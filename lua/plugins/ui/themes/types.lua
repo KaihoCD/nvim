@@ -1,0 +1,26 @@
+---@alias CpcFlavor
+---| 'catppuccin-mocha'
+---| 'catppuccin-macchiato'
+---| 'catppuccin-frappe'
+---| 'catppuccin-latte'
+---@alias TknFlavor
+---| 'tokyonight-storm'
+---| 'tokyonight-night'
+---| 'tokyonight-moon'
+---| 'tokyonight-day'
+---@alias NfxFlavor
+---| 'nightfox'
+---| 'dayfox'
+---| 'dawnfox'
+---| 'duskfox'
+---| 'nordfox'
+---| 'terafox'
+---| 'carbonfox'
+---@alias EfrFlavor
+---| 'everforest'
+
+---@alias Colorscheme
+---| CpcFlavor
+---| TknFlavor
+---| NfxFlavor
+---| EfrFlavor
