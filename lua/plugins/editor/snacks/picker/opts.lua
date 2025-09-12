@@ -86,7 +86,6 @@ return {
 		sidebar = presets.sidebar,
 		select = presets.select,
 	},
-
 	sources = {
 		explorer = {
 			jump = { close = true },
@@ -97,8 +96,8 @@ return {
 				list = {
 					keys = {
 						['L'] = { { 'pick_win', 'jump' }, mode = { 'n', 'i' } },
-						['<C-M-l>'] = resize(2),
-						['<C-M-h>'] = resize(-2),
+						['<A-Left>'] = resize(-2),
+						['<A-Right>'] = resize(2),
 					},
 				},
 			},

@@ -11,10 +11,10 @@ end
 
 map('n', '<Esc>', '<CMD>nohlsearch<CR>', { desc = 'Clear highlights' })
 
-map('n', '<C-M-h>', '2<C-w><', { desc = 'Decrease width' })
-map('n', '<C-M-l>', '2<C-w>>', { desc = 'Increase width' })
-map('n', '<C-M-j>', '2<C-w>+', { desc = 'Increase height' })
-map('n', '<C-M-k>', '2<C-w>-', { desc = 'Decrease height' })
+map('n', '<A-Left>', '2<C-w><', { desc = 'Decrease width' })
+map('n', '<A-Right>', '2<C-w>>', { desc = 'Increase width' })
+map('n', '<A-Down>', '2<C-w>+', { desc = 'Increase height' })
+map('n', '<A-Up>', '2<C-w>-', { desc = 'Decrease height' })
 
 map('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 map('t', '<C-c>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })

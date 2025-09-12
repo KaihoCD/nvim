@@ -61,10 +61,10 @@ M.opts = {
 		},
 	},
 	keys = {
-		['<C-M-l>'] = resize('width', 2),
-		['<C-M-h>'] = resize('width', -2),
-		['<C-M-j>'] = resize('height', 2),
-		['<C-M-k>'] = resize('height', -2),
+		['<A-Left>'] = resize('width', 2),
+		['<A-Right>'] = resize('width', -2),
+		['<A-Up>'] = resize('height', 2),
+		['<A-Down>'] = resize('height', -2),
 	},
 }
 

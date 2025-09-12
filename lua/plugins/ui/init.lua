@@ -4,24 +4,27 @@ local markdown = require('plugins.ui.markdown')
 local noice = require('plugins.ui.noice')
 local snacks = require('plugins.ui.snacks')
 
+local use_or = require('utils.funcs').use_or
+
 return {
 	-- Load theme plugins
 	require('plugins.ui.themes'),
 	-- icons
-	{
-		'mskelton/termicons.nvim', -- Need font "termicons"
-    enabled = G.termicons(),
-		event = 'VeryLazy',
-		dependencies = { 'nvim-tree/nvim-web-devicons' },
-		build = false,
-		opts = {},
-	},
-	{
-		'nvim-tree/nvim-web-devicons',
-    enabled = not G.termicons(),
-		event = 'VeryLazy',
-		opts = {},
-	},
+	use_or(
+		{
+			'nvim-tree/nvim-web-devicons',
+			event = 'VeryLazy',
+			opts = {},
+		},
+		G.termicons(),
+		{
+			'mskelton/termicons.nvim', -- Need font "termicons"
+			event = 'VeryLazy',
+			dependencies = { 'nvim-tree/nvim-web-devicons' },
+			build = false,
+			opts = {},
+		}
+	),
 	{
 		'rebelot/heirline.nvim',
 		event = 'VeryLazy',

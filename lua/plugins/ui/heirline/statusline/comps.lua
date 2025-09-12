@@ -174,6 +174,9 @@ M.WorkDir = {
 }
 
 M.BufferDir = {
+	condition = function()
+		return vim.bo.buftype ~= 'terminal'
+	end,
 	provider = function()
 		local buf_path = vim.api.nvim_buf_get_name(0)
 		if buf_path == '' then

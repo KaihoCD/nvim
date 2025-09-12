@@ -106,8 +106,10 @@ M.sidebar = {
 	preview = 'main',
 	layout = {
 		backdrop = false,
-		width = 40,
-		min_width = 40,
+    -- Use edgy.nvim to constrain the width of sidebar
+    -- Setting the min_width to huge is 
+    -- to prevent the border from overflowing when edgy.nvim changes the width
+		min_width = math.huge,
 		height = 0,
 		position = 'left',
 		border = 'right',

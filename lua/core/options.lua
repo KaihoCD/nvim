@@ -2,7 +2,8 @@
 vim.g.status = {
 	format_on_save = true, ---@type boolean
 	ui_type = 'borderless', ---@type UiType
-	icon_type = 'nerdfont', ---@type IconType
+	-- ui_type = 'border', ---@type UiType
+	icon_type = 'termicons', ---@type IconType
 	border_style = 'single', ---@type BorderType
 }
 

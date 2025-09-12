@@ -21,6 +21,14 @@ function M.merge_if(base, cond, override)
 	return base
 end
 
+--- Uset left or right
+function M.use_or(left, cond, right)
+	if cond then
+		return right
+	end
+	return left
+end
+
 ---@param funcs table<number, fun(arg: any): any>
 ---@return fun(value:any):any
 function M.pipe(funcs)

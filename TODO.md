@@ -12,4 +12,4 @@
     为了降低复杂度，使用高亮颜色来模拟solid边框
     border_style就只专注于边框样式
 
-- [ ] statusline的workdir组件，要考虑到在终端中的情况
+- [x] statusline的workdir组件，要考虑到在终端中的情况

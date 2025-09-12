@@ -52,6 +52,7 @@ return function(colors)
 			NoiceCmdlinePopupBorderInput = {},
 			NoiceCmdlinePopupBorderSearch = {},
 			NoiceCmdlinePopupBorderCalculator = {},
+			NoiceSplit = {'MainBg'},
 		}
 	)
 end
