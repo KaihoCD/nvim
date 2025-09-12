@@ -74,6 +74,16 @@ local BufferIconAndName = {
 local BufferFlag = {
 	{
 		condition = function(self)
+			return not vim.api.nvim_get_option_value('modifiable', { buf = self.bufnr })
+				or vim.api.nvim_get_option_value('readonly', { buf = self.bufnr })
+		end,
+		provider = G.buf.readonly .. ' ',
+		hl = function(self)
+			return { fg = self.is_active and 'terminal' or blend('terminal', 'inactive_bg') }
+		end,
+	},
+	{
+		condition = function(self)
 			return not vim.api.nvim_get_option_value('modified', { buf = self.bufnr })
 		end,
 		provider = G.tabline_icons.close,
@@ -103,16 +113,6 @@ local BufferFlag = {
 			return { fg = 'insert' }
 		end,
 	},
-	{
-		condition = function(self)
-			return not vim.api.nvim_get_option_value('modifiable', { buf = self.bufnr })
-				or vim.api.nvim_get_option_value('readonly', { buf = self.bufnr })
-		end,
-		provider = G.buf.readonly,
-		hl = function()
-			return { fg = 'terminal' }
-		end,
-	},
 }
 
 local M = {}
@@ -123,7 +123,7 @@ M.BufferBlock = utils.surround({ ' ' .. edges[1], edges[2] }, function(self)
 	return self.is_active and 'active_bg' or 'inactive_bg'
 end, {
 	{ provider = ' ' },
-	picker.TablinePicker('constant'),
+	picker.TablinePicker('terminal'),
 	BufferIconAndName,
 	{ provider = ' ' },
 	BufferFlag,

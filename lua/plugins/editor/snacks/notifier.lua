@@ -57,8 +57,10 @@ local function notifier_style()
 		render(buf, notif, ctx)
 		vim.schedule(function()
 			if not notif.layout or buf == last_buf then
+				notif.layout.top = 0
 				return
 			end
+
 			notif.layout.top = (notif.layout.top or 0) + 1
 			ctx.notifier:process()
 			last_buf = buf

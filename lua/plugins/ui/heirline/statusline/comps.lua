@@ -181,7 +181,8 @@ M.BufferDir = {
 		end
 
 		local root = vim.fn.getcwd()
-		local buf_dir = vim.fn.fnamemodify(buf_path, ':h')
+		root = vim.fn.fnamemodify(root, ':~')
+		local buf_dir = vim.fn.fnamemodify(buf_path, ':~')
 		local relative = buf_dir:gsub('^' .. vim.pesc(root), '')
 		local path_separator = package.config:sub(1, 1)
 		return relative:gsub(path_separator, ' ')

@@ -22,6 +22,7 @@ local function change_native_hlgroup(colors)
 		G.borderless(),
 		{
 			NormalFloat = { bg = colors.bg.main_float },
+			FloatBorder = { bg = colors.bg.main_float, fg = colors.theme.main },
 			FloatTitle = { bg = colors.theme.main, fg = colors.bg.main_float },
 			MainFloatBg = { bg = colors.bg.main_float },
 			MainFloatBorder = { bg = colors.bg.main_float },

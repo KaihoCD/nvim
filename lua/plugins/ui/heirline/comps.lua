@@ -57,7 +57,7 @@ function M.get_fileicon(cb)
 				require('nvim-web-devicons').get_icon_color(filename, extension, { default = true })
 		end,
 		provider = function(self)
-			return self.icon
+			return self.icon .. (G.termicons() and '' or ' ')
 		end,
 		hl = function(self)
 			if cb then

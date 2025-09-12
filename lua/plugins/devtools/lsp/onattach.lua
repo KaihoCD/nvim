@@ -41,7 +41,10 @@ local function gen_float_style()
 	return {
 		max_width = math.ceil(vim.o.columns * 0.6),
 		max_height = math.ceil(vim.o.lines * 0.4),
-		border = border_style,
+		border = 'solid',
+		wo = {
+			winhighlight = 'FloatBorder:DiffAdd',
+		},
 	}
 end
 

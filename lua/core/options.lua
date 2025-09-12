@@ -2,16 +2,14 @@
 vim.g.status = {
 	format_on_save = true, ---@type boolean
 	ui_type = 'borderless', ---@type UiType
-	icon_type = 'termicons', ---@type IconType
+	icon_type = 'nerdfont', ---@type IconType
 	border_style = 'single', ---@type BorderType
 }
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-vim.g.colors_name = 'default'
-
--- Default colors theme
-vim.o.background = 'dark'
+vim.g.colors_name = 'default' -- Default theme name
+vim.o.background = 'dark' -- Default colors theme
 
 -- UI
 vim.opt.number = true

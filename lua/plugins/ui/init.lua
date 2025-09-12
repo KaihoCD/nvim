@@ -10,14 +10,20 @@ return {
 	-- icons
 	{
 		'mskelton/termicons.nvim', -- Need font "termicons"
+    enabled = G.termicons(),
 		event = 'VeryLazy',
 		dependencies = { 'nvim-tree/nvim-web-devicons' },
 		build = false,
 		opts = {},
 	},
 	{
+		'nvim-tree/nvim-web-devicons',
+    enabled = not G.termicons(),
+		event = 'VeryLazy',
+		opts = {},
+	},
+	{
 		'rebelot/heirline.nvim',
-		dependencies = { 'mskelton/termicons.nvim' },
 		event = 'VeryLazy',
 		config = heirline.config,
 	},
@@ -63,7 +69,6 @@ return {
 		event = 'VeryLazy',
 		dependencies = {
 			'nvim-treesitter/nvim-treesitter',
-			'mskelton/termicons.nvim',
 		},
 		opts = markdown.opts,
 	},
