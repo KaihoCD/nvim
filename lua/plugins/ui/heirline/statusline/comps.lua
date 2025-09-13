@@ -7,7 +7,7 @@ local icons = G.statusline_icons
 local M = {}
 
 M.Vimode = {
-	flexible = 5,
+	flexible = 6,
 	{
 		provider = function()
 			return ' ' .. icons.nvim .. ' ' .. comps.get_vimode().str .. ' '
@@ -51,7 +51,7 @@ M.Git = {
 			or self.status_dict.removed ~= 0
 			or self.status_dict.changed ~= 0
 	end,
-	flexible = 4,
+	flexible = 5,
 	{
 		{
 			provider = ' ' .. icons.git .. ' ',
@@ -159,37 +159,51 @@ M.Diagnostics = {
 }
 
 M.WorkDir = {
-	flexible = 1,
-	{
-		provider = function()
-			local cwd = vim.fn.getcwd()
-			cwd = vim.fn.fnamemodify(cwd, ':~')
-			local path_separator = package.config:sub(1, 1)
-			return cwd:gsub('~', icons.home .. ' '):gsub(path_separator, ' ')
-		end,
-	},
-	{
-		provider = '',
-	},
-}
+	init = function(self)
+		local cwd = vim.fn.getcwd()
+		self.cwd = vim.fn.fnamemodify(cwd, ':~')
+		self.separator = package.config:sub(1, 1)
 
-M.BufferDir = {
-	condition = function()
-		return vim.bo.buftype ~= 'terminal'
-	end,
-	provider = function()
 		local buf_path = vim.api.nvim_buf_get_name(0)
-		if buf_path == '' then
-			return ''
+		self.has_buf_dir = buf_path ~= ''
+
+		if self.has_buf_dir then
+			local buf_dir = vim.fn.fnamemodify(buf_path, ':h')
+			self.buf_dir = vim.fn.fnamemodify(buf_dir, ':~')
+			-- 提前计算 relative
+			self.relative = buf_dir:gsub('^' .. vim.pesc(cwd), '')
+			self.relative_noslash = buf_dir:gsub('^' .. vim.pesc(cwd .. self.separator), '')
 		end
 
-		local root = vim.fn.getcwd()
-		root = vim.fn.fnamemodify(root, ':~')
-		local buf_dir = vim.fn.fnamemodify(buf_path, ':~')
-		local relative = buf_dir:gsub('^' .. vim.pesc(root), '')
-		local path_separator = package.config:sub(1, 1)
-		return relative:gsub(path_separator, ' ')
+		self.is_valid_buf = vim.bo.buftype ~= 'terminal' and self.has_buf_dir
 	end,
+
+	flexible = 1,
+	{
+		{
+			provider = function(self)
+				return self.cwd:gsub('~', icons.home .. ' '):gsub(self.separator, ' ')
+			end,
+			hl = { fg = 'inactive_fg' },
+		},
+		{
+			condition = function(self)
+				return self.is_valid_buf
+			end,
+			provider = function(self)
+				return self.relative:gsub(self.separator, ' ')
+			end,
+		},
+	},
+	{
+		condition = function(self)
+			return self.is_valid_buf
+		end,
+		provider = function(self)
+			return self.relative_noslash:gsub(self.separator, ' ')
+		end,
+	},
+	{ provider = '' },
 }
 
 M.Lsp = {
@@ -224,7 +238,7 @@ M.Ts = {
 		end
 		return false
 	end,
-	flexible = 3,
+	flexible = 4,
 	{
 		{ provider = ' ' .. icons.ts .. ' ', hl = { italic = false } },
 		{
@@ -252,8 +266,9 @@ M.Record = {
 }
 
 M.Ruler = {
-	flexible = 2,
+	flexible = 3,
 	{ provider = ' 󰉨 %P ' },
+	{ provider = '' },
 }
 
 return M

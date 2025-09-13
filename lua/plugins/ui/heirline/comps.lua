@@ -137,4 +137,5 @@ function M.get_unique_filename(max_length)
 		return unique_path_str
 	end
 end
+
 return M

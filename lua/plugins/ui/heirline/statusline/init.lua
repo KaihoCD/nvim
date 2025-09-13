@@ -55,18 +55,12 @@ return {
 	},
 	-- mid part
 	{
-		{ provider = '%=' },
+		{ provider = ' %=' },
 		{
 			condition = conditions.is_active,
-			{
-				comps.WorkDir,
-				hl = function(self)
-					return { fg = blend('fg', self.vicolors[3]), bg = 'bg' }
-				end,
-			},
-			comps.BufferDir,
+			comps.WorkDir,
 		},
-		{ provider = '%=' },
+		{ provider = '%= ' },
 		hl = function()
 			return { fg = 'fg', bg = 'bg' }
 		end,
