@@ -1,0 +1,146 @@
+_G.G = {}
+
+G.layout = {
+	margin = {
+		top = 10,
+		right = 2,
+		bottom = 2,
+	},
+	size = {
+		float_width = 0.8,
+		float_height = 0.8,
+		split_left = 35,
+		split_right = 0.3,
+		split_bottom = 0.35,
+	},
+}
+
+G.status = {
+	border_style = vim.g.status.border_style,
+	ui_style = vim.g.status.ui_style,
+	icon_type = vim.g.status.icon_type,
+	whichkey_title_pos = vim.g.status.ui_style == 'borderless' and 'center' or 'left',
+	blink_menu_border = vim.g.status.ui_style == 'border' and vim.g.status.border_style or 'none',
+	icon_suffix = vim.g.status.icon_type == 'nerdfont' and ' ' or '',
+}
+
+G.icons = {
+	tabline = {
+		close = '✘',
+		ellipsis = '…',
+    -- stylua: ignore start
+		tabnr = {
+			{ '󰎥', '󰼏' }, { '󰎨', '󰼐' },
+			{ '󰎫', '󰼑' }, { '󰎲', '󰼒' },
+			{ '󰎯', '󰼓' }, { '󰎴', '󰼔' },
+			{ '󰎷', '󰼕' }, { '󰎺', '󰼖' },
+			{ '󰎽', '󰼗' }, { '󰿫', '󰿪' },
+		},
+		-- stylua: ignore end
+		separator = { '', '' },
+	},
+	statusline = {
+		nvim = '',
+		git = '',
+		home = '',
+		lsp = '󰘾',
+		ts = '󱏒',
+		record = '󰻃',
+		separator = { '', '', '', '', '', '' },
+	},
+	buf = {
+		modified = '',
+		readonly = '󰌾',
+	},
+	files = {
+		dir = vim.g.status.icon_type == 'nerdfont' and '󰉋' or '톀',
+		dir_open = vim.g.status.icon_type == 'nerdfont' and '󰝰 ' or '톁',
+		file = vim.g.status.icon_type == 'nerdfont' and '󰈤' or '큪',
+		lua = vim.g.status.icon_type == 'nerdfont' and '' or '킺',
+	},
+	markdown = {
+		header = { '󰎥  ', '󰼐  ', '󰎫  ', '󰼒  ', '󰎯  ', '󰼔  ' },
+		checkbox = {
+			checked = '   ',
+			unchecked = '   ',
+			todo = '   ',
+			important = '   ',
+			question = '   ',
+		},
+	},
+}
+
+G.ui = {
+	fillchars = {
+		foldopen = '',
+		foldclose = '',
+	},
+	tree = {
+		vertical = '│ ',
+		middle = '│ ',
+		last = '└╴',
+	},
+}
+
+G.symbols = {
+	diag = {
+		error = '',
+		warn = '',
+		info = '',
+		hint = '',
+	},
+	levels = {
+		error = '',
+		warn = '',
+		info = '',
+		debug = '',
+		trace = '󰴽',
+	},
+}
+
+G.kind_icons = {
+	Copilot = '',
+
+	String = '',
+	Number = '',
+	Boolean = '',
+	Array = '󰅨',
+	Object = '󱃖',
+	Package = '󰏖',
+	Null = '󰟢',
+	Unknown = '',
+	Identifier = '',
+
+	-- keys from lspkind
+	Text = '󰉿',
+	Method = '󰡱',
+	Function = '󰡱',
+	Constructor = '',
+
+	Field = '',
+	Variable = '',
+	Property = '󰜢',
+
+	Class = '󰙅',
+	Interface = '',
+	Struct = '󱡠',
+	Namespace = '󰦮',
+	Module = '',
+
+	Unit = '󰑭',
+	Value = '󱀍',
+	Enum = '',
+	EnumMember = '',
+
+	Keyword = '󰌆',
+	Constant = '󰐀',
+
+	Snippet = '󱄽',
+	Color = '󰏘',
+	File = '󰈙',
+	Reference = '󰬲',
+	Folder = '󰝰',
+	Event = '',
+	Operator = '',
+	TypeParameter = '󰬛',
+}

@@ -1,0 +1,32 @@
+---Valid highlight key names
+---@alias ValidHLKey
+---| 'fg'
+---| 'bg'
+---| 'sp'
+---| 'bold'
+---| 'standout'
+---| 'underline'
+---| 'undercurl'
+---| 'underdouble'
+---| 'underdotted'
+---| 'underdashed'
+---| 'strikethrough'
+---| 'italic'
+---| 'reverse'
+---| 'nocombine'
+---| 'default'
+---| 'link'
+---| 'ctermfg'
+---| 'ctermbg'
+
+---A single highlight definition map
+---@alias HLAttrs table<ValidHLKey, any>
+
+---Highlight helper object
+---@class HL
+---@field groups string[]
+---@field change fun(self: HL, key: ValidHLKey, value?: any): HL
+---@field blend  fun(self: HL, source: string, overrides?: HLAttrs): HL
+
+---Constructor type for HL
+---@alias HlHelper fun(...: string): HL
