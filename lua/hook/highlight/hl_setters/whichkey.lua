@@ -1,7 +1,7 @@
 return function()
 	return {
-		WhichKeyNormal = { 'NormalFloat' },
-		WhichKeyBorder = { 'FloatBorder' },
-		WhichKeyTitle = { 'FloatTitle' },
+		WhichKeyNormal = { 'MainNormalFloat' },
+		WhichKeyBorder = { 'MainFloatBorder' },
+		WhichKeyTitle = { 'MainFloatTitle' },
 	}
 end

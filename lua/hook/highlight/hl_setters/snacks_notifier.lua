@@ -15,8 +15,8 @@ return function(colors, borderless)
 	local function make_hl(color)
 		return merge_if(
 			{
-				normal = { 'NormalFloat' },
-				title = { 'FloatTitle', { fg = color } },
+				normal = { 'MainNormalFloat' },
+				title = { 'MainFloatTitle', { fg = color } },
 				border = {
 					fg = blend(color, 0.5, colors.bg.main_float),
 					bg = colors.bg.main,
@@ -24,8 +24,8 @@ return function(colors, borderless)
 			},
 			borderless,
 			{
-				title = { 'FloatTitle', { bg = color } },
-				border = { 'FloatBorder' },
+				title = { 'MainFloatTitle', { bg = color } },
+				border = { 'MainFloatBorder' },
 			}
 		)
 	end
@@ -43,7 +43,7 @@ return function(colors, borderless)
 	end
 
 	-- Override error group font color
-	map['SnacksNotifierError'] = { 'NormalFloat', { fg = colors.diag.error } }
+	map['SnacksNotifierError'] = { 'MainNormalFloat', { fg = colors.diag.error } }
 
 	return map
 end

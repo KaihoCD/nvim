@@ -3,7 +3,10 @@ local size = G.layout.size
 local margin = G.layout.margin
 
 local float_winhl = table.concat({
-	'EndOfBuffer:NormalFloat',
+	'EndOfBuffer:MainNormalFloat',
+	'NormalFloat:NormalFloat',
+	'FloatTitle:MainFloatTitle',
+	'FloatBorder:MainFloatBorder',
 }, ',')
 
 return {
