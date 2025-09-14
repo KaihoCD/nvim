@@ -5,13 +5,13 @@ local merge_if = require('utils.funcs').merge_if
 return function(colors, borderless)
 	return merge_if(
 		{
-			BlinkCmpMenu = { 'NormalFloat' },
-			BlinkCmpMenuBorder = { 'FloatBorder' },
-			BlinkCmpDoc = { 'NormalFloat' },
-			BlinkCmpDocBorder = { 'FloatBorder' },
+			BlinkCmpMenu = { 'MainNormalFloat' },
+			BlinkCmpMenuBorder = { 'MainFloatBorder' },
+			BlinkCmpDoc = { 'MainNormalFloat' },
+			BlinkCmpDocBorder = { 'MainFloatBorder' },
 			BlinkCmpScrollBarThumb = { bg = colors.fg.separator },
-			BlinkCmpScrollBarGutter = { 'FloatBorder' },
-			BlinkCmpKind = { 'NormalFloat' },
+			BlinkCmpScrollBarGutter = { 'MainFloatBorder' },
+			BlinkCmpKind = { 'MainNormalFloat' },
 			BlinkCmpMenuSelection = { 'Visual' },
 		},
 		borderless,

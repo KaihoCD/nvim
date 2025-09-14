@@ -22,10 +22,10 @@ return function(colors, borderless)
 			NoiceCmdlineIconCalculator = { 'SubNormalFloat', { fg = colors.theme.sub } },
 
 			-- 标题
-			NoiceCmdlinePopupTitleLua = { 'FloatTitle' },
-			NoiceCmdlinePopupTitleHelp = { 'FloatTitle' },
-			NoiceCmdlinePopupTitleFilter = { 'FloatTitle' },
-			NoiceCmdlinePopupTitleCmdline = { 'FloatTitle' },
+			NoiceCmdlinePopupTitleLua = { 'MainFloatTitle' },
+			NoiceCmdlinePopupTitleHelp = { 'MainFloatTitle' },
+			NoiceCmdlinePopupTitleFilter = { 'MainFloatTitle' },
+			NoiceCmdlinePopupTitleCmdline = { 'MainFloatTitle' },
 			NoiceCmdlinePopupTitleInput = { 'SubFloatTitle' },
 			NoiceCmdlinePopupTitleSearch = { 'SubFloatTitle' },
 			NoiceCmdlinePopupTitleCalculator = { 'SubFloatTitle' },
@@ -40,8 +40,8 @@ return function(colors, borderless)
 			NoiceCmdlinePopupBorderCalculator = { 'SubFloatBorder' },
 
 			-- 确认行
-			NoiceFormatConfirm = { 'NormalFloat' },
-			NoiceFormatConfirmDefault = { 'FloatTitle' },
+			NoiceFormatConfirm = { 'MainNormalFloat' },
+			NoiceFormatConfirmDefault = { 'MainFloatTitle' },
 
 			-- 边框
 			NoiceSplit = { bg = colors.bg.main },

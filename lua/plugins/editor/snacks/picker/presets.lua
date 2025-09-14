@@ -3,14 +3,14 @@ local size = G.layout.size
 local border_style = G.status.border_style
 
 local picker_winhl = table.concat({
-	'EndOfBuffer:NormalFloat',
-  'CursorLineNr:MainFloatBg',
-	'Normal:NormalFloat',
-	'NormalNC:NormalFloat',
-	'NormalSB:NormalFloat',
-	'NormalFloat:NormalFloat',
-	'FloatBorder:FloatBorder',
-	'FloatTitle:FloatTitle',
+	'EndOfBuffer:MainNormalFloat',
+	'CursorLineNr:MainNormalFloat',
+	'Normal:MainNormalFloat',
+	'NormalNC:MainNormalFloat',
+	'NormalSB:MainNormalFloat',
+	'NormalFloat:MainNormalFloat',
+	'FloatBorder:MainFloatBorder',
+	'FloatTitle:MainFloatTitle',
 }, ',')
 
 local sidebar_input_winhl = table.concat({
