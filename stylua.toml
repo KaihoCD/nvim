@@ -1,0 +1,12 @@
+# Prefer single quotes for strings instead of double quotes
+quote_style = "ForceSingle"
+
+# Maximum line width before wrapping
+column_width = 100
+
+# Indentation size (2 spaces is common in Lua projects, esp. Neovim configs)
+indent_width = 2
+
+# Sort `require` statements alphabetically for consistency
+[sort_requires]
+enabled = true

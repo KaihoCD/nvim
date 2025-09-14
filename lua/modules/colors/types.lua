@@ -1,0 +1,64 @@
+-- 基本色
+---@class BaseColors
+---@field fg         string 主前景色
+---@field bg         string 主背景色
+---@field sub_fg     string 次前景色
+---@field sub_bg     string 次背景色
+---@field nontext_fg string 非文本色：行号等
+---@field comment    string 注释
+---@field type       string 结构体、类等“类型”名
+---@field func       string 函数名
+---@field preproc    string 预处理指令、宏
+---@field special    string 转义符、特殊符号
+---@field statement  string 语法：if / return / break ...
+---@field constant   string 常量、枚举、宏常量
+---@field string     string 字符串字面量
+---@field git_add    string Git 新增标识
+---@field git_change string Git 修改标识
+---@field git_delete string Git 删除标识
+---@field diag_error string 诊断-错误
+---@field diag_warn  string 诊断-警告
+---@field diag_info  string 诊断-信息
+---@field diag_hint  string 诊断-提示
+
+---@class FgType
+---@field main       string
+---@field sub        string
+---@field separator  string
+---@field nontext    string
+
+---@class BgType
+---@field main       string
+---@field fix        string
+---@field main_float string
+---@field sub_float  string
+
+---@class ThemeColorsType
+---@field main       string
+---@field sub        string
+---@field comment    string
+---@field type       string
+---@field func       string
+---@field preproc    string
+---@field special    string
+---@field statement  string
+---@field constant   string
+---@field string     string
+
+---@class GitColorsType
+---@field add        string
+---@field change     string
+---@field delete     string
+
+---@class DiagColorsType
+---@field error      string
+---@field warn       string
+---@field info       string
+---@field hint       string
+
+---@class ThemeColors
+---@field fg         FgType
+---@field bg         BgType
+---@field theme      ThemeColorsType
+---@field git        GitColorsType
+---@field diag       DiagColorsType
