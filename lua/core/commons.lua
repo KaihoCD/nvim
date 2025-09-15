@@ -26,7 +26,7 @@ G.status = {
 
 G.icons = {
 	tabline = {
-		close = '✘',
+		close = '',
 		ellipsis = '…',
     -- stylua: ignore start
 		tabnr = {
@@ -43,7 +43,7 @@ G.icons = {
 		nvim = '',
 		git = '',
 		home = '',
-		lsp = '󰘾',
+		lsp = '󰄴',
 		ts = '󱏒',
 		record = '󰻃',
 		separator = { '', '', '', '', '', '' },
