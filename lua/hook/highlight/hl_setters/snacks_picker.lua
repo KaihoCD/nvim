@@ -22,7 +22,7 @@ return function(colors, borderless)
 			SnacksPickerInputBorder = { 'SubFloatBorder' },
 			SnacksPickerInputTitle = { 'SubFloatTitle' },
 			-- picker list
-			SnacksPickerListCursorLine = { 'Visual' },
+			SnacksPickerListCursorLine = { 'CursorLine' },
 		},
 		borderless,
 		{

@@ -11,10 +11,9 @@ return function(colors, borderless)
 
 	return merge_if(
 		{
-			CursorLine = { 'Visual' },
 			CursorLineNr = { bg = main_bg },
 			WinSeparator = { fg = colors.fg.separator },
-      -- Dynamic hl
+			-- Dynamic hl
 			NormalFloat = { bg = main_bg },
 			FloatTitle = { bg = main_bg, fg = main_color },
 			FloatBorder = { bg = main_bg, fg = main_color },
