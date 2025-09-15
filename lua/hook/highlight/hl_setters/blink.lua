@@ -12,7 +12,7 @@ return function(colors, borderless)
 			BlinkCmpScrollBarThumb = { bg = colors.fg.separator },
 			BlinkCmpScrollBarGutter = { 'MainFloatBorder' },
 			BlinkCmpKind = { 'MainNormalFloat' },
-			BlinkCmpMenuSelection = { 'Visual' },
+			BlinkCmpMenuSelection = { 'CursorLine' },
 		},
 		borderless,
 		{

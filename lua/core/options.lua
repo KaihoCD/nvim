@@ -1,8 +1,8 @@
 -- Global state
 vim.g.status = {
 	format_on_save = true, ---@type boolean
-  ui_style = 'borderless', ---@type UiType
-  icon_type = 'nerdfont', ---@type IconType
+	ui_style = 'borderless', ---@type UiType
+	icon_type = 'nerdfont', ---@type IconType
 	-- ui_style = 'border', ---@type UiType
 	-- icon_type = 'termicons', ---@type IconType
 	border_style = 'single', ---@type BorderType
