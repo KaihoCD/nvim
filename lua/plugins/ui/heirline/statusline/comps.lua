@@ -172,8 +172,8 @@ M.WorkDir = {
 		if self.has_buf_dir then
 			local buf_dir = vim.fn.fnamemodify(buf_path, ':h')
 			self.buf_dir = vim.fn.fnamemodify(buf_dir, ':~')
-			self.relative = buf_dir:gsub('^' .. vim.pesc(cwd), '')
-			self.relative_noslash = buf_dir:gsub('^' .. vim.pesc(cwd .. self.separator), '')
+			self.relative = self.buf_dir:gsub('^' .. vim.pesc(self.cwd), '')
+			self.relative_noslash = self.buf_dir:gsub('^' .. vim.pesc(self.cwd .. self.separator), '')
 		end
 
 		self.is_valid_buf = vim.bo.buftype ~= 'terminal' and self.has_buf_dir
