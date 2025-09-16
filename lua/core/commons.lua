@@ -48,7 +48,7 @@ G.icons = {
 		home = '',
 		lsp = '󰄹',
 		ts = '󱏒',
-		ruler = '󰉨',
+		ruler = '󰉪',
 		record = '󰻃',
 		separator = { '', '', '', '', '', '' },
 	},

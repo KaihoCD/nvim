@@ -3,7 +3,7 @@ local checkbox = icons.checkbox
 
 local M = {}
 
-local function add_checkbox_type(raw, render_icon, highlight)
+local function append_checkbox(raw, render_icon, highlight)
 	return {
 		raw = '[' .. raw .. ']',
 		rendered = render_icon,
@@ -22,7 +22,7 @@ M.opts = {
 					border = 'hide',
 					language_icon = false,
 					language_name = false,
-					highlight = 'FloatBg',
+					highlight = 'MainNormalFloat',
 				},
 			},
 		},
@@ -31,15 +31,20 @@ M.opts = {
 	sign = { enabled = false },
 	code = {
 		width = 'block',
-		min_width = '80',
 		border = 'thin',
+		min_width = 80,
 		left_pad = 1,
 		right_pad = 1,
+		position = 'right',
+		language_border = '▄',
+		language_left = '██',
+		language_right = '██',
 		highlight_inline = 'RenderMarkdownCodeInfo',
 	},
 	heading = {
-		icons = icons.header,
 		width = 'block',
+		border = true,
+		icons = icons.header,
 		left_pad = 1,
 		right_pad = 1,
 	},
@@ -48,9 +53,9 @@ M.opts = {
 		checked = { icon = checkbox.checked },
 		unchecked = { icon = checkbox.unchecked },
 		custom = {
-			todo = add_checkbox_type('-', checkbox.todo, 'RenderMarkdownTodo'),
-			important = add_checkbox_type('!', checkbox.important, 'DiagnosticWarn'),
-			question = add_checkbox_type('?', checkbox.question, 'DiagnosticInfo'),
+			todo = append_checkbox('-', checkbox.todo, 'RenderMarkdownTodo'),
+			important = append_checkbox('!', checkbox.important, 'DiagnosticWarn'),
+			question = append_checkbox('?', checkbox.question, 'DiagnosticInfo'),
 		},
 	},
 	anti_conceal = {
