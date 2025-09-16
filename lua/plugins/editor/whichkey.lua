@@ -23,6 +23,7 @@ M.opts = {
 	},
 	spec = {
 		{ '<leader>b', group = '[b]uffer', icon = '󰈔' },
+		{ '<leader>c', group = '[c]onfig', icon = '' },
 		{ '<leader>f', group = '[f]ind', icon = '󰱼' },
 		{ '<leader>l', group = '[l]sp', icon = '󰿘', mode = { 'n', 'v' } },
 		{ '<leader>s', group = '[s]earch', icon = '', mode = { 'n', 'v' } },

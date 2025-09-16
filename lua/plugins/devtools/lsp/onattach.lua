@@ -1,5 +1,5 @@
 local map = require('utils.funcs').map
-local border_style = G.status.border_style
+local border_style = G.status.lsp_border_style
 
 local function augroup(name)
 	return vim.api.nvim_create_augroup('LSP' .. name, { clear = true })

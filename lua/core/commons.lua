@@ -15,13 +15,16 @@ G.layout = {
 	},
 }
 
+local is_borderless = vim.g.status.ui_style == 'borderless'
+local is_termicons = vim.g.status.icon_type == 'termicons'
 G.status = {
 	ui_style = vim.g.status.ui_style,
 	icon_type = vim.g.status.icon_type,
-	border_style = vim.g.status.ui_style == 'borderless' and vim.g.status.border_style or 'solid',
-	whichkey_title_pos = vim.g.status.ui_style == 'borderless' and 'center' or 'left',
-	blink_menu_border = vim.g.status.ui_style == 'border' and vim.g.status.border_style or 'none',
-	icon_suffix = vim.g.status.icon_type == 'nerdfont' and ' ' or '',
+	border_style = vim.g.status.border_style,
+	blink_menu_border = is_borderless and 'none' or vim.g.status.border_style,
+	lsp_border_style = is_borderless and 'solid' or vim.g.status.border_style,
+	whichkey_title_pos = is_borderless and 'center' or 'left',
+	icon_suffix = is_termicons and '' or ' ',
 }
 
 G.icons = {

@@ -19,7 +19,7 @@ local sidebar_input_winhl = table.concat({
 	'NormalFloat:SnacksPickerExplorerNormal',
 	'SnacksPickerPrompt:SnacksPickerExplorerPrompt',
 	'FloatBorder:SnacksPickerExplorerBorder',
-	'FloatTitle:SnacksPickerExplorerBorder',
+	'FloatTitle:SnacksPickerExplorerTitle',
 }, ',')
 
 local sidebar_list_winhl = table.concat({
