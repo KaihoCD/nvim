@@ -16,9 +16,9 @@ G.layout = {
 }
 
 G.status = {
-	border_style = vim.g.status.border_style,
 	ui_style = vim.g.status.ui_style,
 	icon_type = vim.g.status.icon_type,
+	border_style = vim.g.status.ui_style == 'borderless' and vim.g.status.border_style or 'solid',
 	whichkey_title_pos = vim.g.status.ui_style == 'borderless' and 'center' or 'left',
 	blink_menu_border = vim.g.status.ui_style == 'border' and vim.g.status.border_style or 'none',
 	icon_suffix = vim.g.status.icon_type == 'nerdfont' and ' ' or '',
@@ -43,8 +43,9 @@ G.icons = {
 		nvim = '',
 		git = '',
 		home = '',
-		lsp = '󰄴',
+		lsp = '󰄹',
 		ts = '󱏒',
+		ruler = '󰉨',
 		record = '󰻃',
 		separator = { '', '', '', '', '', '' },
 	},

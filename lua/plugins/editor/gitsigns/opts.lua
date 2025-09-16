@@ -1,3 +1,5 @@
+local border_style = G.status.border_style
+
 return {
 	signs = {
 		add = { text = '┃' },
@@ -19,5 +21,8 @@ return {
 	current_line_blame = true,
 	current_line_blame_opts = {
 		delay = 500,
+	},
+	preview_config = {
+		border = border_style,
 	},
 }
