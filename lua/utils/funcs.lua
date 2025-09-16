@@ -33,4 +33,25 @@ function M.pipe(funcs)
 	end
 end
 
+---@alias OsType 'mac' | 'win' | 'linux'
+---@param os_type OsType | nil
+---@return OsType | boolean
+function M.cur_os(os_type)
+	local sysname = (vim.uv or vim.loop).os_uname().sysname
+	local os
+	if sysname == 'Windows_NT' then
+		os = 'win'
+	elseif sysname == 'Darwin' then
+		os = 'mac'
+	else
+		os = 'linux'
+	end
+
+	if os_type then
+		return os == os_type
+	end
+
+	return os
+end
+
 return M
