@@ -17,6 +17,9 @@ return function(colors, borderless)
 			NormalFloat = { bg = main_bg },
 			FloatTitle = { bg = main_bg, fg = main_color },
 			FloatBorder = { bg = main_bg, fg = main_color },
+			MainNormalFloat = { bg = main_bg },
+			MainFloatTitle = { bg = main_bg, fg = main_color },
+			MainFloatBorder = { bg = main_bg, fg = main_color },
 			SubNormalFloat = { bg = main_bg },
 			SubFloatTitle = { bg = main_bg, fg = sub_color },
 			SubFloatBorder = { bg = main_bg, fg = sub_color },
@@ -24,6 +27,8 @@ return function(colors, borderless)
 		borderless,
 		{
 			NormalFloat = { bg = main_float_bg },
+			FloatBorder = { bg = main_float_bg },
+			FloatTitle = { bg = main_color, fg = main_float_bg },
 			MainNormalFloat = { bg = main_float_bg },
 			MainFloatBorder = { bg = main_float_bg, fg = main_float_bg },
 			MainFloatTitle = { bg = main_color, fg = main_float_bg },

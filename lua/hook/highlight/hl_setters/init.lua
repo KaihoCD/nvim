@@ -9,5 +9,4 @@ return {
 	require('hook.highlight.hl_setters.flash'),
 	require('hook.highlight.hl_setters.flash'),
 	require('hook.highlight.hl_setters.whichkey'),
-	require('hook.highlight.hl_setters.gitsigns'),
 }

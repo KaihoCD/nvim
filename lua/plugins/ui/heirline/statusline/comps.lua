@@ -120,7 +120,7 @@ M.Diagnostics = {
 		hint_icon = diag_symbols.hint .. ' ',
 	},
 	init = function(self)
-		self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
+		self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
 		self.warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
 		self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
 		self.hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
@@ -258,7 +258,7 @@ M.Record = {
 		return vim.fn.reg_recording() ~= '' and vim.o.cmdheight == 0
 	end,
 	{ provider = ' ' .. icons.record .. ' ', hl = { italic = false } },
-	utils.surround({ '⌜', '⌟ ' }, nil, {
+	utils.surround({ '󰅁', '󰅂 ' }, nil, {
 		provider = function()
 			return vim.fn.reg_recording()
 		end,
@@ -267,7 +267,7 @@ M.Record = {
 
 M.Ruler = {
 	flexible = 3,
-	{ provider = ' 󰉨 %P ' },
+	{ provider = ' ' .. icons.ruler .. ' %P ' },
 	{ provider = '' },
 }
 
