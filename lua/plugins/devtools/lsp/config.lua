@@ -65,7 +65,7 @@ return function()
 	-- attach lsp
 	for lsp_name, lsp_config in pairs(devtools.get_lsps()) do
 		lsp_config.capabilities =
-			vim.tbl_deep_extend('force', {}, unpack(extra_capabilities), lsp_config.capabilities or {})
+			vim.tbl_deep_extend('force', {}, extra_capabilities, lsp_config.capabilities or {})
 		require('lspconfig')[lsp_name].setup(lsp_config)
 	end
 

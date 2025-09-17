@@ -33,25 +33,32 @@ function M.pipe(funcs)
 	end
 end
 
----@alias OsType 'mac' | 'win' | 'linux'
+---@alias OsType 'mac' | 'win' | 'wsl' | 'linux'
 ---@param os_type OsType | nil
 ---@return OsType | boolean
 function M.cur_os(os_type)
-	local sysname = (vim.uv or vim.loop).os_uname().sysname
-	local os
+  local os = (vim.uv or vim.loop).os_uname()
+	local sysname = os.sysname
+  local release = os.release
+
+	local cur_os
 	if sysname == 'Windows_NT' then
-		os = 'win'
+		cur_os = 'win'
 	elseif sysname == 'Darwin' then
-		os = 'mac'
+		cur_os = 'mac'
+	elseif sysname == 'Linux' and release:match('WSL') then
+		cur_os = 'wsl'
 	else
-		os = 'linux'
+		cur_os = 'linux'
 	end
 
 	if os_type then
-		return os == os_type
+		return cur_os == os_type
 	end
 
-	return os
+	return cur_os
 end
+
+_G.cur_os = M.cur_os
 
 return M
