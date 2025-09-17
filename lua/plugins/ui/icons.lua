@@ -1,4 +1,4 @@
-if G.status.icon_type == 'termicons' then
+if G.setting.use_termicons then
 	return {
 		'mskelton/termicons.nvim', -- Need font "termicons"
 		event = 'VeryLazy',

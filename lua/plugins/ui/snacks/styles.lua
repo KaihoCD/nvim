@@ -1,4 +1,4 @@
-local border_style = G.status.border_style
+local border_style = G.setting.border_style
 local size = G.layout.size
 local margin = G.layout.margin
 

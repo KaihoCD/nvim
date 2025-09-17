@@ -2,9 +2,10 @@ local notify = require('utils.notify')
 local hl = require('modules.highlight').hl
 local hl_setters = require('hook.highlight.hl_setters')
 
+local borderless = G.setting.use_borderless
+
 local function apply_highlights(batch)
 	local colors = require('modules.colors').get_theme_colors()
-	local borderless = G.status.ui_style == 'borderless'
 
 	for _, hl_setter in ipairs(batch) do
 		for group, value in pairs(hl_setter(colors, borderless)) do

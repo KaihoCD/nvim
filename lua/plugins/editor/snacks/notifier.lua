@@ -1,6 +1,6 @@
 local notify = require('utils.notify')
 
-local level_symbols = G.symbols.levels
+local level_symbols = G.icons.levels
 local margin = G.layout.margin
 
 ---@type table<number, {token:lsp.ProgressToken, msg:string, done:boolean}[]>

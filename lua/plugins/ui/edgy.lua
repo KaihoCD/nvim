@@ -1,5 +1,5 @@
 local size = G.layout.size
-local fillchars = G.ui.fillchars
+local fillchars = G.icons.fillchars
 
 local function resize(dim_type, amount)
 	return function(win)

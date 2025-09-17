@@ -1,6 +1,6 @@
--- @param msg   string  消息内容
--- @param level number? 日志等级（默认 INFO）
--- @param opts  table?  传给 notify 的附加选项
+-- @param msg string  message content
+-- @param level number? log levels
+-- @param opts table?
 local function _notify(msg, level, opts)
 	level = level or vim.log.levels.INFO
 	opts = opts or {}
