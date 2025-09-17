@@ -24,6 +24,9 @@ M.opts = {
 					language_name = false,
 					highlight = 'MainNormalFloat',
 				},
+				bullet = {
+					highlight = 'MainNormalFloat',
+				},
 			},
 		},
 	},

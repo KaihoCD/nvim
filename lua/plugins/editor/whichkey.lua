@@ -15,6 +15,8 @@ M.opts = {
 		title_pos = title_pos,
 	},
 	icons = {
+		breadcrumb = '󰶻',
+		separator = '→',
 		keys = {
 			BS = '←',
 			Space = '󰄼',
@@ -26,7 +28,7 @@ M.opts = {
 		{ '<leader>c', group = '[c]onfig', icon = '' },
 		{ '<leader>f', group = '[f]ind', icon = '󰱼' },
 		{ '<leader>l', group = '[l]sp', icon = '󰿘', mode = { 'n', 'v' } },
-		{ '<leader>s', group = '[s]earch', icon = '', mode = { 'n', 'v' } },
+		{ '<leader>s', group = '[s]earch', icon = '', mode = { 'n', 'v' } },
 		{ '<leader>g', group = '[g]it', icon = '', mode = { 'n', 'v' } },
 		{ '<leader>h', group = '[h]unk', icon = '' },
 		{ '<leader>u', group = '[u]i', icon = '󰙵' },

@@ -37,7 +37,7 @@ local function attach_hl(event)
 	end
 end
 
-local function gen_float_style()
+local function _float_style()
 	return {
 		max_width = math.ceil(vim.o.columns * 0.6),
 		max_height = math.ceil(vim.o.lines * 0.4),
@@ -47,15 +47,23 @@ end
 
 local function attach_keymaps(event)
 	local function hover()
-		return vim.lsp.buf.hover(gen_float_style())
+		return vim.lsp.buf.hover(_float_style())
 	end
 
 	local function signature_help()
-		return vim.lsp.buf.signature_help(gen_float_style())
+		return vim.lsp.buf.signature_help(_float_style())
 	end
 
 	local function open_float()
-		return vim.diagnostic.open_float(gen_float_style())
+		local line = vim.api.nvim_win_get_cursor(0)[1] - 1
+
+		local diags = vim.diagnostic.get(event.buf, { lnum = line })
+
+		if #diags == 0 then
+			return vim.diagnostic.goto_next()
+		end
+
+		return vim.diagnostic.open_float(event.buf, _float_style())
 	end
 
   -- stylua: ignore start
