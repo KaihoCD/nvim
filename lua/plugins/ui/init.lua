@@ -27,7 +27,6 @@ return {
 	},
 	{
 		'folke/noice.nvim',
-		priority = 500,
 		event = 'VeryLazy',
 		dependencies = {
 			'MunifTanjim/nui.nvim',

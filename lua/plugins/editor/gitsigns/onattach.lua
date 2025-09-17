@@ -33,7 +33,7 @@ return function()
 	map('n', '<leader>hr', gitsigns.reset_hunk, { desc = '[r]eset hunk' })
 	map('n', '<leader>hR', gitsigns.reset_buffer, { desc = '[R]eset buffer' })
 	map('n', '<leader>hp', '<cmd>GitsignsPreviewHunkInline<cr>', { desc = '[p]review hunk' })
-	map('n', '<leader>hb', function() gitsigns.blame_line({ full = true }) end, { desc = '[b]lame line' })
+	map('n', '<leader>hb', gitsigns.blame, { desc = '[b]lame' })
   -- stylua: ignore start
 	map('v', '<leader>hs', function()gitsigns.stage_hunk(arg) end, { desc = '[s]tage hunk' })
 	map('v', '<leader>hr', function() gitsigns.reset_hunk(arg) end,{ desc = '[r]eset hunk' })

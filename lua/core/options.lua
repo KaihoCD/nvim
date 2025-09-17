@@ -29,6 +29,7 @@ vim.opt.ruler = false
 vim.opt.laststatus = 3
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
+vim.opt.cmdheight = 0
 
 -- Text render
 vim.opt.wrap = true

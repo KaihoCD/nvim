@@ -2,7 +2,7 @@ local setup_onattach = require('plugins.devtools.lsp.onattach')
 
 local diag_icons = G.icons.diag
 local size = G.layout.size
-local border_style = G.setting.border_style
+local border_style = G.context.lsp_border_style
 
 local SEVERITY = {
 	ERROR = vim.diagnostic.severity.ERROR,
