@@ -19,9 +19,12 @@ M.opts = {
 		zsh = { 'shfmt' },
 		bash = { 'shfmt' },
 	},
+	formatters = {
+		eslint_d = {},
+	},
 
 	format_on_save = function()
-		if vim.g.format_on_save then
+		if vim.g.status.format_on_save then
 			return {
 				timeout_ms = 500,
 				lsp_format = 'fallback',
@@ -32,13 +35,23 @@ M.opts = {
 	end,
 }
 
+local args = { async = false, lsp_format = 'fallback', timeout_ms = 500 }
 M.keys = {
 	{
+		mode = { 'n', 'v' },
+		'<leader>ff',
+		function()
+			require('conform').format(args)
+		end,
+		desc = '[f]ormat',
+	},
+	{
+		mode = { 'n', 'v' },
 		'<leader>lf',
 		function()
-			require('conform').format({ async = true, lsp_format = 'fallback' })
+			require('conform').format(args)
 		end,
-		desc = '[f]ormat file',
+		desc = '[f]ormat',
 	},
 }
 

@@ -17,7 +17,7 @@ if cur_os('mac') then
 	M.im_switch_command = 'im-select'
 end
 
-if cur_os('win') then
+if cur_os('win') or cur_os('wsl') then
 	M.default_im = '1033' -- English (US)
 	M.chinese_im = '2052' -- Chinese (Simplified)
 	M.im_switch_command = 'im-select.exe'
@@ -28,6 +28,5 @@ if cur_os('linux') then
 	M.chinese_im = 'pinyin'
 	M.im_switch_command = 'fcitx5-remote'
 end
-
 
 return M
