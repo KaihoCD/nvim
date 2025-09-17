@@ -37,9 +37,9 @@ end
 ---@param os_type OsType | nil
 ---@return OsType | boolean
 function M.cur_os(os_type)
-  local os = (vim.uv or vim.loop).os_uname()
+	local os = (vim.uv or vim.loop).os_uname()
 	local sysname = os.sysname
-  local release = os.release
+	local release = os.release
 
 	local cur_os
 	if sysname == 'Windows_NT' then
@@ -59,6 +59,18 @@ function M.cur_os(os_type)
 	return cur_os
 end
 
-_G.cur_os = M.cur_os
+function M.debounce(ms, fn)
+	local timer = vim.uv.new_timer()
+	return function(...)
+		if not timer then
+			return
+		end
+		local argv = { ... }
+		timer:start(ms, 0, function()
+			timer:stop()
+			vim.schedule_wrap(fn)(unpack(argv))
+		end)
+	end
+end
 
 return M

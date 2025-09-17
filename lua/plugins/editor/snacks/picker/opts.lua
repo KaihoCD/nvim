@@ -1,6 +1,6 @@
-local kind_icons = G.kind_icons
-local diag_symbols = G.symbols.diag
-local tree = G.ui.tree
+local kind_icons = G.icons.kind_icons
+local diag_icons = G.icons.diag
+local tree = G.icons.tree
 local files = G.icons.files
 
 local presets = require('plugins.editor.snacks.picker.presets')
@@ -59,15 +59,15 @@ return {
 	icons = {
 		tree = tree,
 		files = {
-      dir = files.dir,
-      dir_open =files.dir_open,
-      file = files.file
-    },
+			dir = files.dir,
+			dir_open = files.dir_open,
+			file = files.file,
+		},
 		diagnostics = {
-			Error = diag_symbols.error .. ' ',
-			Warn = diag_symbols.warn .. ' ',
-			Info = diag_symbols.info .. ' ',
-			Hint = diag_symbols.hint .. ' ',
+			Error = diag_icons.error .. ' ',
+			Warn = diag_icons.warn .. ' ',
+			Info = diag_icons.info .. ' ',
+			Hint = diag_icons.hint .. ' ',
 		},
 		git = {
 			staged = '󰄵',

@@ -1,6 +1,6 @@
 local margin = G.layout.margin
 local size = G.layout.size
-local border_style = G.status.border_style
+local border_style = G.setting.border_style
 
 local picker_winhl = table.concat({
 	'EndOfBuffer:MainNormalFloat',

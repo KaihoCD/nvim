@@ -1,8 +1,8 @@
 local M = {}
 
-local border_style = G.status.border_style
-local menu_border = G.status.blink_menu_border
-local kind_icons = G.kind_icons
+local border_style = G.setting.border_style
+local menu_border = G.context.blink_menu_border
+local kind_icons = G.icons.kind_icons
 
 M.opts = {
 	fuzzy = { implementation = 'prefer_rust_with_warning' },

@@ -22,4 +22,4 @@ local function setup_themes(theme_plugins_configs, default_theme)
 	return processed_configs
 end
 
-return setup_themes(require('plugins.ui.themes.configs'), 'default')
+return setup_themes(require('plugins.ui.themes.configs'), 'nightfox')

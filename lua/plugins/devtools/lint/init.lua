@@ -1,3 +1,5 @@
+local debounce = require('utils.funcs').debounce
+
 local M = {}
 
 local linters_by_ft = {
@@ -13,13 +15,13 @@ M.config = function()
 	lint.linters_by_ft = linters_by_ft
 
 	local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
-	vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
+	vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufReadPost', 'InsertLeave' }, {
 		group = lint_augroup,
-		callback = function()
+		callback = debounce(100, function()
 			if vim.bo.modifiable then
 				lint.try_lint()
 			end
-		end,
+		end),
 	})
 end
 

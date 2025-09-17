@@ -1,4 +1,4 @@
-local icon_suffix = G.status.icon_suffix
+local icon_suffix = G.context.icon_suffix
 local tabline_icons = G.icons.tabline
 local files_icon = G.icons.files
 

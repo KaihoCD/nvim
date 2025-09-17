@@ -4,7 +4,7 @@ local utils = require('heirline.utils')
 
 local icons = G.icons.statusline
 local buf_icons = G.icons.buf
-local diag_symbols = G.symbols.diag
+local diag_icons = G.icons.diag
 
 local M = {}
 
@@ -114,10 +114,10 @@ M.Git = {
 M.Diagnostics = {
 	condition = conditions.has_diagnostics,
 	static = {
-		error_icon = diag_symbols.error .. ' ',
-		warn_icon = diag_symbols.warn .. ' ',
-		info_icon = diag_symbols.info .. ' ',
-		hint_icon = diag_symbols.hint .. ' ',
+		error_icon = diag_icons.error .. ' ',
+		warn_icon = diag_icons.warn .. ' ',
+		info_icon = diag_icons.info .. ' ',
+		hint_icon = diag_icons.hint .. ' ',
 	},
 	init = function(self)
 		self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })

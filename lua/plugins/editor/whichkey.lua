@@ -1,5 +1,5 @@
-local border_style = G.status.border_style
-local title_pos = G.status.whichkey_title_pos
+local border_style = G.setting.border_style
+local title_pos = G.context.whichkey_title_pos
 local margin = G.layout.margin
 
 local M = {}

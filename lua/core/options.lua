@@ -1,11 +1,16 @@
 -- Global state
-vim.g.status = {
-	format_on_save = true, ---@type boolean
-	ui_style = 'borderless', ---@type UiType
-	icon_type = 'nerdfont', ---@type IconType
-	-- ui_style = 'border', ---@type UiType
-	-- icon_type = 'termicons', ---@type IconType
-	border_style = 'single', ---@type BorderType
+vim.g.setting = {
+	---@type boolean
+	-- Whether to use borderless style for floating windows and menus
+	use_borderless = true,
+
+	---@type boolean
+	-- Whether to use terminal icons instead of plain symbols
+	use_termicons = true,
+
+	---@type BorderType
+	-- The border style for floating windows
+	border_style = 'single',
 }
 
 vim.g.mapleader = ' '
