@@ -15,6 +15,15 @@ vim.schedule(function()
 			G.config.format_on_save = not G.config.format_on_save
 		end,
 	}):map('<leader>cf')
+	Snacks.toggle({
+		name = 'Lint when Text Changed',
+		get = function()
+			return G.config.lint_when_text_changed
+		end,
+		set = function()
+			G.config.lint_when_text_changed = not G.config.lint_when_text_changed
+		end,
+	}):map('<leader>cl')
 end)
 
 return {
@@ -39,6 +48,7 @@ return {
 	{
 		'mfussenegger/nvim-lint',
 		event = 'VeryLazy',
+		keys = lint.keys,
 		opts = lint.opts,
 		config = lint.config,
 	},

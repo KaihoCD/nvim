@@ -20,6 +20,10 @@ G.config = {
 	-- Whether to auto-format files when saving
 	format_on_save = true,
 
+	---@type boolean
+	-- Whether to lint files when text changed
+	lint_when_text_changed = true,
+
 	---@type number
 	-- Default indentation size for new files or formatting
 	indent_size = 4,
