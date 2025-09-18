@@ -40,14 +40,6 @@ local args = { async = true, lsp_format = 'fallback', timeout_ms = 500 }
 M.keys = {
 	{
 		mode = { 'n', 'v' },
-		'<leader>ff',
-		function()
-			require('conform').format(args)
-		end,
-		desc = '[f]ormat',
-	},
-	{
-		mode = { 'n', 'v' },
 		'<leader>lf',
 		function()
 			require('conform').format(args)
