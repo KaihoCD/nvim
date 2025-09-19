@@ -7,30 +7,10 @@ local lsps = {
   ['jsonls'] = require('devtools.lsps.jsonls'),
   ['lua_ls'] = require('devtools.lsps.lua_ls'),
 }
-local formatters = {
-  ['prettierd'] = function()
-    return {
-      prepend_args = {
-        '--tab-width',
-        G.config.indent_size,
-      },
-    }
-  end,
-  ['stylua'] = function()
-    return {
-      prepend_args = {
-        '--indent-width',
-        G.config.indent_size,
-      },
-    }
-  end,
-  ['shfmt'] = {},
-  ['cbfmt'] = {},
-}
-local linters = {
-  ['eslint_d'] = {},
-  ['markdownlint'] = {},
-}
+
+local formatters = require('devtools.formatters')
+
+local linters = require('devtools.linters')
 
 local M = {}
 

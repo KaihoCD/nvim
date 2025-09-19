@@ -9,16 +9,17 @@ M.opts = {
     typescript = { 'prettierd', 'eslint_d' },
     javascriptreact = { 'prettierd', 'eslint_d' },
     typescriptreact = { 'prettierd', 'eslint_d' },
+    vue = { 'prettierd', 'eslint_d' },
     css = { 'prettierd' },
     html = { 'prettierd' },
     json = { 'prettierd' },
     yaml = { 'prettierd' },
-    vue = { 'prettierd', 'eslint_d' },
     markdown = { 'prettierd', 'cbfmt' },
     lua = { 'stylua' },
     zsh = { 'shfmt' },
     bash = { 'shfmt' },
   },
+
   formatters = require('devtools').get_formatters(),
 
   format_on_save = function()
@@ -33,14 +34,16 @@ M.opts = {
   end,
 }
 
-local args = { async = true, lsp_format = 'fallback', timeout_ms = 500 }
-
 M.keys = {
   {
     mode = { 'n', 'v' },
     '<leader>lf',
     function()
-      require('conform').format(args)
+      require('conform').format({
+        async = true,
+        lsp_format = 'fallback',
+        timeout_ms = 500,
+      })
     end,
     desc = '[f]ormat',
   },
