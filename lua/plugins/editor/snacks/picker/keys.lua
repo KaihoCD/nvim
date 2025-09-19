@@ -57,5 +57,5 @@ return {
 	{ '<leader>sR', function() Snacks.picker.resume() end, desc = '[R]esume' },
 	{ '<leader>su', function() Snacks.picker.undo() end, desc = '[u]ndo History' },
 	{ '<leader>sT', function() Snacks.picker.colorschemes() end, desc = '[T]heme' },
-	-- stylua: ignore end
+  -- stylua: ignore end
 }

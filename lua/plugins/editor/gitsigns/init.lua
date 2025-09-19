@@ -1,3 +1,3 @@
 return {
-	opts = require('plugins.editor.gitsigns.opts'),
+  opts = require('plugins.editor.gitsigns.opts'),
 }

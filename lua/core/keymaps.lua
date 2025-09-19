@@ -1,30 +1,30 @@
 local map = require('utils.funcs').map
 
 local function disable_map(keys)
-	for _, key in ipairs(keys) do
-		map('n', key, '<nop>')
-	end
+  for _, key in ipairs(keys) do
+    map('n', key, '<nop>')
+  end
 end
 
 local function map_nav(dir)
-	return function()
-		local cfg = vim.api.nvim_win_get_config(0)
-		if cfg.relative == '' or cfg.relative == 'win' then
-			return vim.cmd.wincmd(dir)
-		end
-	end
+  return function()
+    local cfg = vim.api.nvim_win_get_config(0)
+    if cfg.relative == '' or cfg.relative == 'win' then
+      return vim.cmd.wincmd(dir)
+    end
+  end
 end
 
 local function update_tabsize()
-	vim.ui.input({ prompt = 'Enter new tabsize: ' }, function(input)
-		if input then
-			local tabsize = tonumber(input)
-			vim.opt.expandtab = true
-			vim.opt.tabstop = tabsize or 4
-			vim.opt.shiftwidth = tabsize or 4
-			vim.cmd('e')
-		end
-	end)
+  vim.ui.input({ prompt = 'Enter new tabsize: ' }, function(input)
+    if input then
+      local tabsize = tonumber(input)
+      vim.opt.tabstop = tabsize or 4
+      vim.opt.shiftwidth = tabsize or 4
+      G.config.indent_size = tabsize or 4
+      vim.cmd('e')
+    end
+  end)
 end
 
 map('n', '<Esc>', '<CMD>nohlsearch<CR>', { desc = 'Clear highlights' })

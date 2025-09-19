@@ -1,16 +1,19 @@
 -- Global state
 vim.g.setting = {
-	---@type boolean
-	-- Whether to use borderless style for floating windows and menus
-	use_borderless = true,
+  ---@type boolean
+  -- Whether to use borderless style for floating windows and menus
+  use_borderless = true,
 
-	---@type boolean
-	-- Whether to use terminal icons instead of plain symbols
-	use_termicons = true,
+  ---@type boolean
+  -- Whether to use terminal icons instead of plain symbols
+  use_termicons = true,
 
-	---@type BorderType
-	-- The border style for floating windows
-	border_style = 'single',
+  ---@type BorderType
+  -- The border style for floating windows
+  border_style = 'single',
+
+  ---@type number
+  default_indent_size = 2,
 }
 
 vim.g.mapleader = ' '
@@ -42,8 +45,8 @@ vim.opt.fillchars = { eob = ' ' }
 
 -- Edit behavior
 vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
+vim.opt.shiftwidth = vim.g.setting.default_indent_size
+vim.opt.tabstop = vim.g.setting.default_indent_size
 vim.opt.shiftround = true
 vim.opt.virtualedit = 'block'
 vim.opt.undofile = true
