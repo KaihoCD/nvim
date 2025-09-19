@@ -1,3 +1,3 @@
 return {
-	config = require('plugins.devtools.lsp.config'),
+  config = require('plugins.devtools.lsp.config'),
 }

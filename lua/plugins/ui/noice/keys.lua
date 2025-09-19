@@ -7,5 +7,5 @@ return {
 	{ '<leader>np', function() require('noice').cmd('pick') end, desc = 'Noice [p]icker' },
 	{ '<leader>nl', function() require('noice').cmd('last') end, desc = 'Noice [l]ast Message' },
 	{ '<leader>nu', '<cmd>messages<cr>', desc = 'Noice [u]ser Message' },
-	-- stylua: ignore end
+  -- stylua: ignore end
 }

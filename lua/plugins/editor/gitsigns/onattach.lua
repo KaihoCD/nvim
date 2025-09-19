@@ -1,30 +1,30 @@
 local map = require('utils.funcs').map
 
 return function()
-	local gitsigns = require('gitsigns')
-	local arg = { vim.fn.line('.'), vim.fn.line('v') }
+  local gitsigns = require('gitsigns')
+  local arg = { vim.fn.line('.'), vim.fn.line('v') }
 
-	vim.api.nvim_create_user_command('GitsignsPreviewHunkInline', function()
-		local ok, markdown = pcall(require, 'render-markdown')
+  vim.api.nvim_create_user_command('GitsignsPreviewHunkInline', function()
+    local ok, markdown = pcall(require, 'render-markdown')
 
-		if ok then
-			markdown.disable()
-		end
+    if ok then
+      markdown.disable()
+    end
 
-		gitsigns.preview_hunk_inline()
+    gitsigns.preview_hunk_inline()
 
-		if not ok then
-			return
-		end
+    if not ok then
+      return
+    end
 
-		vim.api.nvim_create_autocmd({ 'CursorMoved', 'InsertEnter', 'BufLeave' }, {
-			buffer = vim.api.nvim_get_current_buf(),
-			once = true,
-			callback = function()
-				markdown.enable()
-			end,
-		})
-	end, {})
+    vim.api.nvim_create_autocmd({ 'CursorMoved', 'InsertEnter', 'BufLeave' }, {
+      buffer = vim.api.nvim_get_current_buf(),
+      once = true,
+      callback = function()
+        markdown.enable()
+      end,
+    })
+  end, {})
 
 	-- stylua: ignore start
 	-- hunk
@@ -46,35 +46,35 @@ return function()
 	map('n', '<leader>ub', gitsigns.toggle_current_line_blame, { desc = 'git [b]lame line' })
 	map('n', '<leader>us', gitsigns.toggle_signs, { desc = 'git [s]ign' })
 	map('n', '<leader>uw', gitsigns.toggle_word_diff, { desc = 'git [w]ord diff' })
-	-- stylua: ignore end
+  -- stylua: ignore end
 
-	if Snacks then
-		Snacks.toggle({
-			name = 'Git Signs',
-			get = function()
-				return require('gitsigns.config').config.signcolumn
-			end,
-			set = function()
-				gitsigns.toggle_signs()
-			end,
-		}):map('<leader>us')
-		Snacks.toggle({
-			name = 'Git Blame line',
-			get = function()
-				return require('gitsigns.config').config.current_line_blame
-			end,
-			set = function()
-				gitsigns.toggle_current_line_blame()
-			end,
-		}):map('<leader>ub')
-		Snacks.toggle({
-			name = 'Git Word Diff',
-			get = function()
-				return require('gitsigns.config').config.word_diff
-			end,
-			set = function()
-				gitsigns.toggle_word_diff()
-			end,
-		}):map('<leader>uw')
-	end
+  if Snacks then
+    Snacks.toggle({
+      name = 'Git Signs',
+      get = function()
+        return require('gitsigns.config').config.signcolumn
+      end,
+      set = function()
+        gitsigns.toggle_signs()
+      end,
+    }):map('<leader>us')
+    Snacks.toggle({
+      name = 'Git Blame line',
+      get = function()
+        return require('gitsigns.config').config.current_line_blame
+      end,
+      set = function()
+        gitsigns.toggle_current_line_blame()
+      end,
+    }):map('<leader>ub')
+    Snacks.toggle({
+      name = 'Git Word Diff',
+      get = function()
+        return require('gitsigns.config').config.word_diff
+      end,
+      set = function()
+        gitsigns.toggle_word_diff()
+      end,
+    }):map('<leader>uw')
+  end
 end
