@@ -13,7 +13,7 @@ vim.g.setting = {
   border_style = 'single',
 
   ---@type number
-  default_indent_size = 2,
+  default_indent_size = 4,
 }
 
 vim.g.mapleader = ' '

@@ -73,4 +73,9 @@ return {
     event = 'VeryLazy',
     opts = whichkey.opts,
   },
+  {
+    'NMAC427/guess-indent.nvim',
+    event = 'VeryLazy',
+    opts = {},
+  },
 }

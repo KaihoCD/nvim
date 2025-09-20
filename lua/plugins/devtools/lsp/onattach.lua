@@ -72,7 +72,7 @@ local function attach_keymaps(event)
   map('i', '<C-s>', signature_help, { buffer = event.buf, desc = 'Signature Help Hover' })
   map('n', '<leader>lr', function() vim.lsp.buf.rename() end, { buffer = event.buf, desc = '[r]ename' })
   map('n', '<leader>ld', open_float, { buffer = event.buf, desc = '[d]ianostic' })
-  map('n', '<leader>lF', function() vim.lsp.buf.format() end, { buffer = event.buf, desc = '[f]ormat by LSP' })
+  map('n', '<leader>lF', function() vim.lsp.buf.format() end, { buffer = event.buf, desc = '[F]ormat by LSP' })
   map({ 'n', 'x' }, '<leader>la', function() vim.lsp.buf.code_action() end, { buffer = event.buf, desc = 'code [a]ction' })
   -- stylua: ignore end
 end

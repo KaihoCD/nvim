@@ -22,12 +22,16 @@ M.opts = {
 
   formatters = require('devtools').get_formatters(),
 
+  default_format_opts = {
+    timeout_ms = 3000,
+    async = false,
+    quiet = false,
+    lsp_format = 'fallback',
+  },
+
   format_on_save = function()
     if G.config.format_on_save then
-      return {
-        timeout_ms = 500,
-        lsp_format = 'fallback',
-      }
+      return {}
     else
       return nil
     end
@@ -39,11 +43,7 @@ M.keys = {
     mode = { 'n', 'v' },
     '<leader>lf',
     function()
-      require('conform').format({
-        async = true,
-        lsp_format = 'fallback',
-        timeout_ms = 500,
-      })
+      require('conform').format()
     end,
     desc = '[f]ormat',
   },
