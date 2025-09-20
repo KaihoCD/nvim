@@ -1,5 +1,8 @@
 local M = {}
 
+-- Disable animate by default
+vim.g.snacks_animate = false
+
 M.opts = {
   animate = {
     duration = 15,
@@ -7,9 +10,7 @@ M.opts = {
     fps = 60,
   },
   indent = {
-    chunk = {
-      enabled = true,
-    },
+    enabled = true,
   },
   scroll = {
     enabled = false,

@@ -15,22 +15,8 @@ local function map_nav(dir)
   end
 end
 
-local function update_tabsize()
-  vim.ui.input({ prompt = 'Enter new tabsize: ' }, function(input)
-    if input then
-      local tabsize = tonumber(input)
-      vim.opt.tabstop = tabsize or 4
-      vim.opt.shiftwidth = tabsize or 4
-      G.config.indent_size = tabsize or 4
-      vim.cmd('e')
-    end
-  end)
-end
-
 map('n', '<Esc>', '<CMD>nohlsearch<CR>', { desc = 'Clear highlights' })
 map('n', '<C-c>', '<Esc>', { desc = 'Escape' })
-
-map('n', '<leader>ct', update_tabsize, { desc = '[t]absize' })
 
 map('n', '<A-Left>', '2<C-w><', { desc = 'Decrease width' })
 map('n', '<A-Right>', '2<C-w>>', { desc = 'Increase width' })
