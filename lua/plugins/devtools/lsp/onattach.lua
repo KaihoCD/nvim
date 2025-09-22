@@ -10,7 +10,7 @@ local function attach_hl(event)
   local method = vim.lsp.protocol.Methods.textDocument_documentHighlight
 
   if client and client:supports_method(method, event.buf) then
-    local highlight_augroup = augroup('Highlight')
+    local highlight_augroup = augroup('LSPHighlight')
 
     vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
       buffer = event.buf,
@@ -25,7 +25,7 @@ local function attach_hl(event)
     })
 
     vim.api.nvim_create_autocmd('LspDetach', {
-      group = augroup('Detach'),
+      group = augroup('LspDetach'),
       callback = function(_event)
         vim.lsp.buf.clear_references()
         vim.api.nvim_clear_autocmds({
@@ -54,32 +54,52 @@ local function attach_keymaps(event)
     return vim.lsp.buf.signature_help(_float_style())
   end
 
-  local function open_float()
-    local line = vim.api.nvim_win_get_cursor(0)[1] - 1
+  local function open_float(count)
+    return function()
+      local line = vim.api.nvim_win_get_cursor(0)[1] - 1
 
-    local diags = vim.diagnostic.get(event.buf, { lnum = line })
+      local diags = vim.diagnostic.get(event.buf, { lnum = line })
 
-    if #diags == 0 then
-      return vim.diagnostic.goto_next()
+      if #diags == 0 then
+        return vim.diagnostic.jump({
+          float = true,
+          count = count,
+        })
+      end
+
+      return vim.diagnostic.open_float(event.buf)
     end
-
-    return vim.diagnostic.open_float(event.buf, _float_style())
   end
+
+  local function file_code_action()
+    vim.lsp.buf.code_action({
+      context = {
+        only = { 'source' }, -- 只显示文件级别的 code action，比如 organize imports, fix all
+        diagnostics = {},
+      },
+    })
+  end
+
+
 
   -- stylua: ignore start
   map('n', 'K', hover, { buffer = event.buf, desc = 'Hover' })
   map('n', 'gK', signature_help, { buffer = event.buf, desc = 'Signature Help Hover' })
   map('i', '<C-s>', signature_help, { buffer = event.buf, desc = 'Signature Help Hover' })
   map('n', '<leader>lr', function() vim.lsp.buf.rename() end, { buffer = event.buf, desc = '[r]ename' })
-  map('n', '<leader>ld', open_float, { buffer = event.buf, desc = '[d]ianostic' })
+  map('n', '<leader>ld', open_float(1), { buffer = event.buf, desc = 'next [d]ianostic' })
+  map('n', '<leader>lD', open_float(-1), { buffer = event.buf, desc = 'prev [d]ianostic' })
+  map('n', ']d', open_float(1), { buffer = event.buf, desc = 'next [d]ianostic' })
+  map('n', '[d', open_float(-1), { buffer = event.buf, desc = 'prev [d]ianostic' })
   map('n', '<leader>lF', function() vim.lsp.buf.format() end, { buffer = event.buf, desc = '[F]ormat by LSP' })
   map({ 'n', 'x' }, '<leader>la', function() vim.lsp.buf.code_action() end, { buffer = event.buf, desc = 'code [a]ction' })
+  map( 'n', '<leader>lA', file_code_action, { buffer = event.buf, desc = 'code [A]ction' })
   -- stylua: ignore end
 end
 
 return function()
   vim.api.nvim_create_autocmd('LspAttach', {
-    group = augroup('AttachHiglight'),
+    group = augroup('LSPAttach'),
     callback = function(event)
       attach_hl(event)
       attach_keymaps(event)

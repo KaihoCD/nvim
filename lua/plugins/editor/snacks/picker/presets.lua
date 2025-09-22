@@ -144,7 +144,6 @@ M.select = {
     row = margin.top,
     width = size.float_width / 2,
     height = size.float_height / 2,
-    min_height = 7,
     box = 'vertical',
     {
       title = '{title}',

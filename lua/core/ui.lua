@@ -30,7 +30,7 @@ G.icons = {
   },
   statusline = {
     nvim = '',
-    git = '',
+    git = '󰘬',
     home = '',
     lsp = '󰄹',
     ts = '󱏒',

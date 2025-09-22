@@ -1,4 +1,5 @@
 local setup_onattach = require('plugins.devtools.lsp.onattach')
+local merge_tables = require('utils.funcs').merge_tables
 
 local diag_icons = G.icons.diag
 local size = G.layout.size
@@ -43,7 +44,7 @@ local function setup_diagbostic()
   })
 end
 
-return function()
+return vim.schedule_wrap(function()
   local devtools = require('devtools')
 
   require('mason').setup({
@@ -58,17 +59,30 @@ return function()
     ensure_installed = devtools.get_installed(),
   })
 
-  local extra_capabilities = {
+  local extra_capabilities = merge_tables({
+    {
+      workspace = {
+        fileOperations = {
+          didRename = true,
+          willRename = true,
+        },
+      },
+    },
     require('blink.cmp').get_lsp_capabilities(),
-  }
+  })
 
   -- attach lsp
+  local lsps = {}
   for lsp_name, lsp_config in pairs(devtools.get_lsps()) do
-    lsp_config.capabilities =
-      vim.tbl_deep_extend('force', {}, extra_capabilities, lsp_config.capabilities or {})
-    require('lspconfig')[lsp_name].setup(lsp_config)
+    lsp_config.capabilities = merge_tables({
+      extra_capabilities,
+      lsp_config.capabilities or {},
+    })
+    vim.lsp.config(lsp_name, lsp_config)
+    table.insert(lsps, lsp_name)
   end
+  vim.lsp.enable(lsps)
 
   setup_diagbostic()
   setup_onattach()
-end
+end)

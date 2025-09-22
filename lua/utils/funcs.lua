@@ -21,6 +21,20 @@ function M.merge_if(base, cond, override)
   return base
 end
 
+--- Merge multiple tables into one.
+--- Later tables overwrite earlier ones.
+--- @param tables table[] Array of tables to merge
+--- @return table Merged table
+function M.merge_tables(tables)
+  local result = {}
+  for _, t in ipairs(tables) do
+    if t then
+      result = vim.tbl_deep_extend('force', result, t)
+    end
+  end
+  return result
+end
+
 ---@param funcs table<number, fun(arg: any): any>
 ---@return fun(value:any):any
 function M.pipe(funcs)

@@ -93,7 +93,6 @@ return {
   },
   sources = {
     explorer = {
-      jump = { close = true },
       layout = {
         preview = { main = true, enabled = false },
       },
@@ -112,5 +111,11 @@ return {
     icons = { layout = { preset = 'select' } },
     search_history = { layout = { preset = 'select' } },
     command_history = { layout = { preset = 'select' } },
+    select = {
+      config = function(opts)
+        local max = math.floor(vim.o.lines * 0.8 - 10)
+        opts.layout.layout.height = math.min(max, opts.layout.layout.height + 1 + 0.5)
+      end,
+    },
   },
 }

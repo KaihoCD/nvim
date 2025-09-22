@@ -47,15 +47,6 @@ M.opts = {
   },
   indent = { enable = true, disable = { 'ruby' } },
 
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = '<M-=>',
-      node_incremental = '<M-=>',
-      node_decremental = '<M-->',
-      scope_incremental = false,
-    },
-  },
   textobjects = {
     move = {
       enable = true,
