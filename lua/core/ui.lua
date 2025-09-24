@@ -51,11 +51,11 @@ G.icons = {
   markdown = {
     header = { '󰎥  ', '󰼐  ', '󰎫  ', '󰼒  ', '󰎯  ', '󰼔  ' },
     checkbox = {
-      checked = '   ',
-      unchecked = '   ',
-      todo = '   ',
-      important = '   ',
-      question = '   ',
+      checked = '  ',
+      unchecked = '  ',
+      todo = '  ',
+      important = '  ',
+      question = '  ',
     },
   },
   fillchars = {
