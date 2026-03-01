@@ -6,7 +6,7 @@ vim.g.setting = {
 
   ---@type boolean
   -- Whether to use terminal icons instead of plain symbols
-  use_termicons = true,
+  use_termicons = false,
 
   ---@type BorderType
   -- The border style for floating windows
