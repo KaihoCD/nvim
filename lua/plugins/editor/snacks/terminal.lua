@@ -2,8 +2,28 @@ local size = G.layout.size
 
 local terminal_cache = {}
 
----@type snacks.win
+---@type snacks.win | nil
 local last_terminal = nil
+
+local function is_terminal_valid(term)
+  if not term or not term.win then
+    return false
+  end
+
+  -- 检查窗口是否有效
+  if not term.win:is_valid() then
+    return false
+  end
+
+  -- 获取窗口的buffer并检查是否是terminal类型
+  local buf = term.win:buf()
+  if not buf or not buf:is_valid() then
+    return false
+  end
+
+  -- 检查buffer的filetype是否为terminal
+  return vim.bo[buf.id].filetype == 'terminal'
+end
 
 local function toggle_terminal(position, width, height)
   return function()
@@ -16,6 +36,16 @@ local function toggle_terminal(position, width, height)
         height = height,
       },
     }
+
+    if not is_terminal_valid(last_terminal) then
+      last_terminal = nil
+    end
+
+    for count, term in pairs(terminal_cache) do
+      if not is_terminal_valid(term) then
+        terminal_cache[count] = nil
+      end
+    end
 
     if vim.v.count == 0 then
       if not last_terminal then
@@ -30,7 +60,7 @@ local function toggle_terminal(position, width, height)
       return
     end
 
-    if not terminal_cache[vim.v.count1] then
+    if not terminal_cache[vim.v.count1] or not is_terminal_valid(terminal_cache[vim.v.count1]) then
       terminal_cache[vim.v.count1] = Snacks.terminal.toggle(nil, opts)
       last_terminal = terminal_cache[vim.v.count1]
       return
