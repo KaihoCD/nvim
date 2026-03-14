@@ -26,6 +26,32 @@ local actions = {
   explorer_up = function(picker)
     vim.fn.chdir(vim.fs.dirname(picker:cwd()))
   end,
+  -- Enhanced paste that supports both files and folders
+  explorer_paste = function(picker)
+    local Actions = require('snacks.explorer.actions')
+    local Tree = require('snacks.explorer.tree')
+    local uv = vim.uv or vim.loop
+
+    local files = vim.split(vim.fn.getreg(vim.v.register or '+') or '', '\n', { plain = true })
+    files = vim.tbl_filter(function(file)
+      file = vim.trim(file)
+      if file == '' then
+        return false
+      end
+      -- Check if path exists (file or directory)
+      return uv.fs_stat(file) ~= nil
+    end, files)
+
+    if #files == 0 then
+      return Snacks.notify.warn('No valid files or folders to paste')
+    end
+
+    local dir = picker:dir()
+    Snacks.picker.util.copy(files, dir)
+    Tree:refresh(dir)
+    Tree:open(dir)
+    Actions.update(picker, { target = dir })
+  end,
   explorer_add = function(picker)
     local Actions = require('snacks.explorer.actions')
     local Tree = require('snacks.explorer.tree')
@@ -113,8 +139,12 @@ return {
     command_history = { layout = { preset = 'select' } },
     select = {
       config = function(opts)
+        if not opts.layout then
+          return
+        end
         local max = math.floor(vim.o.lines * 0.8 - 10)
-        opts.layout.layout.height = math.min(max, opts.layout.layout.height + 1 + 0.5)
+        local current_height = opts.layout.height or 0
+        opts.layout.height = math.min(max, current_height + 1.5)
       end,
     },
   },

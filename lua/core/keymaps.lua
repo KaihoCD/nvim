@@ -24,7 +24,6 @@ map('n', '<A-Down>', '2<C-w>+', { desc = 'Increase height' })
 map('n', '<A-Up>', '2<C-w>-', { desc = 'Decrease height' })
 
 map('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-map('t', '<C-c>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 map({ 'n', 't' }, '<C-h>', map_nav('h'), { desc = 'Move focus left' })
 map({ 'n', 't' }, '<C-l>', map_nav('l'), { desc = 'Move focus right' })
