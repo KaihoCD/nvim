@@ -41,7 +41,7 @@ return {
     event = 'VeryLazy',
     opts = {
       autocmd = { enabled = true, updatetime = 250 },
-      code_lenses = true,
+      code_lenses = false,
       sign = {
         text = '󱠁',
         lens_text = '',

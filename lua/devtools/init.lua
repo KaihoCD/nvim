@@ -2,6 +2,7 @@ local lsps = {
   ['html'] = {},
   ['cssls'] = {},
   ['emmet_ls'] = {},
+  ['eslint'] = require('devtools.lsps.eslint'),
   ['marksman'] = {},
   ['ts_ls'] = require('devtools.lsps.ts_ls'),
   ['jsonls'] = require('devtools.lsps.jsonls'),
