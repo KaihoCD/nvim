@@ -6,7 +6,6 @@ local git = require('plugins.ui.heirline.git')
 local M = {}
 
 local icons = G.icons
-local colors = G.State.get('colors')
 
 M.vi_mode = {
     flexible = 6,
@@ -61,7 +60,7 @@ M.git = {
                 return count > 0 and ('+' .. count)
             end,
             hl = function()
-                return { fg = colors.green }
+                return { fg = 'green' }
             end,
         },
         {
@@ -70,7 +69,7 @@ M.git = {
                 return count > 0 and ('-' .. count)
             end,
             hl = function()
-                return { fg = colors.red }
+                return { fg = 'red' }
             end,
         },
         {
@@ -79,7 +78,7 @@ M.git = {
                 return count > 0 and ('~' .. count)
             end,
             hl = function()
-                return { fg = colors.yellow }
+                return { fg = 'yellow' }
             end,
         },
         {
@@ -104,7 +103,7 @@ M.diagnostic = {
             return self.errors > 0 and (' ' .. icons.diag.error .. ' ' .. self.errors)
         end,
         hl = function()
-            return { fg = colors.red }
+            return { fg = 'red' }
         end,
     },
     {
@@ -112,7 +111,7 @@ M.diagnostic = {
             return self.warnings > 0 and (' ' .. icons.diag.warn .. ' ' .. self.warnings)
         end,
         hl = function()
-            return { fg = colors.yellow }
+            return { fg = 'yellow' }
         end,
     },
     {
@@ -120,7 +119,7 @@ M.diagnostic = {
             return self.info > 0 and (' ' .. icons.diag.info .. ' ' .. self.info)
         end,
         hl = function()
-            return { fg = colors.blue }
+            return { fg = 'blue' }
         end,
     },
     {
@@ -128,7 +127,7 @@ M.diagnostic = {
             return self.hints > 0 and (' ' .. icons.diag.hint .. ' ' .. self.hints)
         end,
         hl = function()
-            return { fg = colors.cyan }
+            return { fg = 'cyan' }
         end,
     },
 }
@@ -207,13 +206,16 @@ M.ruler = {
 }
 
 return {
-    M.vi_mode,
-    M.git,
-    M.diagnostic,
-    { provider = ' %=', hl = { bg = colors.black } },
-    M.indent,
-    M.record,
-    M.lsp,
-    M.ts,
-    M.ruler,
+    {
+        M.vi_mode,
+        M.git,
+        M.diagnostic,
+        { provider = ' %=', hl = { bg = 'bgDeep' } },
+        M.indent,
+        M.record,
+        M.lsp,
+        M.ts,
+        M.ruler,
+        hl = { bg = 'bgDeep' },
+    },
 }

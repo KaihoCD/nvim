@@ -1,6 +1,5 @@
 local heirline_utils = require('plugins.ui.heirline.utils')
 local utils = require('heirline.utils')
-local colors = G.State.get('colors')
 
 local M = {}
 local sep = package.config:sub(1, 1)
@@ -8,13 +7,13 @@ local sep = package.config:sub(1, 1)
 M.ctx = {
     separator = ' ',
     hl = {
-        cwd = { fg = colors.brightBlack },
-        separator = { fg = colors.brightBlack },
-        relative = { fg = colors.foreground },
-        filename = { fg = colors.blue },
+        cwd = { fg = 'comment' },
+        separator = { fg = 'comment' },
+        relative = { fg = 'fg' },
+        filename = { fg = 'blue' },
         file_icon = nil,
-        modified = { fg = colors.green, italic = false },
-        readonly = { fg = colors.yellow, italic = false },
+        modified = { fg = 'green', italic = false },
+        readonly = { fg = 'yellow', italic = false },
     },
 }
 
@@ -24,11 +23,7 @@ local function make_segments_component(source_key, hl_key)
             return #self[source_key] > 0
         end,
         provider = function(self)
-            return heirline_utils.render_path_segments(
-                self[source_key],
-                self.separator,
-                heirline_utils.path_hl[hl_key]
-            )
+            return heirline_utils.render_path_segments(self[source_key], self.separator, M.ctx.hl[hl_key], M.ctx.hl.separator)
         end,
     }
 end
@@ -308,7 +303,6 @@ M.WorkDir = {
         local buffer = heirline_utils.get_buffer_identity(0)
         local icon, icon_color = heirline_utils.get_file_info()
 
-        heirline_utils.set_tabline_path_highlights(M.ctx)
         self.display_info = build_display_info(cwd, buffer.path)
         self.fallback_name = buffer.fallback_name
         self.allow_file_status = self.display_info.is_file or buffer.is_unnamed
@@ -328,9 +322,9 @@ M.TabPages = {
         end,
         hl = function(self)
             if self.is_active then
-                return { fg = colors.blue, bold = true }
+                return { fg = 'blue', bold = true }
             else
-                return { fg = colors.brightBlack }
+                return { fg = 'comment' }
             end
         end,
     }),
@@ -339,7 +333,7 @@ M.TabPages = {
 return {
     { provider = ' ' },
     M.WorkDir,
-    { provider = '%=', hl = { bg = colors.black } },
+    { provider = '%=', hl = { bg = 'bgDeep' } },
     M.TabPages,
     { provider = ' ' },
 }

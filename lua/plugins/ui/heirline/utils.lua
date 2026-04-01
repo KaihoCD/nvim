@@ -1,6 +1,7 @@
 local M = {}
 
 local devicons = require('nvim-web-devicons')
+local highlights = require('heirline.highlights')
 
 M.mode = {
     ['n'] = { 'NORMAL', 'blue' },
@@ -14,7 +15,7 @@ M.mode = {
     ['i'] = { 'INSERT', 'green' },
     ['ic'] = { 'INSERT', 'green' },
     ['ix'] = { 'INSERT', 'green' },
-    ['t'] = { 'TERM', 'brightBlack' },
+    ['t'] = { 'TERM', 'comment' },
     ['nt'] = { 'N-TERM', 'blue' },
     ['v'] = { 'VISUAL', 'purple' },
     ['vs'] = { 'V-CHAR', 'purple' },
@@ -32,11 +33,11 @@ M.mode = {
     ['c'] = { 'COMMAND', 'yellow' },
     ['cv'] = { 'COMMAND', 'yellow' },
     ['ce'] = { 'COMMAND', 'yellow' },
-    ['r'] = { 'PROMPT', 'brightBlack' },
-    ['rm'] = { 'MORE', 'brightBlack' },
-    ['r?'] = { 'CONFIRM', 'brightBlack' },
-    ['!'] = { 'SHELL', 'brightBlack' },
-    ['null'] = { 'null', 'brightBlack' },
+    ['r'] = { 'PROMPT', 'comment' },
+    ['rm'] = { 'MORE', 'comment' },
+    ['r?'] = { 'CONFIRM', 'comment' },
+    ['!'] = { 'SHELL', 'comment' },
+    ['null'] = { 'null', 'comment' },
 }
 
 ---@return string icon The file icon
@@ -59,12 +60,6 @@ function M.get_file_info()
 
     return icon or G.icons.file.default, color or '', filename
 end
-
-M.path_hl = {
-    cwd = 'HeirlineTablinePathCwd',
-    separator = 'HeirlineTablinePathSeparator',
-    relative = 'HeirlineTablinePathRelative',
-}
 
 -- Normalizes buffer paths by removing URI schemes and handling special cases.
 function M.normalize_buf_path(buf_path)
@@ -105,26 +100,28 @@ function M.normalize_segment(segment)
     return (segment:gsub('^~', G.icons.ui.home .. ' '))
 end
 
-function M.set_tabline_path_highlights(ctx)
-    vim.api.nvim_set_hl(0, M.path_hl.cwd, ctx.hl.cwd)
-    vim.api.nvim_set_hl(0, M.path_hl.separator, ctx.hl.separator)
-    vim.api.nvim_set_hl(0, M.path_hl.relative, ctx.hl.relative)
+---@param text string
+---@param hl table
+---@return string
+local function paint(text, hl)
+    local open, close = highlights.eval_hl(hl)
+    return open .. text .. close
 end
 
-function M.paint(group, text)
-    return '%#' .. group .. '#' .. text
-end
-
--- Renders the path segments with appropriate highlights and separators.
-function M.render_path_segments(segments, separator, group)
+---@param segments string[]
+---@param separator string
+---@param segment_hl table
+---@param separator_hl table
+---@return string
+function M.render_path_segments(segments, separator, segment_hl, separator_hl)
     local rendered = {}
 
     for i, segment in ipairs(segments) do
         if i > 1 then
-            table.insert(rendered, M.paint(M.path_hl.separator, separator))
+            table.insert(rendered, paint(separator, separator_hl))
         end
 
-        table.insert(rendered, M.paint(group, M.normalize_segment(segment)))
+        table.insert(rendered, paint(M.normalize_segment(segment), segment_hl))
     end
 
     return table.concat(rendered)
