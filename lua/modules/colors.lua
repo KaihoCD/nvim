@@ -42,6 +42,10 @@ local function decode_theme(chunk)
         return nil
     end
 
+    if theme.system == 'base16' and type(theme.raw) ~= 'table' then
+        return nil
+    end
+
     return theme
 end
 
