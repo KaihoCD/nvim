@@ -1,5 +1,4 @@
 return {
-    require('plugins.ui.themes'),
     {
         src = 'https://github.com/rebelot/heirline.nvim',
         event = 'UiEnter',

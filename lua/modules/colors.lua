@@ -45,7 +45,7 @@ local function decode_theme(chunk)
     return theme
 end
 
----@return table?
+---@return table? clrs
 local function load_palette()
     local cmd = export_command()
     if not cmd then
@@ -64,16 +64,24 @@ local function load_palette()
     end
 
     local theme = decode_theme(result.stdout)
-    return theme and theme.palette or nil
+    if type(theme) ~= 'table' then
+        return nil
+    end
+
+    local palette = type(theme.palette) == 'table' and theme.palette or nil
+    if not palette or vim.tbl_isempty(palette) then
+        return nil
+    end
+
+    theme.palette = palette
+    return theme
 end
 
 function M.apply()
-    local palette = load_palette()
-    if palette then
-        G.State.set('colors', palette)
+    local clrs = load_palette()
+    if clrs then
+        G.State.set('clrs', clrs)
     end
 end
-
-M.apply()
 
 return M

@@ -7,9 +7,9 @@ local sep = package.config:sub(1, 1)
 M.ctx = {
     separator = ' ',
     hl = {
-        cwd = { fg = 'comment' },
+        cwd = { fg = 'blue' },
         separator = { fg = 'comment' },
-        relative = { fg = 'fg' },
+        relative = { fg = 'fgAlt' },
         filename = { fg = 'blue' },
         file_icon = nil,
         modified = { fg = 'green', italic = false },
@@ -333,7 +333,7 @@ M.TabPages = {
 return {
     { provider = ' ' },
     M.WorkDir,
-    { provider = '%=', hl = { bg = 'bgDeep' } },
+    { provider = '%=', hl = { bg = 'bgAlt' } },
     M.TabPages,
     { provider = ' ' },
 }
