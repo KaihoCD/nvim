@@ -1,4 +1,3 @@
-local AUTO_LINT = 'auto_lint'
 local NOTIFY_OPTS = { title = 'Linter' }
 
 local M = {}
@@ -25,9 +24,10 @@ end
 
 local function toggle_auto_lint()
     local notify = require('utils.notify')
-    local enabled = not G.State.get(AUTO_LINT)
+    local preferences = G.State.get('preferences')
+    local enabled = not preferences.auto_lint
 
-    G.State.set(AUTO_LINT, enabled)
+    G.State.set('preferences', vim.tbl_extend('force', preferences, { auto_lint = enabled }))
     notify.info('Auto Lint: ' .. (enabled and 'Enabled' or 'Disabled'), NOTIFY_OPTS)
 end
 
@@ -59,7 +59,13 @@ local function setup_autocmds()
                 end
 
                 local bo = vim.bo[args.buf]
-                if G.State.get(AUTO_LINT) and bo.modifiable and bo.buftype == '' then
+                ---@type ModulePreferencesState
+                local preferences = G.State.get('preferences') or {
+                    auto_lint = false,
+                    format_on_save = false,
+                }
+
+                if preferences.auto_lint and bo.modifiable and bo.buftype == '' then
                     vim.api.nvim_buf_call(args.buf, function()
                         require('lint').try_lint()
                     end)

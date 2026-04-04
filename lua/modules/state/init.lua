@@ -1,10 +1,5 @@
 ---@diagnostic disable: undefined-global
 
----@class ModuleStateStore
----@field get fun(key: string): any
----@field set fun(key: string, value: any)
----@field register fun(defaults: table<string, any>)
-
 local M = {}
 
 -- =========================
@@ -127,15 +122,14 @@ end
 -- Public API
 -- =========================
 
----@param key string
----@return any
-function M.get(key)
+---@type ModuleStateGet
+local function get(key)
     local data = get_store()
     return data[key]
 end
 
----@param incoming table<string, any>
-function M.register(incoming)
+---@type ModuleStateRegister
+local function register(incoming)
     local data = get_store()
     local changed = false
 
@@ -151,14 +145,17 @@ function M.register(incoming)
     end
 end
 
----@param key string
----@param value any
-function M.set(key, value)
+---@type ModuleStateSet
+local function set(key, value)
     local data = get_store()
 
     data[key] = value
     schedule_write()
 end
+
+M.get = get
+M.register = register
+M.set = set
 
 ---@type ModuleStateStore
 G.State = M

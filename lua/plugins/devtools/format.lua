@@ -1,4 +1,3 @@
-local FORMAT_ON_SAVE = 'format_on_save'
 local FORMAT_TIMEOUT_MS = 3000
 local NOTIFY_OPTS = { title = 'Formatter' }
 
@@ -26,7 +25,9 @@ local function build_opts()
         },
         formatters = require('devtools').get_formatters(),
         format_on_save = function()
-            if not G.State.get(FORMAT_ON_SAVE) then
+            local preferences = G.State.get('preferences')
+
+            if not preferences.format_on_save then
                 return nil
             end
 
@@ -56,9 +57,10 @@ end
 
 local function toggle_format_on_save()
     local notify = require('utils.notify')
-    local enabled = G.State.get(FORMAT_ON_SAVE)
+    local preferences = G.State.get('preferences')
+    local enabled = preferences.format_on_save
 
-    G.State.set(FORMAT_ON_SAVE, not enabled)
+    G.State.set('preferences', vim.tbl_extend('force', preferences, { format_on_save = not enabled }))
     notify.info('Format on Save: ' .. (not enabled and 'Enabled' or 'Disabled'), NOTIFY_OPTS)
 end
 
