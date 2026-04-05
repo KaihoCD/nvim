@@ -3,7 +3,7 @@
 # Neovim 启动时间性能测试脚本
 # 运行50次并统计最大/最小/平均启动时间
 
-ITERATIONS=50
+ITERATIONS=200
 declare -a times
 
 echo "开始测试 Neovim 启动时间 (共 $ITERATIONS 次)..."

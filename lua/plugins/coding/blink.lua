@@ -1,5 +1,6 @@
 local M = {
     utils = {},
+    state = {},
 }
 
 function M.utils.get_color_item(ctx)
@@ -24,6 +25,20 @@ function M.utils.cmdline_sources()
     return {}
 end
 
+function M.utils.get_border()
+    if not M.state.ui then
+        M.state.ui = G.State.get('ui')
+    end
+
+    local ui = M.state.ui
+
+    if ui.type == 'borderless' then
+        return 'none'
+    else
+        return ui.style
+    end
+end
+
 ---@module 'blink.cmp'
 ---@type blink.cmp.Config
 M.opts = {
@@ -43,12 +58,12 @@ M.opts = {
             selection = { preselect = true, auto_insert = false },
         },
         documentation = {
-            window = { border = 'none' },
+            window = { border = M.utils.get_border() },
             auto_show = true,
             auto_show_delay_ms = 200,
         },
         menu = {
-            border = 'none',
+            border = M.utils.get_border(),
             auto_show = true,
             draw = {
                 columns = { { 'kind_icon' }, { 'label', gap = 1 } },
@@ -90,7 +105,7 @@ M.opts = {
         },
     },
     fuzzy = { implementation = 'lua' },
-    signature = { window = { border = 'none' } },
+    signature = { window = { border = M.utils.get_border() } },
     cmdline = {
         sources = M.utils.cmdline_sources,
         keymap = {

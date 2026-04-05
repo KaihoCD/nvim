@@ -1,3 +1,5 @@
+local snacks = require('plugins.ui.snacks')
+
 return {
     {
         src = 'https://github.com/rebelot/heirline.nvim',
@@ -28,17 +30,6 @@ return {
     {
         src = 'https://github.com/folke/snacks.nvim',
         event = 'VimEnter',
-        opts = {
-            indent = { enabled = true },
-            input = { enabled = true },
-            statuscolumn = {
-                left = { 'mark', 'sign' },
-                right = { 'fold', 'git' },
-                folds = {
-                    open = false,
-                    git_hl = false,
-                },
-            },
-        },
+        opts = snacks.opts,
     },
 }

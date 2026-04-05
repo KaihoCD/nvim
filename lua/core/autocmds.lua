@@ -139,6 +139,9 @@ vim.api.nvim_create_autocmd('FileType', {
                 desc = desc,
             }, extra or {})
         end
+
+        vim.opt_local.number = true
+
         map('n', '<BS>', go_parent, opt('Go to parent directory'))
         map('n', 'a', '%', opt('Add new file / toggle hidden'))
         map('n', 'd', 'D', opt('Delete file'))

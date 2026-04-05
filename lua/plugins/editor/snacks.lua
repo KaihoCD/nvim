@@ -20,6 +20,7 @@ M.opts = {
 
 function M.config(opts)
     vim.g.snacks_animate = false
+
     require('snacks').setup(opts)
 
     --stylua: ignore start
