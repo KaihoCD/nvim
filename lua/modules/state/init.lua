@@ -122,13 +122,31 @@ end
 -- Public API
 -- =========================
 
----@type ModuleStateGet
 local function get(key)
     local data = get_store()
     return data[key]
 end
 
----@type ModuleStateRegister
+--- Merge default values into existing data recursively.
+--- Only sets fields that are nil in the existing data.
+---@param existing table<string, any>
+---@param defaults table<string, any>
+---@return boolean changed
+local function merge_defaults(existing, defaults)
+    local changed = false
+    for key, value in pairs(defaults) do
+        if existing[key] == nil then
+            existing[key] = vim.deepcopy(value)
+            changed = true
+        elseif type(existing[key]) == 'table' and type(value) == 'table' then
+            if merge_defaults(existing[key], value) then
+                changed = true
+            end
+        end
+    end
+    return changed
+end
+
 local function register(incoming)
     local data = get_store()
     local changed = false
@@ -137,6 +155,10 @@ local function register(incoming)
         if data[key] == nil then
             data[key] = vim.deepcopy(value)
             changed = true
+        elseif type(data[key]) == 'table' and type(value) == 'table' then
+            if merge_defaults(data[key], value) then
+                changed = true
+            end
         end
     end
 
@@ -145,7 +167,6 @@ local function register(incoming)
     end
 end
 
----@type ModuleStateSet
 local function set(key, value)
     local data = get_store()
 
