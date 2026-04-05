@@ -60,10 +60,11 @@ local function setup_autocmds()
 
                 local bo = vim.bo[args.buf]
                 ---@type ModulePreferencesState
-                local preferences = G.State.get('preferences') or {
-                    auto_lint = false,
-                    format_on_save = false,
-                }
+                local preferences = G.State.get('preferences')
+                    or {
+                        auto_lint = false,
+                        format_on_save = false,
+                    }
 
                 if preferences.auto_lint and bo.modifiable and bo.buftype == '' then
                     vim.api.nvim_buf_call(args.buf, function()

@@ -23,7 +23,12 @@ local function make_segments_component(source_key, hl_key)
             return #self[source_key] > 0
         end,
         provider = function(self)
-            return heirline_utils.render_path_segments(self[source_key], self.separator, M.ctx.hl[hl_key], M.ctx.hl.separator)
+            return heirline_utils.render_path_segments(
+                self[source_key],
+                self.separator,
+                M.ctx.hl[hl_key],
+                M.ctx.hl.separator
+            )
         end,
     }
 end

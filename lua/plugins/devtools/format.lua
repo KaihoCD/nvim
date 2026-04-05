@@ -60,7 +60,10 @@ local function toggle_format_on_save()
     local preferences = G.State.get('preferences')
     local enabled = preferences.format_on_save
 
-    G.State.set('preferences', vim.tbl_extend('force', preferences, { format_on_save = not enabled }))
+    G.State.set(
+        'preferences',
+        vim.tbl_extend('force', preferences, { format_on_save = not enabled })
+    )
     notify.info('Format on Save: ' .. (not enabled and 'Enabled' or 'Disabled'), NOTIFY_OPTS)
 end
 
