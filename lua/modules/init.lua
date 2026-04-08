@@ -3,7 +3,7 @@ require('modules.pack')
 require('modules.autoim')
 
 require('modules.colors')
-local hl = require('modules.highlight')
+require('modules.highlight')
 
 -- Register global state keys and defaults.
 -- Type annotations for the state store are defined in 'modules/state/type.lua'.
@@ -16,10 +16,8 @@ G.State.register({
         type = 'borderless',
         style = 'single',
     },
-    ['clrs'] = require('modules.colors.constant').default_clrs,
+    ['clrs'] = require('modules.colors.constant').palette,
 })
-
-hl.apply()
 
 -- Use Plugins
 G.Pack.use('plugins')

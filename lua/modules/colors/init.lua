@@ -1,15 +1,19 @@
 local M = {}
 
-local COLOR_SCRIPT = vim.fn.expand('~/.config/colors/colors')
+local COLOR_MAP = require('modules.colors.colors-map')
+local utils = require('modules.colors.utils')
 
 ---@return string[]?
 local function export_command()
-    if vim.fn.executable('clrs') == 1 then
-        return { 'clrs', 'export', 'lua' }
+    local clrs_path = vim.fn.expand('~/.config/clrs/clrs')
+
+    if vim.fn.executable(clrs_path) == 1 then
+        return { clrs_path, 'export', 'lua' }
     end
 
-    if vim.fn.executable(COLOR_SCRIPT) == 1 then
-        return { COLOR_SCRIPT, 'export', 'lua' }
+    -- Fall back to system clrs if available
+    if vim.fn.executable('clrs') == 1 then
+        return { 'clrs', 'export', 'lua' }
     end
 
     return nil
@@ -38,18 +42,14 @@ local function decode_theme(chunk)
         return nil
     end
 
-    if type(theme) ~= 'table' or type(theme.palette) ~= 'table' then
-        return nil
-    end
-
-    if theme.system == 'base16' and type(theme.raw) ~= 'table' then
+    if type(theme) ~= 'table' or not theme.name or not theme.base00 or not theme.base17 then
         return nil
     end
 
     return theme
 end
 
----@return table? clrs
+---@return table? theme
 local function load_palette()
     local cmd = export_command()
     if not cmd then
@@ -67,32 +67,23 @@ local function load_palette()
         return nil
     end
 
-    local theme = decode_theme(result.stdout)
-    if type(theme) ~= 'table' then
-        return nil
-    end
-
-    local palette = type(theme.palette) == 'table' and theme.palette or nil
-    if not palette or vim.tbl_isempty(palette) then
-        return nil
-    end
-
-    theme.palette = palette
-    return theme
+    return decode_theme(result.stdout)
 end
 
 function M.apply()
-    local clrs = load_palette()
-    if not clrs then
+    local theme = load_palette()
+    if not theme then
         return
     end
 
     local current = G.State.get('clrs')
-    if current and current.name == clrs.name and current.system == clrs.system then
+    if current and current.name == theme.name then
         return
     end
 
-    G.State.set('clrs', clrs)
+    local palette = utils.build_palette(theme, COLOR_MAP)
+
+    G.State.set('clrs', palette)
 end
 
 return M
