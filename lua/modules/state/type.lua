@@ -6,13 +6,7 @@
 ---@field type 'borderless' | 'bordered'
 ---@field style 'single' | 'rounded'
 
----@class ModuleColorsState
----@field system string
----@field name string
----@field author string
----@field variant string
----@field palette table<string, string>
----@field raw? table<string, string>
+---@alias ModuleColorsState ColorsPalette
 
 ---@alias ModuleLspConfigsState table<string, string>
 

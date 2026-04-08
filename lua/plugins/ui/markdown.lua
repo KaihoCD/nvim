@@ -21,10 +21,10 @@ M.opts = {
                     border = 'hide',
                     language_icon = false,
                     language_name = false,
-                    highlight = 'MainNormalFloat',
+                    highlight = 'NormalFloat',
                 },
                 bullet = {
-                    highlight = 'MainNormalFloat',
+                    highlight = 'NormalFloat',
                 },
             },
         },

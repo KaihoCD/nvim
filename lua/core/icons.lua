@@ -57,7 +57,7 @@ M.markdown = {
 }
 
 M.kind_icons = {
-    Copilot = '',
+    Copilot = '',
 
     String = '',
     Number = '',

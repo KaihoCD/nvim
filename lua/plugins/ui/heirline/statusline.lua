@@ -60,16 +60,7 @@ M.git = {
                 return count > 0 and ('+' .. count)
             end,
             hl = function()
-                return { fg = 'green' }
-            end,
-        },
-        {
-            provider = function(self)
-                local count = self.status_dict.removed or 0
-                return count > 0 and ('-' .. count)
-            end,
-            hl = function()
-                return { fg = 'red' }
+                return { fg = 'green_bright' }
             end,
         },
         {
@@ -78,7 +69,16 @@ M.git = {
                 return count > 0 and ('~' .. count)
             end,
             hl = function()
-                return { fg = 'yellow' }
+                return { fg = 'yellow_bright' }
+            end,
+        },
+        {
+            provider = function(self)
+                local count = self.status_dict.removed or 0
+                return count > 0 and ('-' .. count)
+            end,
+            hl = function()
+                return { fg = 'red_bright' }
             end,
         },
         {
@@ -103,7 +103,7 @@ M.diagnostic = {
             return self.errors > 0 and (' ' .. icons.diag.error .. ' ' .. self.errors)
         end,
         hl = function()
-            return { fg = 'red' }
+            return { fg = 'red_bright' }
         end,
     },
     {
@@ -111,7 +111,7 @@ M.diagnostic = {
             return self.warnings > 0 and (' ' .. icons.diag.warn .. ' ' .. self.warnings)
         end,
         hl = function()
-            return { fg = 'yellow' }
+            return { fg = 'yellow_bright' }
         end,
     },
     {
@@ -119,7 +119,7 @@ M.diagnostic = {
             return self.info > 0 and (' ' .. icons.diag.info .. ' ' .. self.info)
         end,
         hl = function()
-            return { fg = 'blue' }
+            return { fg = 'blue_bright' }
         end,
     },
     {
@@ -127,7 +127,7 @@ M.diagnostic = {
             return self.hints > 0 and (' ' .. icons.diag.hint .. ' ' .. self.hints)
         end,
         hl = function()
-            return { fg = 'cyan' }
+            return { fg = 'cyan_bright' }
         end,
     },
 }
@@ -210,12 +210,12 @@ return {
         M.vi_mode,
         M.git,
         M.diagnostic,
-        { provider = ' %=', hl = { bg = 'bgAlt' } },
+        { provider = ' %=' },
         M.indent,
         M.record,
         M.lsp,
         M.ts,
         M.ruler,
-        hl = { bg = 'bgAlt' },
+        hl = { bg = 'bg_sub' },
     },
 }

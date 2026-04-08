@@ -15,7 +15,7 @@ M.mode = {
     ['i'] = { 'INSERT', 'green' },
     ['ic'] = { 'INSERT', 'green' },
     ['ix'] = { 'INSERT', 'green' },
-    ['t'] = { 'TERM', 'comment' },
+    ['t'] = { 'TERM', 'fg_ghost' },
     ['nt'] = { 'N-TERM', 'blue' },
     ['v'] = { 'VISUAL', 'purple' },
     ['vs'] = { 'V-CHAR', 'purple' },
@@ -33,11 +33,11 @@ M.mode = {
     ['c'] = { 'COMMAND', 'yellow' },
     ['cv'] = { 'COMMAND', 'yellow' },
     ['ce'] = { 'COMMAND', 'yellow' },
-    ['r'] = { 'PROMPT', 'comment' },
-    ['rm'] = { 'MORE', 'comment' },
-    ['r?'] = { 'CONFIRM', 'comment' },
-    ['!'] = { 'SHELL', 'comment' },
-    ['null'] = { 'null', 'comment' },
+    ['r'] = { 'PROMPT', 'fg_ghost' },
+    ['rm'] = { 'MORE', 'fg_ghost' },
+    ['r?'] = { 'CONFIRM', 'fg_ghost' },
+    ['!'] = { 'SHELL', 'fg_ghost' },
+    ['null'] = { 'null', 'fg_ghost' },
 }
 
 ---@return string icon The file icon
@@ -102,9 +102,11 @@ end
 
 ---@param text string
 ---@param hl table
+---@param bg string?
 ---@return string
-local function paint(text, hl)
-    local open, close = highlights.eval_hl(hl)
+local function paint(text, hl, bg)
+    local merged = bg and vim.tbl_extend('force', hl or {}, { bg = bg }) or hl
+    local open, close = highlights.eval_hl(merged)
     return open .. text .. close
 end
 
@@ -112,16 +114,17 @@ end
 ---@param separator string
 ---@param segment_hl table
 ---@param separator_hl table
+---@param bg string?
 ---@return string
-function M.render_path_segments(segments, separator, segment_hl, separator_hl)
+function M.render_path_segments(segments, separator, segment_hl, separator_hl, bg)
     local rendered = {}
 
     for i, segment in ipairs(segments) do
         if i > 1 then
-            table.insert(rendered, paint(separator, separator_hl))
+            table.insert(rendered, paint(separator, separator_hl, bg))
         end
 
-        table.insert(rendered, paint(M.normalize_segment(segment), segment_hl))
+        table.insert(rendered, paint(M.normalize_segment(segment), segment_hl, bg))
     end
 
     return table.concat(rendered)

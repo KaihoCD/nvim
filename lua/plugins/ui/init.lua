@@ -1,4 +1,4 @@
-local snacks = require('plugins.ui.snacks')
+local blink = require('plugins.ui.blink')
 
 return {
     {
@@ -25,11 +25,20 @@ return {
         opts = {
             render = 'virtual',
             virtual_symbol = '',
+            enable_named_colors = false,
         },
+    },
+    {
+        src = 'https://github.com/saghen/blink.cmp',
+        deps = {
+            { src = 'https://github.com/xzbdmw/colorful-menu.nvim' },
+            { src = 'https://github.com/brenoprata10/nvim-highlight-colors' },
+        },
+        opts = blink.opts,
     },
     {
         src = 'https://github.com/folke/snacks.nvim',
         event = 'VimEnter',
-        opts = snacks.opts,
+        opts = require('plugins.ui.snacks').opts,
     },
 }

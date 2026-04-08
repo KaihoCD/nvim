@@ -7,7 +7,7 @@ function M.config()
     local clrs = G.State.get('clrs') or {}
 
     highlights.clear_colors()
-    heirline.load_colors(clrs.palette or {})
+    heirline.load_colors(clrs or {})
 
     heirline.setup({
         statusline = require('plugins.ui.heirline.statusline'),

@@ -6,10 +6,11 @@ local sep = package.config:sub(1, 1)
 
 M.ctx = {
     separator = ' ',
+    bg = 'bg_sub',
     hl = {
-        cwd = { fg = 'blue' },
-        separator = { fg = 'comment' },
-        relative = { fg = 'fgAlt' },
+        cwd = { fg = 'fg_low' },
+        separator = { fg = 'fg_low' },
+        relative = { fg = 'fg_high' },
         filename = { fg = 'blue' },
         file_icon = nil,
         modified = { fg = 'green', italic = false },
@@ -27,7 +28,8 @@ local function make_segments_component(source_key, hl_key)
                 self[source_key],
                 self.separator,
                 M.ctx.hl[hl_key],
-                M.ctx.hl.separator
+                M.ctx.hl.separator,
+                M.ctx.bg
             )
         end,
     }
@@ -329,16 +331,19 @@ M.TabPages = {
             if self.is_active then
                 return { fg = 'blue', bold = true }
             else
-                return { fg = 'comment' }
+                return { fg = 'fg_ghost' }
             end
         end,
     }),
 }
 
 return {
-    { provider = ' ' },
-    M.WorkDir,
-    { provider = '%=', hl = { bg = 'bgAlt' } },
-    M.TabPages,
-    { provider = ' ' },
+    {
+        { provider = ' ' },
+        M.WorkDir,
+        { provider = '%=' },
+        M.TabPages,
+        { provider = ' ' },
+        hl = { bg = 'bg_sub' },
+    },
 }
