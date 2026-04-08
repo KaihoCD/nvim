@@ -11,7 +11,7 @@ M.snacks_opts = {
         win = {
             input = {
                 keys = {
-                    ['<a-a>'] = { 'opencode_send', mode = { 'n', 'i' } },
+                    ['<C-o>s'] = { 'opencode_send', mode = { 'n', 'i' } },
                 },
             },
         },
@@ -22,16 +22,24 @@ function M.config()
     vim.o.autoread = true
 
     ---@type opencode.Opts
-    vim.g.opencode_opts = {}
+    vim.g.opencode_opts = {
+        ask = {
+            snacks = {
+                icon = G.icons.kind_icons.Copilot .. ' ',
+                win = {
+                    title_pos = 'center',
+                    footer_keys = false,
+                },
+            },
+        },
+    }
 
     local opencode = require('opencode')
 
     -- stylua: ignore start
     map('x', '<leader>oa', function() opencode.ask('@this: ',{ submit = true }) end, { desc = 'Ask opencode…' })
     map('n', '<leader>oa', function() opencode.ask('@buffer: ',{ submit = true }) end, { desc = 'Ask opencode…' })
-
-    map('n', '<leader>ou', function() opencode.command('session.half.page.up') end, { desc = 'Scroll opencode up' })
-    map('n', '<leader>od', function() opencode.command('session.half.page.down') end, { desc = 'Scroll opencode down' })
+    map('n', '<leader>os', function() opencode.select() end, { desc = 'Select opencode…' })
     -- stylua: ignore end
 end
 

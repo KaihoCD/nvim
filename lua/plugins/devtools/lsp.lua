@@ -104,6 +104,7 @@ local function attach_lsp_keymaps(event)
 
     map('n', 'grA', file_code_action, 'Code Action (Source)')
     map('n', 'grD', vim.lsp.buf.declaration, 'Goto Declaration')
+    map('n', '<leader>lF', vim.lsp.buf.format, 'Format by Lsp')
 end
 
 local function setup_lsp_attach_autocmd()

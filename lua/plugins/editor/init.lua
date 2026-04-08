@@ -39,6 +39,8 @@ return {
                 ['<C-r>'] = 'actions.refresh',
                 ['-'] = { 'actions.close', mode = 'n' },
                 ['q'] = { 'actions.close', mode = 'n' },
+                ['<C-s>v'] = { 'actions.select', opts = { vertical = true } },
+                ['<C-s>s'] = { 'actions.select', opts = { horizontal = true } },
             },
         },
         config = function(opts)
