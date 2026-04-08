@@ -1,18 +1,18 @@
 --- Define all native Vim syntax highlight groups.
----@param p table<string, string> palette colors
+---@param p ColorsPalette palette colors
 ---@return table<string, table> group definitions
 return function(p)
     return {
         -- Comments
-        Comment = { fg = p.fgMute, italic = true },
+        Comment = { fg = p.fg_low, italic = true },
 
         -- Constants
         Constant = { fg = p.orange },
         String = { fg = p.green },
         Character = { fg = p.green },
-        Number = { fg = p.yellowAlt },
-        Float = { fg = p.yellowAlt },
-        Boolean = { fg = p.yellowAlt, italic = true },
+        Number = { fg = p.yellow_bright },
+        Float = { fg = p.yellow_bright },
+        Boolean = { fg = p.yellow_bright, italic = true },
 
         -- Identifiers
         Identifier = { fg = p.fg },
@@ -25,11 +25,12 @@ return function(p)
         Repeat = { fg = p.purple },
         Label = { fg = p.purple },
         Exception = { fg = p.purple },
-        ['@keyword'] = { fg = p.redAlt, italic = true },
-        ['@keyword.repeat'] = { fg = p.purpleAlt },
-        ['@keyword.function'] = { fg = p.purpleAlt },
-        ['@keyword.operator'] = { fg = p.purpleAlt },
-        ['@keyword.conditional'] = { fg = p.purpleAlt },
+        ['@keyword'] = { fg = p.red_bright, italic = true },
+        ['@keyword.repeat'] = { fg = p.purple },
+        ['@keyword.function'] = { fg = p.purple },
+        ['@keyword.operator'] = { fg = p.purple },
+        ['@keyword.conditional'] = { fg = p.purple },
+        ['@variable'] = { fg = p.fg },
 
         -- Types
         Type = { fg = p.yellow },
@@ -48,8 +49,8 @@ return function(p)
         Operator = { fg = p.cyan },
 
         -- Delimiters
-        Delimiter = { fg = p.fgMute },
-        ['@constructor'] = { fg = p.fgMute },
+        Delimiter = { fg = p.fg_low },
+        ['@constructor'] = { fg = p.fg_low },
 
         -- Special
         Special = { fg = p.cyan },

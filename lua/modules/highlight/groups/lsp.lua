@@ -1,22 +1,22 @@
 --- Define all LSP highlight groups.
 --- Directly defines colors (no linking) so LSP can enhance native/treesitter highlights.
----@param p table<string, string> palette colors
+---@param p ColorsPalette palette colors
 ---@return table<string, table> group definitions
 return function(p)
     return {
         -- Diagnostics
-        DiagnosticError = { fg = p.red },
-        DiagnosticWarn = { fg = p.orange },
-        DiagnosticInfo = { fg = p.blue },
-        DiagnosticHint = { fg = p.cyan },
+        DiagnosticError = { fg = p.red_bright },
+        DiagnosticWarn = { fg = p.yellow_bright },
+        DiagnosticInfo = { fg = p.blue_bright },
+        DiagnosticHint = { fg = p.cyan_bright },
         DiagnosticOk = { fg = p.green },
 
         -- Virtual Text
-        DiagnosticVirtualTextError = { fg = p.red, bg = p.bgAlt },
-        DiagnosticVirtualTextWarn = { fg = p.orange, bg = p.bgAlt },
-        DiagnosticVirtualTextInfo = { fg = p.blue, bg = p.bgAlt },
-        DiagnosticVirtualTextHint = { fg = p.cyan, bg = p.bgAlt },
-        DiagnosticVirtualTextOk = { fg = p.green, bg = p.bgAlt },
+        DiagnosticVirtualTextError = { fg = p.red, bg = nil },
+        DiagnosticVirtualTextWarn = { fg = p.orange, bg = nil },
+        DiagnosticVirtualTextInfo = { fg = p.blue, bg = nil },
+        DiagnosticVirtualTextHint = { fg = p.cyan, bg = nil },
+        DiagnosticVirtualTextOk = { fg = p.green, bg = nil },
 
         -- Underlines
         DiagnosticUnderlineError = { underline = true, sp = p.red },
@@ -28,7 +28,7 @@ return function(p)
         -- Semantic Tokens (direct colors, not links)
         ['@lsp.type.variable'] = { fg = p.fg },
         ['@lsp.type.parameter'] = { fg = p.orange },
-        ['@lsp.type.property'] = { fg = p.cyanAlt },
+        ['@lsp.type.property'] = { fg = p.cyan },
         ['@lsp.type.function'] = { fg = p.blue },
         ['@lsp.type.method'] = { fg = p.blue },
         ['@lsp.type.namespace'] = { fg = p.cyan },

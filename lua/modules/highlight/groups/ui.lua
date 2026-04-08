@@ -1,62 +1,86 @@
 --- Define all Neovim UI highlight groups.
 --- Color values can be a string (shared by both modes) or an array:
----@param p table<string, string> palette colors
+---@param p ColorsPalette palette colors
 ---@return table<string, table> group definitions
 return function(p)
+    local color_utils = require('modules.colors.utils')
+
     --- { borderless_value, bordered_value }
     local map = {
         -- Editor basics
         Normal = { bg = p.bg, fg = p.fg },
         NormalNC = { bg = p.bg, fg = p.fg },
         EndOfBuffer = { bg = nil, fg = p.bg },
-        LineNr = { bg = nil, fg = p.comment },
-        CursorLineNr = { bg = nil, fg = p.yellowAlt },
-        SignColumn = { bg = p.bg, fg = p.fgMute },
-        FoldColumn = { bg = p.bg, fg = p.comment },
-        WinSeparator = { bg = p.bg, fg = p.fgMute },
+        LineNr = { bg = nil, fg = p.fg_ghost },
+        CursorLineNr = { bg = nil, fg = p.orange },
+        SignColumn = { bg = p.bg, fg = p.fg_low },
+        FoldColumn = { bg = p.bg, fg = p.blue },
+        Folded = { bg = p.bg_line, fg = p.blue },
+        WinSeparator = { bg = p.bg, fg = p.fg_ghost },
         Directory = { fg = p.blue },
-        StatusLine = { bg = p.bgAlt, fg = p.fg },
-        StatusLineNC = { bg = p.bgAlt, fg = p.fgMute },
+        StatusLine = { bg = p.bg_sub, fg = p.fg },
+        StatusLineNC = { bg = p.bg_sub, fg = p.fg_low },
+        NonText = { fg = p.fg_ghost },
+        DiffAdd = { bg = color_utils.blend(p.green, 0.15, p.bg), fg = nil },
+        DiffChange = { bg = color_utils.blend(p.yellow, 0.15, p.bg), fg = nil },
+        DiffDelete = { bg = color_utils.blend(p.red, 0.15, p.bg), fg = nil },
 
         -- Interaction states
-        Visual = { bg = p.bgSel },
-        VisualNOS = { bg = p.bgSel },
+        Visual = { bg = p.bg_line },
+        VisualNOS = { bg = p.bg_line },
         Search = { bg = p.yellow, fg = p.bg },
         IncSearch = { bg = p.orange, fg = p.bg },
         CurSearch = { bg = p.orange, fg = p.bg },
-        MatchParen = { bg = p.bgSel, fg = p.fgMax },
-        ColorColumn = { bg = p.bgAlt },
-        CursorLine = { bg = p.bgAlt },
-        CursorColumn = { bg = p.bgAlt },
+        MatchParen = { bg = p.bg_line, fg = p.fg_max },
 
         -- Messages
         Question = { fg = p.blue },
         MoreMsg = { fg = p.green },
         WarningMsg = { fg = p.orange },
         ErrorMsg = { fg = p.red },
-        Title = { fg = p.fgMax, bold = true },
+        Title = { fg = p.fg_max, bold = true },
 
-        -- Floats and menus
+        -- Floats
         NormalFloat = {
-            bg = { p.bgAlt, p.bg },
-            fg = p.fg,
+            bg = { p.bg_sub, p.bg },
         },
         FloatBorder = {
-            bg = { p.bgAlt, p.bg },
-            fg = { p.bgAlt, p.blue },
+            bg = { p.bg_sub, p.bg },
+            fg = { p.bg_sub, p.fg_low },
         },
         FloatTitle = {
-            bg = { p.blue, p.bg },
-            fg = { p.bg, p.blue },
-            bold = true,
+            bg = p.yellow_bright,
+            fg = p.bg,
         },
+        -- Extra
+        SubFloatTitle = {
+            bg = p.blue,
+            fg = p.bg,
+        },
+        DeepFloat = {
+            bg = { p.bg_dark, nil },
+            fg = p.fg_high,
+        },
+        DeepFloatBorder = {
+            bg = { p.bg_dark, p.bg },
+            fg = { p.bg_dark, p.fg_low },
+        },
+        LightFloat = {
+            bg = { p.bg_line, nil },
+            fg = p.fg_high,
+        },
+        LightFloatBorder = {
+            bg = { p.bg_line, p.bg },
+            fg = { p.bg_line, p.fg_low },
+        },
+
+        -- Menus
         Pmenu = {
-            bg = { p.bgAlt, p.bg },
-            fg = p.fg,
+            bg = { p.bg_dark, p.bg },
+            fg = p.fg_low,
         },
-        PmenuSel = { bg = p.bgSel, fg = p.fgMax },
-        PmenuSbar = { bg = p.bgAlt },
-        PmenuThumb = { bg = p.fg },
+        PmenuSel = { bg = p.bg_line, fg = p.fg_max },
+        PmenuThumb = { bg = p.fg_ghost },
     }
 
     return require('modules.highlight.groups.utils').resolve_groups_by_ui_type(map)
