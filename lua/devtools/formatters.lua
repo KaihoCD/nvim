@@ -1,4 +1,5 @@
 local M = {
+    ['biome'] = {},
     ['prettierd'] = {},
     ['stylua'] = {},
     ['shfmt'] = {},
