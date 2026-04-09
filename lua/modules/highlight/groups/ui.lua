@@ -26,8 +26,8 @@ return function(p)
         DiffDelete = { bg = color_utils.blend(p.red, 0.15, p.bg), fg = nil },
 
         -- Interaction states
-        Visual = { bg = p.bg_line },
-        VisualNOS = { bg = p.bg_line },
+        Visual = { bg = p.bg_sub },
+        VisualNOS = { bg = p.bg_sub },
         Search = { bg = p.yellow, fg = p.bg },
         IncSearch = { bg = p.orange, fg = p.bg },
         CurSearch = { bg = p.orange, fg = p.bg },
