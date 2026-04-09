@@ -157,6 +157,7 @@ local M = {
     ['html'] = build_lsp_configs({}),
     ['cssls'] = build_lsp_configs({}),
     ['marksman'] = build_lsp_configs({}),
+    ['eslint'] = build_lsp_configs({}),
     ['vtsls'] = vtsls,
     ['jsonls'] = jsonls,
     ['lua_ls'] = lua_ls,
