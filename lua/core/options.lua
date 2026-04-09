@@ -60,6 +60,6 @@ vim.opt.grepformat = '%f:%l:%c:%m'
 vim.opt.jumpoptions = 'stack,view'
 vim.opt.completeopt = 'noselect'
 vim.opt.wildmenu = false
-vim.opt.updatetime = 250
+vim.opt.updatetime = 500
 vim.opt.timeoutlen = 500
 vim.opt.shortmess:append({ W = true, c = true, C = true })

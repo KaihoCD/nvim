@@ -7,11 +7,22 @@ local git_state = {
 
 local fs_event = nil
 local watched_head_path = nil
+local updating = false
 
 local function update_branch_async()
+    -- Prevent concurrent updates
+    if updating then
+        return
+    end
+    updating = true
+
     vim.system({ 'git', 'symbolic-ref', '--short', 'HEAD' }, { text = true }, function(obj)
         vim.schedule(function()
+            updating = false
+
             local old_branch = git_state.branch
+            local old_is_repo = git_state.is_repo
+
             if obj.code == 0 then
                 git_state.is_repo = true
                 git_state.branch = vim.trim(obj.stdout or '')
@@ -20,8 +31,12 @@ local function update_branch_async()
                 git_state.branch = ''
             end
 
-            -- Trigger statusline update if branch changed
-            if old_branch ~= git_state.branch then
+            -- Smart redraw: redraw if branch changed, repo status changed, or initial load
+            local should_redraw = (old_branch ~= git_state.branch)
+                or (old_is_repo ~= git_state.is_repo)
+                or (old_branch == '' and old_is_repo == false)
+
+            if should_redraw then
                 vim.cmd.redrawstatus()
             end
         end)
@@ -76,7 +91,9 @@ local function setup_git_watcher()
 end
 
 local group = vim.api.nvim_create_augroup('GitUtilEventDrive', { clear = true })
-vim.api.nvim_create_autocmd({ 'VimEnter', 'DirChanged' }, {
+
+-- Update git branch on critical events
+vim.api.nvim_create_autocmd({ 'VimEnter', 'DirChanged', 'FocusGained' }, {
     group = group,
     callback = function()
         update_branch_async()
@@ -84,7 +101,8 @@ vim.api.nvim_create_autocmd({ 'VimEnter', 'DirChanged' }, {
     end,
 })
 
-vim.api.nvim_create_autocmd('BufWritePost', {
+-- Lazy update on cursor hold (as fallback for edge cases)
+vim.api.nvim_create_autocmd('CursorHold', {
     group = group,
     callback = update_branch_async,
 })

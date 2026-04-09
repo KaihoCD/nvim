@@ -304,7 +304,7 @@ end
 
 M.WorkDir = {
     flexible = 1,
-    update = { 'BufEnter', 'BufModifiedSet', 'DirChanged', 'WinResized' },
+    update = { 'BufEnter', 'BufLeave', 'TermLeave', 'BufModifiedSet', 'DirChanged', 'WinResized' },
     init = function(self)
         local cwd = vim.fn.getcwd()
         local buffer = heirline_utils.get_buffer_identity(0)
