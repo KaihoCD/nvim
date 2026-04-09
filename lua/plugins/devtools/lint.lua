@@ -49,31 +49,43 @@ local function setup_autocmds()
     local debounce = require('utils').debounce
     local lint_group = vim.api.nvim_create_augroup('Lint', { clear = true })
 
-    vim.api.nvim_create_autocmd(
-        { 'BufEnter', 'InsertLeave', 'TextChanged', 'TextChangedI', 'BufWritePost' },
-        {
-            group = lint_group,
-            callback = debounce(200, function(args)
-                if not vim.api.nvim_buf_is_valid(args.buf) then
-                    return
-                end
+    local function should_lint_and_run(args)
+        if not vim.api.nvim_buf_is_valid(args.buf) then
+            return
+        end
 
-                local bo = vim.bo[args.buf]
-                ---@type ModulePreferencesState
-                local preferences = G.State.get('preferences')
-                    or {
-                        auto_lint = false,
-                        format_on_save = false,
-                    }
+        local bo = vim.bo[args.buf]
+        ---@type ModulePreferencesState
+        local preferences = G.State.get('preferences')
+            or {
+                auto_lint = false,
+                format_on_save = false,
+            }
 
-                if preferences.auto_lint and bo.modifiable and bo.buftype == '' then
-                    vim.api.nvim_buf_call(args.buf, function()
-                        require('lint').try_lint()
-                    end)
-                end
-            end),
-        }
-    )
+        if preferences.auto_lint and bo.modifiable and bo.buftype == '' then
+            vim.api.nvim_buf_call(args.buf, function()
+                require('lint').try_lint()
+            end)
+        end
+    end
+
+    -- Immediate execution: save and buffer switch
+    vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter' }, {
+        group = lint_group,
+        callback = should_lint_and_run,
+    })
+
+    -- Debounce 200ms: editing events
+    vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged', 'TextChangedI' }, {
+        group = lint_group,
+        callback = debounce(200, should_lint_and_run),
+    })
+
+    -- Fallback: cursor hold (uses updatetime=500ms)
+    vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+        group = lint_group,
+        callback = should_lint_and_run,
+    })
 end
 
 local function setup_keymaps()
