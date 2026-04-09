@@ -1,5 +1,4 @@
 ---@class ModulePreferencesState
----@field auto_lint boolean
 ---@field format_on_save boolean
 
 ---@class ModuleUiState

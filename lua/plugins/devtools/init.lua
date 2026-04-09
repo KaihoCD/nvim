@@ -23,9 +23,4 @@ return {
         event = { 'BufReadPre', 'BufNewFile' },
         config = require('plugins.devtools.format').config,
     },
-    {
-        src = 'https://github.com/mfussenegger/nvim-lint',
-        event = { 'BufReadPre', 'BufNewFile' },
-        config = require('plugins.devtools.lint').config,
-    },
 }

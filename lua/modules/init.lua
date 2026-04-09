@@ -9,7 +9,6 @@ require('modules.highlight')
 -- Type annotations for the state store are defined in 'modules/state/type.lua'.
 G.State.register({
     ['preferences'] = {
-        auto_lint = false,
         format_on_save = false,
     },
     ['ui'] = {
