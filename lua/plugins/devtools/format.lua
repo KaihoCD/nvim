@@ -21,20 +21,34 @@ end
 
 local LSP_HOOKS = {
     eslint = function(bufnr, client)
-        if not client.server_capabilities.codeActionProvider then
-            return
-        end
+        local group =
+            vim.api.nvim_create_augroup('EslintFixAllAfterFormat_' .. bufnr, { clear = true })
 
-        vim.api.nvim_buf_call(bufnr, function()
-            vim.lsp.buf.code_action({
-                context = {
-                    ---@diagnostic disable-next-line: assign-type-mismatch
-                    only = { 'source.fixAll.eslint' },
-                    diagnostics = {},
-                },
-                apply = true,
-            })
-        end)
+        vim.api.nvim_create_autocmd('DiagnosticChanged', {
+            group = group,
+            buffer = bufnr,
+            once = true,
+            callback = function()
+                if not client.server_capabilities.codeActionProvider then
+                    return
+                end
+
+                vim.api.nvim_buf_call(bufnr, function()
+                    vim.lsp.buf.code_action({
+                        context = {
+                            ---@diagnostic disable-next-line: assign-type-mismatch
+                            only = { 'source.fixAll.eslint' },
+                            diagnostics = {},
+                        },
+                        apply = true,
+                    })
+                end)
+            end,
+        })
+
+        vim.defer_fn(function()
+            pcall(vim.api.nvim_del_augroup_by_id, group)
+        end, FORMAT_TIMEOUT_MS)
     end,
 }
 
@@ -85,7 +99,7 @@ local function format_buffer(opts)
     opts = opts or {}
     opts.bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
     opts.timeout_ms = opts.timeout_ms or FORMAT_TIMEOUT_MS
-    opts.async = opts.async ~= false
+    opts.async = vim.F.if_nil(opts.async, true)
 
     orchestrate_format(function(format_opts, callback)
         conform.format(format_opts, callback)
