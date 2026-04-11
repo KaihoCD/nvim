@@ -147,6 +147,7 @@ local function normalize(spec)
     return spec
 end
 
+---Builds a map of plugin specifications from the provided user specifications.
 ---@param user_specs PluginUserSpec[]
 ---@return PluginSpecMap, PluginSpecEntryList
 function M.build(user_specs)

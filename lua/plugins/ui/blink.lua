@@ -10,7 +10,6 @@ local function get_color_item(ctx)
     return require('nvim-highlight-colors').format(ctx.item.documentation, { kind = ctx.kind })
 end
 
-
 local winhl_menu = table.concat({
     'Normal:DeepFloat',
     'FloatBorder:DeepFloatBorder',

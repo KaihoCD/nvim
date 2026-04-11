@@ -24,8 +24,9 @@ return {
         event = 'VimEnter',
         opts = {
             render = 'virtual',
-            virtual_symbol = '',
+            virtual_symbol = '',
             enable_named_colors = false,
+            virtual_symbol_position = 'eol',
         },
     },
     {

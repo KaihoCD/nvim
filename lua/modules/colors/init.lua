@@ -3,6 +3,9 @@ local M = {}
 local COLOR_MAP = require('modules.colors.colors-map')
 local utils = require('modules.colors.utils')
 
+-- Local cache for the color palette
+local cached_palette = nil
+
 ---@return string[]?
 local function export_command()
     local clrs_path = vim.fn.expand('~/.config/clrs/clrs')
@@ -70,20 +73,38 @@ local function load_palette()
     return decode_theme(result.stdout)
 end
 
-function M.apply()
+--- Get the cached color palette
+---@return table? palette The cached color palette, or nil if not loaded
+function M.get()
+    if cached_palette then
+        return cached_palette
+    end
+
+    -- If not cached locally, try to get from State
+    cached_palette = G.State.get('clrs')
+    return cached_palette
+end
+
+function M.setup()
     local theme = load_palette()
     if not theme then
+        -- Try to populate cache from State even if load fails
+        cached_palette = G.State.get('clrs')
         return
     end
 
     local current = G.State.get('clrs')
     if current and current.name == theme.name then
+        -- Cache the current palette
+        cached_palette = current
         return
     end
 
     local palette = utils.build_palette(theme, COLOR_MAP)
 
     G.State.set('clrs', palette)
+    -- Update local cache
+    cached_palette = palette
 end
 
 return M

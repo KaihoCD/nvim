@@ -23,7 +23,14 @@ M.git = {
         local is_repo, _ = git.get_status()
         return is_repo
     end,
-    update = { 'BufEnter', 'DirChanged', 'FocusGained', 'InsertLeave', 'BufWritePost', 'CursorHold' },
+    update = {
+        'BufEnter',
+        'DirChanged',
+        'FocusGained',
+        'InsertLeave',
+        'BufWritePost',
+        'CursorHold',
+    },
     init = function(self)
         local _, branch = git.get_status()
 

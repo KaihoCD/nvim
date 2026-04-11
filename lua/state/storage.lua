@@ -1,10 +1,9 @@
----@diagnostic disable: undefined-global
+---@class StateStorage
+---@field get_data fun(): table<string, any>
+---@field write fun()
+---@field invalidate_cache fun()
 
 local M = {}
-
--- =========================
--- Paths and Cache
--- =========================
 
 local state_path = vim.fn.stdpath('config') .. '/state.json'
 
@@ -17,10 +16,9 @@ local queue = {}
 local scheduled = false
 local write_pending = false
 
--- =========================
 -- File IO
--- =========================
 
+---Ensure the state directory exists.
 local function ensure_dir()
     vim.fn.mkdir(vim.fn.stdpath('state'), 'p')
 end
@@ -61,6 +59,8 @@ local function write_file(data)
     fd:close()
 end
 
+-- Cache Management
+
 ---Load state once into memory.
 local function ensure_cache()
     if cache == nil then
@@ -70,7 +70,7 @@ end
 
 ---Return the in-memory store, creating it if needed.
 ---@return table<string, any>
-local function get_store()
+local function get_data()
     ensure_cache()
 
     if cache == nil then
@@ -80,10 +80,14 @@ local function get_store()
     return cache
 end
 
--- =========================
--- Write Queue
--- =========================
+---Invalidate the cache (for testing purposes).
+local function invalidate_cache()
+    cache = nil
+end
 
+-- Write Queue
+
+---Run all queued tasks.
 local function run_queue()
     scheduled = false
 
@@ -104,7 +108,7 @@ local function push(task)
     end
 end
 
----Schedule a single pending write.
+---Schedule a write to disk.
 local function schedule_write()
     if write_pending then
         return
@@ -118,67 +122,8 @@ local function schedule_write()
     end)
 end
 
--- =========================
--- Public API
--- =========================
-
-local function get(key)
-    local data = get_store()
-    return data[key]
-end
-
---- Merge default values into existing data recursively.
---- Only sets fields that are nil in the existing data.
----@param existing table<string, any>
----@param defaults table<string, any>
----@return boolean changed
-local function merge_defaults(existing, defaults)
-    local changed = false
-    for key, value in pairs(defaults) do
-        if existing[key] == nil then
-            existing[key] = vim.deepcopy(value)
-            changed = true
-        elseif type(existing[key]) == 'table' and type(value) == 'table' then
-            if merge_defaults(existing[key], value) then
-                changed = true
-            end
-        end
-    end
-    return changed
-end
-
-local function register(incoming)
-    local data = get_store()
-    local changed = false
-
-    for key, value in pairs(incoming) do
-        if data[key] == nil then
-            data[key] = vim.deepcopy(value)
-            changed = true
-        elseif type(data[key]) == 'table' and type(value) == 'table' then
-            if merge_defaults(data[key], value) then
-                changed = true
-            end
-        end
-    end
-
-    if changed then
-        schedule_write()
-    end
-end
-
-local function set(key, value)
-    local data = get_store()
-
-    data[key] = value
-    schedule_write()
-end
-
-M.get = get
-M.register = register
-M.set = set
-
----@type ModuleStateStore
-G.State = M
+M.get_data = get_data
+M.write = schedule_write
+M.invalidate_cache = invalidate_cache
 
 return M

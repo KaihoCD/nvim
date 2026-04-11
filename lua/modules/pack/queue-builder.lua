@@ -143,6 +143,7 @@ local function append_unique(bucket, seen, items)
     end
 end
 
+---Builds a plugin loading queue based on the provided specifications and entry list.
 ---@param specs_map PluginSpecMap
 ---@param entry_list PluginSpecEntryList
 ---@return PackQueue

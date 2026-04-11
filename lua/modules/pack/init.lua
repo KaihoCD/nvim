@@ -9,6 +9,40 @@ local notify = require('utils.notify')
 local M = {}
 local module_cache = {}
 
+---Synchronizes the plugins specified in the specs_map with the local plugin directory.
+---@param specs_map PluginSpecMap - A map of plugin specifications keyed by their source identifiers.
+local function sync_plugins(specs_map)
+    local pack_specs = {}
+    local need_install = false
+
+    local base_path = vim.fn.stdpath('data') .. '/site/pack/core/opt/'
+
+    for _, spec in pairs(specs_map) do
+        local path = base_path .. spec.name
+
+        if not need_install and not vim.uv.fs_stat(path) then
+            need_install = true
+        end
+
+        table.insert(pack_specs, {
+            name = spec.name,
+            src = spec.src,
+            version = spec.version,
+        })
+    end
+
+    if not need_install or #pack_specs == 0 then
+        return
+    end
+
+    vim.pack.add(pack_specs, {
+        confirm = false,
+        load = function()
+            --[[ nop function ]]
+        end,
+    })
+end
+
 ---@param name string
 ---@return string[]
 local function guess_modules(name)
@@ -56,42 +90,20 @@ local function load_plugins(specs_map, srcs)
         return
     end
 
-    local pack_specs = {}
     for _, src in ipairs(srcs) do
         local spec = specs_map[src]
-        if spec and not spec.loaded then
-            table.insert(pack_specs, {
-                src = spec.src,
-                name = spec.name,
-                version = spec.version,
-            })
+        if not spec or spec.loaded then
+            goto continue
         end
+
+        setup_plugin(spec)
+        spec.loaded = true
+
+        ::continue::
     end
-
-    if #pack_specs == 0 then
-        return
-    end
-
-    vim.pack.add(pack_specs, {
-        confirm = false,
-        load = function(data)
-            local plug_spec = data.spec or {}
-            local spec = specs_map[plug_spec.src]
-
-            if not spec or spec.loaded then
-                return
-            end
-
-            if plug_spec.name then
-                spec.name = plug_spec.name
-            end
-
-            setup_plugin(spec)
-            spec.loaded = true
-        end,
-    })
 end
 
+---Sets up triggers for loading plugins based on the provided specs_map and queue.
 ---@param specs_map PluginSpecMap
 ---@param queue PackQueue
 local function setup_triggers(specs_map, queue)
@@ -124,14 +136,13 @@ local function setup_triggers(specs_map, queue)
     end
 end
 
----@param name string
-function M.use(name)
-    local user_specs = module_scan.scan(name)
+---@param name? string
+function M.setup(name)
+    local user_specs = module_scan.scan(name or 'plugins')
     local specs_map, entry_list = specs_builder.build(user_specs)
     local queue = queue_builder.build(specs_map, entry_list)
+    sync_plugins(specs_map)
     setup_triggers(specs_map, queue)
 end
-
-G.Pack = M
 
 return M

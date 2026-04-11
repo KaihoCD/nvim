@@ -21,12 +21,8 @@ local function apply_groups(groups)
     end
 end
 
-function M.apply()
-    local clrs = G.State.get('clrs')
-    if not clrs then
-        return
-    end
-
+---@param palette ColorsPalette
+local function setup_hl(palette)
     local groups_dir = vim.fn.stdpath('config') .. '/lua/modules/highlight/groups'
     local handle = vim.loop.fs_scandir(groups_dir)
     if not handle then
@@ -38,19 +34,19 @@ function M.apply()
         local mod_name = 'modules.highlight.groups.' .. name:gsub('%.lua$', '')
         local ok, mod = pcall(require, mod_name)
         if ok and type(mod) == 'function' then
-            apply_groups(mod(clrs))
+            apply_groups(mod(palette))
         end
         name = vim.loop.fs_scandir_next(handle)
     end
 end
 
-vim.api.nvim_create_autocmd('UiEnter', {
-    callback = function()
-        vim.opt.winborder = G.State.get('ui').style
-
-        require('modules.colors').apply()
-        M.apply()
-    end,
-})
+function M.setup()
+    vim.api.nvim_create_autocmd('UiEnter', {
+        callback = function()
+            vim.opt.winborder = G.State.get('ui').style
+            setup_hl(G.State.get('clrs'))
+        end,
+    })
+end
 
 return M

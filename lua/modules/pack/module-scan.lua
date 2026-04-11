@@ -1,4 +1,4 @@
-local notify = require('utils').notify
+local notify = require('utils.notify')
 
 local M = {}
 
@@ -29,6 +29,9 @@ local function resolve_module_name(module_name)
     error('Unable to resolve caller module path')
 end
 
+---Scans the specified root module for plugin specifications.
+---@param name string - The root module name to scan for plugin specifications.
+---@return table[] - A list of plugin specifications found in the scanned modules.
 function M.scan(name)
     local root_module = resolve_module_name(name)
     local plugin_root = (vim and vim.fn and vim.fn.stdpath and vim.fn.stdpath('config'))
