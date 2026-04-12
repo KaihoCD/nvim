@@ -47,6 +47,12 @@ function M.setup()
             setup_hl(G.State.get('clrs'))
         end,
     })
+    vim.api.nvim_create_autocmd('User', {
+        pattern = 'ColorsUpdated',
+        callback = function(e)
+            setup_hl(e.data.palette)
+        end,
+    })
 end
 
 return M

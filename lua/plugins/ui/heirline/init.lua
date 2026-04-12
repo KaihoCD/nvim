@@ -9,6 +9,14 @@ function M.config()
     highlights.clear_colors()
     heirline.load_colors(clrs or {})
 
+    vim.api.nvim_create_autocmd('User', {
+        pattern = 'ColorsUpdated',
+        callback = function(e)
+            highlights.clear_colors()
+            heirline.load_colors(e.data.palette)
+        end,
+    })
+
     heirline.setup({
         statusline = require('plugins.ui.heirline.statusline'),
         tabline = require('plugins.ui.heirline.tabline'),
