@@ -4,24 +4,21 @@ M.border_style = G.State.get('ui').style
 
 M.input_winhl = table.concat({
     'NonText:LintNr',
-    'NormalFloat:LightFloat',
-    'FloatBorder:LightFloatBorder',
+    'NormalFloat:LighterFloat',
+    'FloatBorder:LighterFloatBorder',
     'Special:Function',
+    'DiagnosticHint:Function',
+    'DiagnosticInfo:FloatTitle',
 }, ',')
 
 M.deep_winhl = table.concat({
-    'NormalFloat:DeepFloat',
-    'FloatBorder:DeepFloatBorder',
     'FloatTitle:SubFloatTitle',
-    'DiagnosticInfo:SubFloatTitle',
 }, ',')
 
 M.float_winhl = table.concat({
     'NormalFloat:LightFloat',
     'FloatBorder:LightFloatBorder',
     'FloatTitle:FloatTitle',
-    'DiagnosticInfo:FloatTitle',
-    'DiagnosticHint:Function',
 }, ',')
 
 local N = {}
@@ -47,7 +44,7 @@ N.defautl = {
             },
             {
                 win = 'list',
-                title = ' Results ',
+                title = 'Results',
                 title_pos = 'center',
                 border = M.border_style,
                 wo = { winhighlight = M.deep_winhl },
@@ -55,7 +52,7 @@ N.defautl = {
         },
         {
             win = 'preview',
-            title = 'Preview: {preview}',
+            title = '{preview}',
             width = 0.5,
             title_pos = 'center',
             border = M.border_style,
@@ -87,7 +84,7 @@ N.vertical = {
         },
         {
             win = 'preview',
-            title = 'Preview: {preview}',
+            title = '{preview}',
             height = 0.5,
             border = M.border_style,
             wo = { winhighlight = M.deep_winhl },

@@ -31,7 +31,7 @@ return function(p)
         Search = { bg = p.yellow, fg = p.bg },
         IncSearch = { bg = p.orange, fg = p.bg },
         CurSearch = { bg = p.orange, fg = p.bg },
-        MatchParen = { bg = p.bg_line, fg = p.fg_max },
+        MatchParen = { bg = p.bg_sub, fg = p.fg_max },
 
         -- Messages
         Question = { fg = p.blue },
@@ -42,11 +42,11 @@ return function(p)
 
         -- Floats
         NormalFloat = {
-            bg = { p.bg_sub, p.bg },
+            bg = { p.bg_dark, p.bg },
         },
         FloatBorder = {
-            bg = { p.bg_sub, p.bg },
-            fg = { p.bg_sub, p.fg_low },
+            bg = { p.bg_dark, p.bg },
+            fg = { p.bg_dark, p.fg_low },
         },
         FloatTitle = {
             bg = p.yellow_bright,
@@ -57,19 +57,19 @@ return function(p)
             bg = p.blue,
             fg = p.bg,
         },
-        DeepFloat = {
-            bg = { p.bg_dark, nil },
-            fg = p.fg_high,
-        },
-        DeepFloatBorder = {
-            bg = { p.bg_dark, p.bg },
-            fg = { p.bg_dark, p.fg_low },
-        },
         LightFloat = {
-            bg = { p.bg_line, nil },
+            bg = { p.bg_sub, nil },
             fg = p.fg_high,
         },
         LightFloatBorder = {
+            bg = { p.bg_sub, p.bg },
+            fg = { p.bg_sub, p.fg_low },
+        },
+        LighterFloat = {
+            bg = { p.bg_line, nil },
+            fg = p.fg_high,
+        },
+        LighterFloatBorder = {
             bg = { p.bg_line, p.bg },
             fg = { p.bg_line, p.fg_low },
         },
@@ -77,9 +77,12 @@ return function(p)
         -- Menus
         Pmenu = {
             bg = { p.bg_dark, p.bg },
-            fg = p.fg_low,
+            fg = p.fg,
         },
-        PmenuSel = { bg = p.bg_line, fg = p.fg_max },
+        PmenuSel = {
+            bg = { p.bg_dark, p.bg },
+            fg = p.fg_max,
+        },
         PmenuThumb = { bg = p.fg_ghost },
     }
 

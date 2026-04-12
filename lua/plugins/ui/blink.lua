@@ -11,19 +11,22 @@ local function get_color_item(ctx)
 end
 
 local winhl_menu = table.concat({
-    'Normal:DeepFloat',
-    'FloatBorder:DeepFloatBorder',
-    'CursorLine:MatchParen',
+    'Normal:Pmenu',
+    'FloatNormal:FloatNormal',
+    'Pmenu:FloatNormal',
+    'FloatBorder:FloatBorder',
+    'CursorLine:Visual',
 }, ',')
 
 local winhl_doc = table.concat({
-    'Normal:NormalFloat',
-    'FloatBorder:FloatBorder',
+    'Normal:LightFloat',
+    'FloatBorder:LightFloatBorder',
+    'BlinkCmpDocSeparator:LineNr',
 }, ',')
 
 local winhl_signature = table.concat({
-    'Normal:DeepFloat',
-    'FloatBorder:DeepFloatBorder',
+    'Normal:LightFloat',
+    'FloatBorder:LightFloatBorder',
 }, ',')
 
 ---@module 'blink.cmp'
@@ -35,7 +38,6 @@ M.opts = {
     },
     completion = {
         menu = {
-            -- border = G.State.get('ui').type == 'borderless' and 'none' or border_style,
             border = border_style,
             draw = {
                 columns = { { 'kind_icon' }, { 'label', 'source_name', gap = 2 } },

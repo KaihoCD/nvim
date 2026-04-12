@@ -26,7 +26,7 @@ M.opts = {
         },
         input = {
             row = 10,
-            wo = { winhighlight = presets.float_winhl },
+            wo = { winhighlight = presets.input_winhl },
         },
     },
     lazygit = {

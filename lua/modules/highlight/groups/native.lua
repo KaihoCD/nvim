@@ -30,7 +30,7 @@ return function(p)
         ['@keyword.function'] = { fg = p.purple },
         ['@keyword.operator'] = { fg = p.purple },
         ['@keyword.conditional'] = { fg = p.purple },
-        ['@variable'] = { fg = p.fg },
+        ['@variable'] = { fg = p.fg_high },
 
         -- Types
         Type = { fg = p.yellow },
