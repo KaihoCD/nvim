@@ -26,7 +26,7 @@ M.diag = {
     error = '',
     warn = '',
     info = '',
-    hint = '',
+    hint = '󱧢',
 }
 
 M.levels = {

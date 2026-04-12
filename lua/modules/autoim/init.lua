@@ -7,7 +7,7 @@ local notify = require('utils.notify').with({
 
 local M = {}
 
-function M.setup()
+local function load_auto_im()
     if
         not configs.im_switch_command
         or not command.ensure_available({
@@ -55,6 +55,15 @@ function M.setup()
     })
 
     return true
+end
+
+function M.setup()
+    vim.api.nvim_create_autocmd('VimEnter', {
+        once = true,
+        callback = function()
+            load_auto_im()
+        end,
+    })
 end
 
 return M
