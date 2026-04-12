@@ -86,25 +86,35 @@ function M.get()
 end
 
 function M.setup()
-    local theme = load_palette()
-    if not theme then
-        -- Try to populate cache from State even if load fails
-        cached_palette = G.State.get('clrs')
-        return
-    end
+    vim.api.nvim_create_autocmd('UIEnter', {
+        once = true,
+        callback = function()
+            local theme = load_palette()
+            if not theme then
+                -- Try to populate cache from State even if load fails
+                cached_palette = G.State.get('clrs')
+                return
+            end
 
-    local current = G.State.get('clrs')
-    if current and current.name == theme.name then
-        -- Cache the current palette
-        cached_palette = current
-        return
-    end
+            local current = G.State.get('clrs')
+            if current and current.name == theme.name then
+                -- Cache the current palette
+                cached_palette = current
+                return
+            end
 
-    local palette = utils.build_palette(theme, COLOR_MAP)
+            local palette = utils.build_palette(theme, COLOR_MAP)
 
-    G.State.set('clrs', palette)
-    -- Update local cache
-    cached_palette = palette
+            G.State.set('clrs', palette)
+            -- Update local cache
+            cached_palette = palette
+
+            vim.api.nvim_exec_autocmds('User', {
+                pattern = 'ColorsUpdated',
+                data = { palette = palette },
+            })
+        end,
+    })
 end
 
 return M
