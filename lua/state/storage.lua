@@ -125,5 +125,8 @@ end
 M.get_data = get_data
 M.write = schedule_write
 M.invalidate_cache = invalidate_cache
+M.get_file_path = function()
+    return state_path
+end
 
 return M

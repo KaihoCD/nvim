@@ -28,3 +28,6 @@ G.State.register({
         ['*'] = 'pattern:^#%x%x%x%x%x%x$',
     },
 })
+
+-- Enable file watching
+G.State.watch_file()

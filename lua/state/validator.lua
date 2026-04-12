@@ -1,5 +1,32 @@
 local M = {}
 
+---Format error message in a consistent, clean style
+---@param field_path string The field path (e.g., "lsp_configs.vtsls")
+---@param error_type string The error type (e.g., "Invalid enum value")
+---@param expected string? Expected value description
+---@param got string? Actual value received
+---@return string formatted_error The formatted error message
+local function format_error(field_path, error_type, expected, got)
+    local lines = {
+        string.format('Field: "%s"', field_path),
+        string.format('Error: %s', error_type),
+    }
+
+    if expected then
+        table.insert(lines, string.format('- Expected: %s', expected))
+    end
+
+    if got then
+        table.insert(lines, string.format('- But Got: %s', got))
+    end
+
+    -- Add blank line before fix instruction
+    table.insert(lines, '')
+    table.insert(lines, 'Please Fix at "state.json"')
+
+    return table.concat(lines, '\n')
+end
+
 ---Validate if a single value conforms to the schema
 ---@param value any Value to validate
 ---@param schema table Schema definition
@@ -37,31 +64,30 @@ local function validate_value(value, schema, path)
         end
     end
 
-    -- 1. Type check
+    -- Type check
     if expected_type and value_type ~= expected_type then
-        return false,
-            string.format(
-                '%s type mismatch:\n  Expected: %s\n  Got: %s',
-                path,
-                expected_type,
-                value_type
-            )
+        return false, format_error(path, 'Type mismatch', expected_type, value_type)
     end
 
-    -- 2. Enum value check
+    -- Enum value check
     if schema.enum then
         if not vim.tbl_contains(schema.enum, value) then
+            -- Format enum values with quotes and join with |
+            local quoted_enums = vim.tbl_map(function(v)
+                return string.format('"%s"', v)
+            end, schema.enum)
+
             return false,
-                string.format(
-                    '%s must be one of: %s\n  Got: "%s"',
+                format_error(
                     path,
-                    table.concat(schema.enum, ', '),
-                    tostring(value)
+                    'Invalid enum value',
+                    table.concat(quoted_enums, '|'),
+                    string.format('"%s"', tostring(value))
                 )
         end
     end
 
-    -- 3. Pattern check
+    -- Pattern check
     if schema.pattern then
         if value_type ~= 'string' then
             return false, path .. ' must be string for pattern matching'
@@ -85,20 +111,29 @@ local function validate_value(value, schema, path)
 
         if not matched then
             return false,
-                string.format('%s must match pattern: %s\n  Got: "%s"', path, schema.pattern, value)
+                format_error(path, 'Pattern mismatch', schema.pattern, string.format('"%s"', value))
         end
     end
 
-    -- 4. Number range check
+    -- Number range check
     if schema.min or schema.max then
         if value_type ~= 'number' then
             return false, path .. ' must be number for range check'
         end
-        if schema.min and value < schema.min then
-            return false, string.format('%s must be >= %d\n  Got: %d', path, schema.min, value)
+
+        -- Build range description
+        local range_desc
+        if schema.min and schema.max then
+            range_desc = string.format('>= %d and <= %d', schema.min, schema.max)
+        elseif schema.min then
+            range_desc = string.format('>= %d', schema.min)
+        else
+            range_desc = string.format('<= %d', schema.max)
         end
-        if schema.max and value > schema.max then
-            return false, string.format('%s must be <= %d\n  Got: %d', path, schema.max, value)
+
+        -- Check if value is in range
+        if (schema.min and value < schema.min) or (schema.max and value > schema.max) then
+            return false, format_error(path, 'Out of range', range_desc, tostring(value))
         end
     end
 
@@ -137,7 +172,7 @@ local function validate_value(value, schema, path)
                 else
                     -- New field, warn but don't block
                     vim.notify(
-                        string.format('⚠️  New field: %s.%s (%s)', path, key, type(sub_value)),
+                        string.format('New field: %s.%s (%s)', path, key, type(sub_value)),
                         vim.log.levels.WARN
                     )
                 end
@@ -155,10 +190,11 @@ local function validate_value(value, schema, path)
                 then
                     if value[key] == nil then
                         if sub_schema.required then
-                            return false, path .. '.' .. key .. ' is required but missing'
+                            return false,
+                                format_error(path .. '.' .. key, 'Required field missing', nil, nil)
                         else
                             vim.notify(
-                                string.format('⚠️  Missing field: %s.%s', path, key),
+                                string.format('Missing field: %s.%s', path, key),
                                 vim.log.levels.WARN
                             )
                         end
@@ -196,7 +232,7 @@ function M.validate(data, schema)
                 -- New field warning (doesn't block validation)
                 table.insert(
                     warnings,
-                    string.format('⚠️  No schema for field: %s (%s)', field, type(value))
+                    string.format('No schema for field: %s (%s)', field, type(value))
                 )
             end
         end
@@ -205,13 +241,10 @@ function M.validate(data, schema)
         for field, field_schema in pairs(schema) do
             if field ~= '*' and data[field] == nil then
                 if field_schema.required then
-                    table.insert(errors, field .. ' is required but missing')
+                    table.insert(errors, format_error(field, 'Required field missing', nil, nil))
                 else
                     -- Warn when optional fields are missing
-                    table.insert(
-                        warnings,
-                        string.format('⚠️  Optional field missing: %s', field)
-                    )
+                    table.insert(warnings, string.format('Optional field missing: %s', field))
                 end
             end
         end

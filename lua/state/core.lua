@@ -1,6 +1,7 @@
 local storage = require('state.storage')
-local schema_parser = require('state.schema_parser')
+local schema_parser = require('state.schema-parser')
 local validator = require('state.validator')
+local notify = require('utils.notify').with({ title = 'State' })
 
 local M = {}
 
@@ -28,29 +29,95 @@ local function merge_defaults(existing, defaults)
 end
 
 ---Validate data against schema and show notifications.
----@param key string The state key
 ---@param data any The data to validate
 ---@param schema table The parsed schema
-local function validate_and_notify(key, data, schema)
+local function validate_and_notify(data, schema)
     local ok, errors, warnings = validator.validate(data, schema)
 
     if not ok then
-        vim.notify(
-            string.format('State validation failed for "%s":\n%s', key, table.concat(errors, '\n')),
-            vim.log.levels.ERROR
-        )
+        -- Display each error separately (already formatted by validator)
+        for _, error_msg in ipairs(errors) do
+            vim.schedule(function()
+                notify.error(error_msg)
+            end)
+        end
     end
 
     if warnings and #warnings > 0 then
-        vim.notify(
-            string.format(
-                'State validation warnings for "%s":\n%s',
-                key,
-                table.concat(warnings, '\n')
-            ),
-            vim.log.levels.WARN
-        )
+        -- Display warnings
+        for _, warning_msg in ipairs(warnings) do
+            vim.schedule(function()
+                notify.warn(warning_msg)
+            end)
+        end
     end
+end
+
+---Reload state from file and validate all data.
+---@return boolean success True if reload succeeded
+local function reload_from_file()
+    -- Read state.json file
+    local state_file = storage.get_file_path()
+    local fd = io.open(state_file, 'r')
+    if not fd then
+        notify.error('Failed to open state.json for reading')
+        return false
+    end
+
+    local content = fd:read('*a')
+    fd:close()
+
+    -- Parse JSON
+    local ok, data = pcall(vim.json.decode, content)
+    if not ok then
+        notify.error(string.format('Failed to parse state.json:\n%s', data))
+        return false
+    end
+
+    if type(data) ~= 'table' then
+        notify.error('Invalid state.json: must be a JSON object')
+        return false
+    end
+
+    -- Validate all keys against their schemas
+    local all_errors = {}
+    for key, value in pairs(data) do
+        local schema = schema_registry[key]
+        if schema then
+            local valid, errors = validator.validate(value, schema)
+            if not valid then
+                table.insert(all_errors, string.format('Key "%s":', key))
+                for _, err in ipairs(errors) do
+                    table.insert(all_errors, '  ' .. err)
+                end
+            end
+        end
+    end
+
+    -- If validation failed, don't apply changes
+    if #all_errors > 0 then
+        notify.error(
+            string.format(
+                'State validation failed. Changes not applied:\n%s',
+                table.concat(all_errors, '\n')
+            )
+        )
+        return false
+    end
+
+    -- Validation passed, reload data from disk
+    storage.invalidate_cache()
+    storage.get_data() -- This will re-read from disk
+
+    notify.info('State reloaded successfully')
+
+    -- Trigger StateUpdated event
+    vim.api.nvim_exec_autocmds('User', {
+        pattern = 'StateUpdated',
+        data = { data = storage.get_data() },
+    })
+
+    return true
 end
 
 ---Get a value from state.
@@ -68,6 +135,12 @@ function M.set(key, value)
     local data = storage.get_data()
     data[key] = value
     storage.write()
+
+    -- Trigger StateUpdated event
+    vim.api.nvim_exec_autocmds('User', {
+        pattern = 'StateUpdated',
+        data = { data = storage.get_data() },
+    })
 end
 
 ---Register default values and optional validation schema.
@@ -103,7 +176,7 @@ function M.register(defaults, schemas)
             if data[key] then
                 local parsed_schema = schema_registry[key]
                 if parsed_schema then
-                    validate_and_notify(key, data[key], parsed_schema)
+                    validate_and_notify(data[key], parsed_schema)
                 end
             end
         end
@@ -112,6 +185,24 @@ function M.register(defaults, schemas)
     if changed then
         storage.write()
     end
+end
+
+---Setup file watcher for state.json.
+---Automatically reloads state when the file is saved.
+function M.watch_file()
+    local state_file = storage.get_file_path()
+
+    vim.api.nvim_create_autocmd('BufWritePost', {
+        pattern = state_file,
+        callback = function()
+            reload_from_file()
+        end,
+        desc = 'Auto-reload state when state.json is saved',
+    })
+
+    require('utils').map('n', '<leader>se', function()
+        vim.cmd.edit(storage.get_file_path())
+    end, { desc = '[s]tate [e]dit' })
 end
 
 return M
