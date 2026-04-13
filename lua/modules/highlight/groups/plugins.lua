@@ -4,6 +4,7 @@
 return function(p)
     local color_utils = require('modules.colors.utils')
     return {
+        -- [[ Render-Markdown ]]
         RenderMarkdownBullet = { fg = p.orange },
         RenderMarkdownCode = { bg = p.bg_dark },
         RenderMarkdownDash = { fg = p.orange },
@@ -23,5 +24,14 @@ return function(p)
         ['@markup.heading.5.markdown'] = { fg = p.blue, bold = true },
         RenderMarkdownH6Bg = { bg = color_utils.blend(p.purple, 0.1, p.bg) },
         ['@markup.heading.6.markdown'] = { fg = p.purple, bold = true },
+
+        -- [[ GitSigns ]]
+        GitSignsAddInline = { fg = nil, underline = true },
+        GitSignsAddLnInline = { fg = nil, underline = true },
+        GitSignsChangeInline = { fg = nil, underline = true },
+        GitSignsDeleteInline = { fg = nil, underline = true },
+        GitSignsChangeLnInline = { fg = nil, underline = true },
+        GitSignsDeleteLnInline = { fg = nil, underline = true },
+        GitSignsDeleteVirtLnInLine = { fg = nil, underline = true },
     }
 end
