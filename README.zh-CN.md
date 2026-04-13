@@ -53,23 +53,23 @@
 
 ### 语法与解析
 
-| 插件                 | 功能                             |
-| -------------------- | -------------------------------- |
-| **nvim-treesitter**  | 语法解析与高亮                   |
-| **ts-comments.nvim** | 智能注释（基于 Treesitter）      |
-| **nvim-origami**     | 代码折叠优化                     |
+| 插件                 | 功能                        |
+| -------------------- | --------------------------- |
+| **nvim-treesitter**  | 语法解析与高亮              |
+| **ts-comments.nvim** | 智能注释（基于 Treesitter） |
+| **nvim-origami**     | 代码折叠优化                |
 
 ### UI 增强
 
-| 插件                         | 功能                              |
-| ---------------------------- | --------------------------------- |
-| **heirline.nvim**            | 高度可定制的状态栏/标签页         |
-| **snacks.nvim**              | UI 组件集合（通知、输入框等）     |
-| **render-markdown.nvim**     | Markdown 实时预览                 |
-| **nvim-highlight-colors**    | 颜色代码可视化                    |
-| **colorful-menu.nvim**       | 彩色补全菜单                      |
-| **nvim-web-devicons**        | 文件类型图标                      |
-| **guess-indent.nvim**        | 自动检测缩进                      |
+| 插件                      | 功能                          |
+| ------------------------- | ----------------------------- |
+| **heirline.nvim**         | 高度可定制的状态栏/标签页     |
+| **snacks.nvim**           | UI 组件集合（通知、输入框等） |
+| **render-markdown.nvim**  | Markdown 实时预览             |
+| **nvim-highlight-colors** | 颜色代码可视化                |
+| **colorful-menu.nvim**    | 彩色补全菜单                  |
+| **nvim-web-devicons**     | 文件类型图标                  |
+| **guess-indent.nvim**     | 自动检测缩进                  |
 
 ### 文件管理
 
@@ -79,33 +79,32 @@
 
 ### AI 工具
 
-| 插件                | 功能                     |
-| ------------------- | ------------------------ |
-| **opencode.nvim**   | OpenCode AI 助手集成     |
+| 插件              | 功能                 |
+| ----------------- | -------------------- |
+| **opencode.nvim** | OpenCode AI 助手集成 |
 
 ## 依赖
 
-| 依赖                         | 必需 | 说明                                |
-| ---------------------------- | ---- | ----------------------------------- |
-| Neovim >= 0.10               | ✓    | 编辑器本体                          |
-| Git                          | ✓    | 插件下载                            |
-| Nerd Font                    | 推荐 | 图标显示                            |
-| ripgrep                      | 可选 | 搜索功能                            |
-| `clrs`                       | 可选 | 主题管理工具（colors 模块）         |
-| `im-select` / `fcitx-remote` | 可选 | 输入法切换（autoim 模块）           |
+| 依赖                         | 必需 | 说明                        |
+| ---------------------------- | ---- | --------------------------- |
+| Neovim >= 0.12               | ✓    | 编辑器本体                  |
+| Git                          | ✓    | 插件下载                    |
+| Nerd Font                    | 推荐 | 图标显示                    |
+| ripgrep                      | 可选 | 搜索功能                    |
+| `clrs`                       | 可选 | 主题管理工具（colors 模块） |
+| `im-select` / `fcitx-remote` | 可选 | 输入法切换（autoim 模块）   |
 
 ## 自定义配置
 
-| 路径                                | 用途                     |
-| ----------------------------------- | ------------------------ |
-| `lua/core/options.lua`              | 编辑器选项               |
-| `lua/core/keymaps.lua`              | 快捷键映射               |
-| `lua/plugins/`                      | 添加/修改插件配置        |
-| `lua/devtools/lsps.lua`             | LSP 服务器配置           |
-| `lua/devtools/formatters.lua`       | 格式化工具配置           |
-| `lua/modules/autoim/config.lua`     | 输入法切换配置           |
+| 路径                            | 用途              |
+| ------------------------------- | ----------------- |
+| `lua/core/options.lua`          | 编辑器选项        |
+| `lua/core/keymaps.lua`          | 快捷键映射        |
+| `lua/plugins/`                  | 添加/修改插件配置 |
+| `lua/devtools/lsps.lua`         | LSP 服务器配置    |
+| `lua/devtools/formatters.lua`   | 格式化工具配置    |
+| `lua/modules/autoim/config.lua` | 输入法切换配置    |
 
 ## 开源协议
 
 MIT
-

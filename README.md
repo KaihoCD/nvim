@@ -6,106 +6,105 @@ Personal Neovim configuration built with Lua for modern development.
 
 ## Core Architecture
 
-| Directory   | Description                                   |
-| ----------- | --------------------------------------------- |
-| `core/`     | Core configs: options, keymaps, autocmds      |
-| `modules/`  | Custom modules (see details below)            |
-| `plugins/`  | Plugin configuration files                    |
+| Directory   | Description                                     |
+| ----------- | ----------------------------------------------- |
+| `core/`     | Core configs: options, keymaps, autocmds        |
+| `modules/`  | Custom modules (see details below)              |
+| `plugins/`  | Plugin configuration files                      |
 | `state/`    | Global state management with persistent storage |
-| `utils/`    | Utility function library                      |
-| `devtools/` | Development tools config (LSP, Formatter)     |
+| `utils/`    | Utility function library                        |
+| `devtools/` | Development tools config (LSP, Formatter)       |
 
 ## Custom Modules
 
-| Module        | Function                   | Description                                                                        |
-| ------------- | -------------------------- | ---------------------------------------------------------------------------------- |
-| **pack**      | Package manager            | Lightweight plugin manager with lazy loading (startup/filetype/event-based)       |
-| **autoim**    | Auto input method switch   | Automatically switch input methods between insert/normal modes for CN/EN editing  |
-| **colors**    | Theme management           | Integrate external `clrs` tool for dynamic color scheme loading                   |
-| **highlight** | Highlight group manager    | Unified management of custom highlight groups (native, LSP, UI, plugins)          |
+| Module        | Function                 | Description                                                                      |
+| ------------- | ------------------------ | -------------------------------------------------------------------------------- |
+| **pack**      | Package manager          | Lightweight plugin manager with lazy loading (startup/filetype/event-based)      |
+| **autoim**    | Auto input method switch | Automatically switch input methods between insert/normal modes for CN/EN editing |
+| **colors**    | Theme management         | Integrate external `clrs` tool for dynamic color scheme loading                  |
+| **highlight** | Highlight group manager  | Unified management of custom highlight groups (native, LSP, UI, plugins)         |
 
 ## Plugin List
 
 ### Editing Enhancement
 
-| Plugin                | Function                                |
-| --------------------- | --------------------------------------- |
-| **blink.cmp**         | Fast completion engine                  |
-| **copilot.lua**       | GitHub Copilot AI assistance            |
-| **mini.pairs**        | Auto bracket pairing                    |
+| Plugin                | Function                                  |
+| --------------------- | ----------------------------------------- |
+| **blink.cmp**         | Fast completion engine                    |
+| **copilot.lua**       | GitHub Copilot AI assistance              |
+| **mini.pairs**        | Auto bracket pairing                      |
 | **mini.surround**     | Quick surround editing (brackets, quotes) |
-| **mini.ai**           | Enhanced text objects                   |
-| **nvim-ts-autotag**   | HTML/JSX tag auto-closing               |
-| **friendly-snippets** | Code snippet collection                 |
+| **mini.ai**           | Enhanced text objects                     |
+| **nvim-ts-autotag**   | HTML/JSX tag auto-closing                 |
+| **friendly-snippets** | Code snippet collection                   |
 
 ### Development Tools
 
-| Plugin                        | Function                                      |
-| ----------------------------- | --------------------------------------------- |
-| **nvim-lspconfig**            | LSP client configuration                      |
-| **mason.nvim**                | LSP/DAP/Linter/Formatter package manager      |
-| **mason-lspconfig.nvim**      | Bridge between Mason and LSP                  |
-| **mason-tool-installer.nvim** | Auto-install Mason tools                      |
-| **conform.nvim**              | Async code formatting                         |
-| **lazydev.nvim**              | Neovim Lua development enhancement            |
-| **gitsigns.nvim**             | Git status display and operations             |
-| **todo-comments.nvim**        | TODO comment highlighting and search          |
+| Plugin                        | Function                                 |
+| ----------------------------- | ---------------------------------------- |
+| **nvim-lspconfig**            | LSP client configuration                 |
+| **mason.nvim**                | LSP/DAP/Linter/Formatter package manager |
+| **mason-lspconfig.nvim**      | Bridge between Mason and LSP             |
+| **mason-tool-installer.nvim** | Auto-install Mason tools                 |
+| **conform.nvim**              | Async code formatting                    |
+| **lazydev.nvim**              | Neovim Lua development enhancement       |
+| **gitsigns.nvim**             | Git status display and operations        |
+| **todo-comments.nvim**        | TODO comment highlighting and search     |
 
 ### Syntax & Parsing
 
-| Plugin              | Function                           |
-| ------------------- | ---------------------------------- |
-| **nvim-treesitter** | Syntax parsing and highlighting    |
+| Plugin               | Function                            |
+| -------------------- | ----------------------------------- |
+| **nvim-treesitter**  | Syntax parsing and highlighting     |
 | **ts-comments.nvim** | Smart commenting (Treesitter-based) |
-| **nvim-origami**    | Code folding optimization          |
+| **nvim-origami**     | Code folding optimization           |
 
 ### UI Enhancement
 
-| Plugin                      | Function                           |
-| --------------------------- | ---------------------------------- |
-| **heirline.nvim**           | Highly customizable statusline/tabline |
-| **snacks.nvim**             | UI component collection (notifications, inputs, etc.) |
-| **render-markdown.nvim**    | Markdown live preview              |
-| **nvim-highlight-colors**   | Color code visualization           |
-| **colorful-menu.nvim**      | Colorful completion menu           |
-| **nvim-web-devicons**       | File type icons                    |
-| **guess-indent.nvim**       | Auto-detect indentation            |
+| Plugin                    | Function                                              |
+| ------------------------- | ----------------------------------------------------- |
+| **heirline.nvim**         | Highly customizable statusline/tabline                |
+| **snacks.nvim**           | UI component collection (notifications, inputs, etc.) |
+| **render-markdown.nvim**  | Markdown live preview                                 |
+| **nvim-highlight-colors** | Color code visualization                              |
+| **colorful-menu.nvim**    | Colorful completion menu                              |
+| **nvim-web-devicons**     | File type icons                                       |
+| **guess-indent.nvim**     | Auto-detect indentation                               |
 
 ### File Management
 
-| Plugin      | Function                     |
-| ----------- | ---------------------------- |
-| **oil.nvim** | Buffer-like file explorer    |
+| Plugin       | Function                  |
+| ------------ | ------------------------- |
+| **oil.nvim** | Buffer-like file explorer |
 
 ### AI Tools
 
-| Plugin            | Function                       |
-| ----------------- | ------------------------------ |
+| Plugin            | Function                          |
+| ----------------- | --------------------------------- |
 | **opencode.nvim** | OpenCode AI assistant integration |
 
 ## Dependencies
 
-| Dependency      | Required | Description                            |
-| --------------- | -------- | -------------------------------------- |
-| Neovim >= 0.12  | ✓        | Editor itself                          |
-| Git             | ✓        | Plugin download                        |
-| Nerd Font       | Recommended | Icon display                        |
-| ripgrep         | Optional | Search functionality                   |
-| `clrs`          | Optional | Theme management tool (colors module) |
-| `im-select` / `fcitx-remote` | Optional | Input method switching (autoim module) |
+| Dependency                   | Required    | Description                            |
+| ---------------------------- | ----------- | -------------------------------------- |
+| Neovim >= 0.12               | ✓           | Editor itself                          |
+| Git                          | ✓           | Plugin download                        |
+| Nerd Font                    | Recommended | Icon display                           |
+| ripgrep                      | Optional    | Search functionality                   |
+| `clrs`                       | Optional    | Theme management tool (colors module)  |
+| `im-select` / `fcitx-remote` | Optional    | Input method switching (autoim module) |
 
 ## Customization
 
-| Path                              | Purpose                        |
-| --------------------------------- | ------------------------------ |
-| `lua/core/options.lua`            | Editor options                 |
-| `lua/core/keymaps.lua`            | Keybindings                    |
-| `lua/plugins/`                    | Add/modify plugin configs      |
-| `lua/devtools/lsps.lua`           | LSP server configuration       |
-| `lua/devtools/formatters.lua`     | Formatter configuration        |
-| `lua/modules/autoim/config.lua`   | Input method switch config     |
+| Path                            | Purpose                    |
+| ------------------------------- | -------------------------- |
+| `lua/core/options.lua`          | Editor options             |
+| `lua/core/keymaps.lua`          | Keybindings                |
+| `lua/plugins/`                  | Add/modify plugin configs  |
+| `lua/devtools/lsps.lua`         | LSP server configuration   |
+| `lua/devtools/formatters.lua`   | Formatter configuration    |
+| `lua/modules/autoim/config.lua` | Input method switch config |
 
 ## License
 
 MIT
-
