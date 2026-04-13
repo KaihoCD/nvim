@@ -83,26 +83,11 @@ Personal Neovim configuration built with Lua for modern development.
 | ----------------- | ------------------------------ |
 | **opencode.nvim** | OpenCode AI assistant integration |
 
-## Quick Start
-
-### Installation
-
-```bash
-# Backup existing configuration
-mv ~/.config/nvim ~/.config/nvim.bak
-
-# Clone this configuration
-git clone <your-repo-url> ~/.config/nvim
-
-# Start Neovim (plugins will auto-install)
-nvim
-```
-
-### Dependencies
+## Dependencies
 
 | Dependency      | Required | Description                            |
 | --------------- | -------- | -------------------------------------- |
-| Neovim >= 0.10  | ✓        | Editor itself                          |
+| Neovim >= 0.12  | ✓        | Editor itself                          |
 | Git             | ✓        | Plugin download                        |
 | Nerd Font       | Recommended | Icon display                        |
 | ripgrep         | Optional | Search functionality                   |
