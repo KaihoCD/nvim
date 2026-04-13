@@ -46,7 +46,7 @@ M.file = {
 }
 
 M.markdown = {
-    header = { '󰎥  ', '󰼐  ', '󰎫  ', '󰼒  ', '󰎯  ', '󰼔  ' },
+    header = { '󰎥 ', '󰼐 ', '󰎫 ', '󰼒 ', '󰎯 ', '󰼔 ' },
     checkbox = {
         checked = '  ',
         unchecked = '  ',

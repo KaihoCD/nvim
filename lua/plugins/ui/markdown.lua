@@ -45,7 +45,6 @@ M.opts = {
     },
     heading = {
         width = 'block',
-        border = true,
         icons = icons.header,
         left_pad = 1,
         right_pad = 1,
