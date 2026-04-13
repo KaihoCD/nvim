@@ -120,25 +120,7 @@ nvim
 | `lua/devtools/formatters.lua`     | Formatter configuration        |
 | `lua/modules/autoim/config.lua`   | Input method switch config     |
 
-## Features
-
-### Dynamic Path Rendering
-
-The tabline intelligently adapts path display based on available space:
-
-**Configuration** (`lua/plugins/ui/heirline/tabline.lua`):
-```lua
-M.truncate_config = {
-    max_length = 30,    -- Maximum length before truncation
-    keep_prefix = 15,   -- Characters to keep at start
-    keep_suffix = 10,   -- Characters to keep at end
-}
-```
-
-**Example**:
-- Original: `@reolink-web+bff-business@2.0.24-beta.53_@reolink+web.fe.http-client@1.9.2_axios@1.8.4__e4bda360cd87d5177aca9c72bd8de5d4`
-- Truncated: `@reolink-web+bf…72bd8de5d4`
-
 ## License
 
 MIT
+

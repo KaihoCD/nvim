@@ -120,25 +120,7 @@ nvim
 | `lua/devtools/formatters.lua`       | 格式化工具配置           |
 | `lua/modules/autoim/config.lua`     | 输入法切换配置           |
 
-## 功能特性
-
-### 动态路径渲染
-
-Tabline 会根据可用空间智能调整路径显示：
-
-**配置文件** (`lua/plugins/ui/heirline/tabline.lua`):
-```lua
-M.truncate_config = {
-    max_length = 30,    -- 最大长度
-    keep_prefix = 15,   -- 保留前缀字符数
-    keep_suffix = 10,   -- 保留后缀字符数
-}
-```
-
-**示例**:
-- 原始: `@reolink-web+bff-business@2.0.24-beta.53_@reolink+web.fe.http-client@1.9.2_axios@1.8.4__e4bda360cd87d5177aca9c72bd8de5d4`
-- 截断后: `@reolink-web+bf…72bd8de5d4`
-
 ## 开源协议
 
 MIT
+
