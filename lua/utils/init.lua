@@ -1,9 +1,24 @@
 local M = {}
 
 M.map = function(mode, lhs, rhs, opts)
-    opts = opts or {}
-    opts.silent = opts.silent ~= false -- defaults true
-    opts.noremap = opts.noremap ~= false -- defaults true
+    opts = vim.tbl_extend('force', {
+        silent = true,
+        noremap = true,
+    }, opts or {})
+
+    if type(rhs) == 'string' then
+        local is_cmd = rhs:match('^<[Cc][Mm][Dd]>')
+        local is_colon = rhs:match('^:')
+
+        if (is_cmd or is_colon) and not rhs:find('silent!') then
+            if is_cmd then
+                rhs = rhs:gsub('^(<[Cc][Mm][Dd]>)%s*', '%1silent! ')
+            else
+                rhs = rhs:gsub('^:%s*', ':silent! ')
+            end
+        end
+    end
+
     vim.keymap.set(mode, lhs, rhs, opts)
 end
 

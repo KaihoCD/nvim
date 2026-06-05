@@ -1,77 +1,92 @@
--- @param msg string  message content
--- @param level number? log levels
--- @param opts table?
-local function _notify(msg, level, opts)
+local Notify = {}
+Notify.__index = Notify
+
+local HL_LEVEL_MAP = {
+    [vim.log.levels.TRACE] = 'Macro',
+    [vim.log.levels.DEBUG] = 'Comment',
+    [vim.log.levels.INFO] = 'DiagnosticInfo',
+    [vim.log.levels.WARN] = 'DiagnosticWarn',
+    [vim.log.levels.ERROR] = 'DiagnosticError',
+}
+
+local function emit(msg, level, opts)
     level = level or vim.log.levels.INFO
     opts = opts or {}
 
-    if Snacks and Snacks.notify then
-        opts.level = level
-        return Snacks.notify(msg, opts)
-    else
-        return vim.notify(msg, level, opts)
-    end
-end
+    local prefix = ''
+    local icon = opts.icon and type(opts.icon) == 'string' and opts.icon ~= '' and opts.icon or nil
+    local title = opts.title and type(opts.title) == 'string' and opts.title ~= '' and opts.title
+        or nil
 
-local function with_defaults(defaults)
-    defaults = defaults or {}
-
-    local function merge(opts)
-        return vim.tbl_extend('force', defaults, opts or {})
+    if icon and title then
+        prefix = ('[%s %s] '):format(icon, title)
+    elseif title then
+        prefix = ('[%s] '):format(title)
+    elseif icon then
+        prefix = ('[%s] '):format(icon)
     end
 
-    return setmetatable({}, {
-        __call = function(_, msg, level, opts)
-            return _notify(msg, level, merge(opts))
-        end,
-    })
+    local chunks = {}
+    local content_hl = level ~= vim.log.levels.INFO and (HL_LEVEL_MAP[level] or 'Normal') or nil
+    if prefix ~= '' then
+        chunks[#chunks + 1] = { prefix, HL_LEVEL_MAP[level] or 'Normal' }
+    end
+    chunks[#chunks + 1] = content_hl and { msg, content_hl } or { msg }
+
+    return vim.api.nvim_echo(chunks, true, {})
 end
 
-local notify = setmetatable({}, {
-    __call = function(_, msg, level, opts)
-        return _notify(msg, level, opts)
-    end,
-})
-
-notify.info = function(msg, opts)
-    return _notify(msg, vim.log.levels.INFO, opts)
-end
-notify.warn = function(msg, opts)
-    return _notify(msg, vim.log.levels.WARN, opts)
-end
-notify.error = function(msg, opts)
-    return _notify(msg, vim.log.levels.ERROR, opts)
-end
-notify.debug = function(msg, opts)
-    return _notify(msg, vim.log.levels.DEBUG, opts)
-end
-notify.trace = function(msg, opts)
-    return _notify(msg, vim.log.levels.TRACE, opts)
-end
+---@class utils.notify.Instance
+---@field defaults table
+---@field notify fun(msg: string, level?: number, opts?: table)
+---@field info fun(msg: string, opts?: table)
+---@field warn fun(msg: string, opts?: table)
+---@field error fun(msg: string, opts?: table)
+---@field debug fun(msg: string, opts?: table)
+---@field trace fun(msg: string, opts?: table)
 
 ---@param defaults table?
----@return {info: fun(msg: string, opts?: table), warn: fun(msg: string, opts?: table), error: fun(msg: string, opts?: table), debug: fun(msg: string, opts?: table), trace: fun(msg: string, opts?: table)}
----Create a scoped notifier that merges `defaults` into every notification call.
----The returned object can be called like `notify`, and also exposes level helpers
----such as `info`, `warn`, and `error`.
-notify.with = function(defaults)
-    local scoped = with_defaults(defaults)
-    scoped.info = function(msg, opts)
-        return notify.info(msg, vim.tbl_extend('force', defaults or {}, opts or {}))
+---@return utils.notify.Instance
+function Notify.new(defaults)
+    local instance = { defaults = defaults or {} }
+
+    local function merge(opts)
+        return vim.tbl_extend('force', instance.defaults or {}, opts or {})
     end
-    scoped.warn = function(msg, opts)
-        return notify.warn(msg, vim.tbl_extend('force', defaults or {}, opts or {}))
+
+    instance.notify = function(msg, level, opts)
+        return emit(msg, level, merge(opts))
     end
-    scoped.error = function(msg, opts)
-        return notify.error(msg, vim.tbl_extend('force', defaults or {}, opts or {}))
+    instance.info = function(msg, opts)
+        return instance.notify(msg, vim.log.levels.INFO, opts)
     end
-    scoped.debug = function(msg, opts)
-        return notify.debug(msg, vim.tbl_extend('force', defaults or {}, opts or {}))
+    instance.warn = function(msg, opts)
+        return instance.notify(msg, vim.log.levels.WARN, opts)
     end
-    scoped.trace = function(msg, opts)
-        return notify.trace(msg, vim.tbl_extend('force', defaults or {}, opts or {}))
+    instance.error = function(msg, opts)
+        return instance.notify(msg, vim.log.levels.ERROR, opts)
     end
-    return scoped
+    instance.debug = function(msg, opts)
+        return instance.notify(msg, vim.log.levels.DEBUG, opts)
+    end
+    instance.trace = function(msg, opts)
+        return instance.notify(msg, vim.log.levels.TRACE, opts)
+    end
+
+    return setmetatable(instance, Notify)
 end
 
-return notify
+Notify.default = Notify.new()
+
+-- 向后兼容：旧调用方 require('utils.notify').info(msg) 转发到 Notify.default
+return setmetatable(Notify, {
+    __index = function(_, key)
+        local default = rawget(Notify, 'default')
+        if default and type(default[key]) == 'function' then
+            return default[key]
+        end
+    end,
+    __call = function(_, msg, level, opts)
+        return Notify.default.notify(msg, level, opts)
+    end,
+})
