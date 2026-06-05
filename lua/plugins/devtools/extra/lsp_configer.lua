@@ -1,6 +1,7 @@
 local devtools = require('devtools')
 local lsp_definitions = require('devtools.lsps')
-local notify = require('utils.notify').with({ title = 'LspConfig' })
+local Notify = require('utils.notify')
+local notify = Notify.new({ title = 'LspConfig' })
 
 local STATE_KEY = 'lsp_configs'
 local DEFAULT_VARIANT = 'default'

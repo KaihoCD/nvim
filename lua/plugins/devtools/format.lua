@@ -1,4 +1,4 @@
-local FORMAT_TIMEOUT_MS = 3000
+local FORMAT_TIMEOUT_MS = 1000
 local NOTIFY_OPTS = { title = 'Formatter' }
 
 local M = {}
@@ -20,41 +20,12 @@ local function build_formatter_display_name(formatters, uses_lsp)
 end
 
 local LSP_HOOKS = {
-    eslint = function(bufnr, client)
-        local group =
-            vim.api.nvim_create_augroup('EslintFixAllAfterFormat_' .. bufnr, { clear = true })
-
-        vim.api.nvim_create_autocmd('DiagnosticChanged', {
-            group = group,
-            buffer = bufnr,
-            once = true,
-            callback = function()
-                if not client.server_capabilities.codeActionProvider then
-                    return
-                end
-
-                vim.api.nvim_buf_call(bufnr, function()
-                    vim.lsp.buf.code_action({
-                        context = {
-                            ---@diagnostic disable-next-line: assign-type-mismatch
-                            only = { 'source.fixAll.eslint' },
-                            diagnostics = {},
-                        },
-                        apply = true,
-                    })
-                end)
-            end,
-        })
-
-        vim.defer_fn(function()
-            pcall(vim.api.nvim_del_augroup_by_id, group)
-        end, FORMAT_TIMEOUT_MS)
-    end,
+    eslint = require('plugins.devtools.format_hook.eslint').run,
 }
 
 local function run_lsp_hooks(bufnr)
     local clients = vim.lsp.get_clients({ bufnr = bufnr })
-    local notify = require('utils.notify')
+    local notify = require('utils.notify').default
 
     for _, client in ipairs(clients) do
         local hook = LSP_HOOKS[client.name]
@@ -73,7 +44,7 @@ end
 -- 格式化编排器：负责协调格式化流程
 local function orchestrate_format(format_fn, opts)
     local conform = require('conform')
-    local notify = require('utils.notify')
+    local notify = require('utils.notify').default
 
     local bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
 
@@ -99,7 +70,7 @@ local function format_buffer(opts)
     opts = opts or {}
     opts.bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
     opts.timeout_ms = opts.timeout_ms or FORMAT_TIMEOUT_MS
-    opts.async = vim.F.if_nil(opts.async, true)
+    opts.async = vim.F.if_nil(opts.async, false)
 
     orchestrate_format(function(format_opts, callback)
         conform.format(format_opts, callback)
@@ -107,7 +78,7 @@ local function format_buffer(opts)
 end
 
 local function toggle_format_on_save()
-    local notify = require('utils.notify')
+    local notify = require('utils.notify').default
     local preferences = G.State.get('preferences')
     local enabled = preferences.format_on_save
 
@@ -148,11 +119,11 @@ function M.config()
         notify_no_formatters = true,
         notify_on_error = true,
         formatters_by_ft = {
-            javascript = { 'biome' },
-            typescript = { 'biome' },
-            javascriptreact = { 'biome' },
-            typescriptreact = { 'biome' },
-            json = { 'biome' },
+            javascript = { 'prettierd' },
+            typescript = { 'prettierd' },
+            javascriptreact = { 'prettierd' },
+            typescriptreact = { 'prettierd' },
+            json = { 'prettierd' },
             vue = { 'prettierd' },
             css = { 'prettierd' },
             less = { 'prettierd' },

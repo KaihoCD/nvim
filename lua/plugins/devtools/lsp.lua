@@ -1,11 +1,7 @@
 local M = {}
 
-M.mason_lspconfig_opts = {
-    automatic_enable = false,
-}
-
 local function augroup(name)
-    return vim.api.nvim_create_augroup('LSP' .. name, { clear = true })
+    return vim.api.nvim_create_augroup('Lsp' .. name, { clear = true })
 end
 
 local function setup_diagnostic()
@@ -134,18 +130,13 @@ local function configure_lsps(capabilities)
     end
 end
 
-function M.mason_tool_installer_config()
-    require('mason-tool-installer').setup({
-        ensure_installed = require('devtools').get_installed(),
-    })
-end
-
 local function configure_lsp()
     local capabilities = build_capabilities()
     configure_lsps(capabilities)
     setup_diagnostic()
     setup_lsp_attach_autocmd()
     require('plugins.devtools.extra.lsp_configer')
+    require('plugins.devtools.extra.lsp_progress')
 
     -- Preferences
     vim.lsp.document_color.enable(false)

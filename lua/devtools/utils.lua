@@ -2,10 +2,10 @@ local M = {}
 
 local DEFAULT_VARIANT = 'default'
 
----@alias LspConfigBuilder fun(default_lsp_config: vim.lsp.Config): vim.lsp.Config
+---@alias devtools.LspConfigBuilder fun(default_lsp_config: vim.lsp.Config): vim.lsp.Config
 
 ---@param default_lsp_config vim.lsp.Config
----@param variant_builders? table<string, LspConfigBuilder>
+---@param variant_builders? table<string, devtools.LspConfigBuilder>
 ---@return table<string, vim.lsp.Config>
 function M.build_lsp_configs(default_lsp_config, variant_builders)
     local lsp_configs = {

@@ -1,5 +1,51 @@
 local build_lsp_configs = require('devtools.utils').build_lsp_configs
 
+local ts_ls = build_lsp_configs({
+    filetypes = {
+        'javascript',
+        'javascriptreact',
+        'javascript.jsx',
+        'typescript',
+        'typescriptreact',
+        'typescript.tsx',
+    },
+    settings = {
+        complete_function_calls = true,
+        typescript = {
+            updateImportsOnFileMove = { enabled = 'always' },
+            suggest = {
+                completeFunctionCalls = true,
+            },
+            inlayHints = {
+                enumMemberValues = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                parameterNames = { enabled = 'literals' },
+                parameterTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                variableTypes = { enabled = false },
+            },
+        },
+    },
+}, {
+    mason = function(config)
+        return vim.tbl_deep_extend('force', config, {
+            settings = {
+                typescript = {
+                    tsdk = vim.fs.joinpath(
+                        vim.fn.stdpath('data'),
+                        'mason',
+                        'packages',
+                        'typescript-language-server',
+                        'node_modules',
+                        'typescript',
+                        'lib'
+                    ),
+                },
+            },
+        })
+    end,
+})
+
 local vtsls = build_lsp_configs({
     filetypes = {
         'javascript',
@@ -155,10 +201,24 @@ local lua_ls = build_lsp_configs({
 
 local M = {
     ['html'] = build_lsp_configs({}),
-    ['cssls'] = build_lsp_configs({}),
+    ['cssls'] = build_lsp_configs({
+        settings = {
+            css = {
+                validate = true,
+            },
+            less = {
+                validate = true,
+            },
+            scss = {
+                validate = true,
+            },
+        },
+        filetypes = { 'css', 'scss', 'less' },
+    }),
     ['marksman'] = build_lsp_configs({}),
     ['eslint'] = build_lsp_configs({}),
-    ['vtsls'] = vtsls,
+    -- ['vtsls'] = vtsls,
+    ['ts_ls'] = ts_ls,
     ['jsonls'] = jsonls,
     ['lua_ls'] = lua_ls,
 }
