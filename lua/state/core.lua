@@ -1,7 +1,8 @@
 local storage = require('state.storage')
 local schema_parser = require('state.schema-parser')
 local validator = require('state.validator')
-local notify = require('utils.notify').with({ title = 'State' })
+local Notify = require('utils.notify')
+local notify = Notify.new({ title = 'State' })
 
 local M = {}
 

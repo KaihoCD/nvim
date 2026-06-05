@@ -1,16 +1,38 @@
 local module_scan = require('modules.pack.module-scan')
 local specs_builder = require('modules.pack.specs-builder')
 local queue_builder = require('modules.pack.queue-builder')
-local notify = require('utils.notify')
-
----@class PackManager
----@field use fun(name: string)
+local notify = require('utils.notify').default
 
 local M = {}
 local module_cache = {}
 
+---@param specs_map modules.pack.PluginSpecMap
+local function prune_stale_plugins(specs_map)
+    local expected = {}
+    local stale = {}
+
+    for _, spec in pairs(specs_map) do
+        expected[spec.name] = true
+    end
+
+    for _, plugin in ipairs(vim.pack.get()) do
+        local name = plugin.spec and plugin.spec.name or nil
+
+        if name and not expected[name] then
+            table.insert(stale, name)
+        end
+    end
+
+    if #stale == 0 then
+        return
+    end
+
+    table.sort(stale)
+    vim.pack.del(stale)
+end
+
 ---Synchronizes the plugins specified in the specs_map with the local plugin directory.
----@param specs_map PluginSpecMap - A map of plugin specifications keyed by their source identifiers.
+---@param specs_map modules.pack.PluginSpecMap - A map of plugin specifications keyed by their source identifiers.
 local function sync_plugins(specs_map)
     local pack_specs = {}
     local need_install = false
@@ -35,10 +57,14 @@ local function sync_plugins(specs_map)
         return
     end
 
+    prune_stale_plugins(specs_map)
+
     vim.pack.add(pack_specs, {
         confirm = false,
         load = function()
-            --[[ nop function ]]
+            -- Don't load newly installed plugins into this half-initialized session.
+            -- Restart after install so startup/FileType/VimEnter hooks run cleanly.
+            vim.cmd('restart')
         end,
     })
 end
@@ -50,7 +76,7 @@ local function guess_modules(name)
     return stripped == name and { name } or { name, stripped }
 end
 
----@param spec PluginSpec
+---@param spec modules.pack.PluginSpec
 local function setup_plugin(spec)
     vim.cmd.packadd(spec.name)
 
@@ -83,7 +109,7 @@ local function setup_plugin(spec)
     end
 end
 
----@param specs_map PluginSpecMap
+---@param specs_map modules.pack.PluginSpecMap
 ---@param srcs string[]
 local function load_plugins(specs_map, srcs)
     if #srcs == 0 then
@@ -104,8 +130,8 @@ local function load_plugins(specs_map, srcs)
 end
 
 ---Sets up triggers for loading plugins based on the provided specs_map and queue.
----@param specs_map PluginSpecMap
----@param queue PackQueue
+---@param specs_map modules.pack.PluginSpecMap
+---@param queue modules.pack.PackQueue
 local function setup_triggers(specs_map, queue)
     if #queue.startup > 0 then
         load_plugins(specs_map, queue.startup)
@@ -143,6 +169,10 @@ function M.setup(name)
     local queue = queue_builder.build(specs_map, entry_list)
     sync_plugins(specs_map)
     setup_triggers(specs_map, queue)
+
+    vim.schedule(function()
+        prune_stale_plugins(specs_map)
+    end)
 end
 
 return M
