@@ -1,0 +1,53 @@
+---@class modules.colors.Base24
+---@field name   string
+---@field base00 string
+---@field base01 string
+---@field base02 string
+---@field base03 string
+---@field base04 string
+---@field base05 string
+---@field base06 string
+---@field base07 string
+---@field base08 string
+---@field base09 string
+---@field base10 string
+---@field base11 string
+---@field base0A string
+---@field base0B string
+---@field base0C string
+---@field base0D string
+---@field base0E string
+---@field base0F string
+---@field base12 string
+---@field base13 string
+---@field base14 string
+---@field base15 string
+---@field base16 string
+---@field base17 string
+
+---@class modules.colors.ColorsPalette
+---@field name          string Theme name
+---@field bg            string Core background
+---@field bg_sub        string Secondary background (statusline/sidebar)
+---@field bg_line       string Line/block background (selection)
+---@field fg_ghost      string Dimmest text (comments)
+---@field fg_low        string Dim text (linenumbers/dividers)
+---@field fg            string Primary text (standard code)
+---@field fg_high       string Bright text (selected item/title)
+---@field fg_max        string Brightest text (search highlight)
+---@field red           string Variables/errors
+---@field orange        string Numbers/constants
+---@field yellow        string Types/warnings
+---@field green         string Strings/Git additions
+---@field cyan          string Operators/regex
+---@field blue          string Functions/properties
+---@field purple        string Keywords
+---@field brown         string Special markers
+---@field bg_dark       string Darker background (popup menu)
+---@field red_bright    string Accent background (error block)
+---@field orange_bright string Bright orange
+---@field yellow_bright string Bright yellow (warning icons)
+---@field green_bright  string Bright green (success markers)
+---@field cyan_bright   string Bright cyan (info icons)
+---@field blue_bright   string Bright blue (Git branch/folds)
+---@field purple_bright string Bright purple (key logic)

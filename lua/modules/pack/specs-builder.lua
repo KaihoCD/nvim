@@ -1,28 +1,3 @@
----@class PluginUserSpec
----@field src string
----@field name? string
----@field event? string|string[]
----@field ft? string|string[]
----@field version? string
----@field opts? table
----@field config? fun(opts?: table)
----@field deps? PluginUserSpec[]
-
----@class PluginSpec
----@field src string
----@field name string
----@field version? string
----@field event? string[]
----@field ft? string[]
----@field opts table
----@field config? fun(opts?: table)
----@field deps string[]
----@field loaded boolean
-
----@alias PluginSpecMap table<string, PluginSpec>
-
----@alias PluginSpecEntryList string[]
-
 local M = {}
 
 ---@param value any
@@ -40,8 +15,8 @@ local function to_list(value)
     return { value }
 end
 
----@param input PluginUserSpec[]
----@return PluginUserSpec[], PluginSpecEntryList
+---@param input modules.pack.PluginUserSpec[]
+---@return modules.pack.PluginUserSpec[], modules.pack.PluginSpecEntryList
 local function scan_specs(input)
     local flat = {}
     local entry_list = {}
@@ -69,8 +44,8 @@ local function scan_specs(input)
     return flat, entry_list
 end
 
----@param flat PluginUserSpec[]
----@return table<string, PluginUserSpec[]>
+---@param flat modules.pack.PluginUserSpec[]
+---@return table<string, modules.pack.PluginUserSpec[]>
 local function collect_by_src(flat)
     local map = {}
     for _, spec in ipairs(flat) do
@@ -80,8 +55,8 @@ local function collect_by_src(flat)
     return map
 end
 
----@param user_specs PluginUserSpec[]
----@return PluginSpec
+---@param user_specs modules.pack.PluginUserSpec[]
+---@return modules.pack.PluginSpec
 local function merge_specs(user_specs)
     local merged = {
         src = user_specs[1].src,
@@ -130,8 +105,8 @@ local function merge_specs(user_specs)
     return merged
 end
 
----@param spec PluginSpec
----@return PluginSpec
+---@param spec modules.pack.PluginSpec
+---@return modules.pack.PluginSpec
 local function normalize(spec)
     if not spec.name then
         spec.name = spec.src:match('.*/(.*)') or spec.src
@@ -148,8 +123,8 @@ local function normalize(spec)
 end
 
 ---Builds a map of plugin specifications from the provided user specifications.
----@param user_specs PluginUserSpec[]
----@return PluginSpecMap, PluginSpecEntryList
+---@param user_specs modules.pack.PluginUserSpec[]
+---@return modules.pack.PluginSpecMap, modules.pack.PluginSpecEntryList
 function M.build(user_specs)
     local flat, entry_list = scan_specs(user_specs)
     local grouped = collect_by_src(flat)

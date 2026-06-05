@@ -21,7 +21,7 @@ local function apply_groups(groups)
     end
 end
 
----@param palette ColorsPalette
+---@param palette modules.colors.ColorsPalette
 local function setup_hl(palette)
     local groups_dir = vim.fn.stdpath('config') .. '/lua/modules/highlight/groups'
     local handle = vim.loop.fs_scandir(groups_dir)

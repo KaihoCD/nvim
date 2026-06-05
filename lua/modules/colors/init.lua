@@ -4,6 +4,7 @@ local COLOR_MAP = require('modules.colors.colors-map')
 local utils = require('modules.colors.utils')
 
 -- Local cache for the color palette
+---@type modules.colors.ColorsPalette?
 local cached_palette = nil
 
 ---@return string[]?
@@ -23,7 +24,7 @@ local function export_command()
 end
 
 ---@param chunk string
----@return table?
+---@return modules.colors.Base24?
 local function decode_theme(chunk)
     if type(chunk) ~= 'string' or chunk == '' then
         return nil
@@ -52,7 +53,7 @@ local function decode_theme(chunk)
     return theme
 end
 
----@return table? theme
+---@return modules.colors.Base24? theme
 local function load_palette()
     local cmd = export_command()
     if not cmd then
@@ -74,7 +75,7 @@ local function load_palette()
 end
 
 --- Get the cached color palette
----@return table? palette The cached color palette, or nil if not loaded
+---@return modules.colors.ColorsPalette? palette The cached color palette, or nil if not loaded
 function M.get()
     if cached_palette then
         return cached_palette

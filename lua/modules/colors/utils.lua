@@ -81,9 +81,9 @@ function M.lighten(color, amount, fg)
 end
 
 --- Build a semantic color palette from a base24 theme using the color map
----@param base24 Base24 -- base24 theme with raw.base00-base17
+---@param base24 modules.colors.Base24 -- base24 theme with raw.base00-base17
 ---@param map table    -- color mapping table: { baseXX = 'semantic_name', ... }
----@return ColorsPalette
+---@return modules.colors.ColorsPalette
 function M.build_palette(base24, map)
     local palette = { name = base24.name }
 

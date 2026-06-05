@@ -1,3 +1,4 @@
+---@type state.Store
 G.State = require('state.core')
 
 G.State.register({
@@ -22,6 +23,7 @@ G.State.register({
     },
     lsp_configs = {
         vtsls = 'enum:default|mason',
+        ts_ls = 'enum:default|mason',
     },
     clrs = {
         name = 'string',

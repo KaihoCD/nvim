@@ -1,15 +1,7 @@
----@class PackQueue
----@field startup string[]
----@field event table<string, string[]>
----@field ft table<string, string[]>
-
----@alias DepGraph table<string, string[]>
----@alias SeenSet table<string, boolean>
-
 local M = {}
 
----@param specs_map PluginSpecMap
----@return DepGraph
+---@param specs_map modules.pack.PluginSpecMap
+---@return modules.pack.DepGraph
 local function build_graph(specs_map)
     local graph = {}
     for src, spec in pairs(specs_map) do
@@ -18,7 +10,7 @@ local function build_graph(specs_map)
     return graph
 end
 
----@param graph DepGraph
+---@param graph modules.pack.DepGraph
 local function validate_deps(graph)
     for src, deps in pairs(graph) do
         for _, dep_src in ipairs(deps) do
@@ -29,7 +21,7 @@ local function validate_deps(graph)
     end
 end
 
----@param graph DepGraph
+---@param graph modules.pack.DepGraph
 local function validate_no_cycle(graph)
     local visiting = {}
     local visited = {}
@@ -55,7 +47,7 @@ local function validate_no_cycle(graph)
     end
 end
 
----@param spec PluginSpec
+---@param spec modules.pack.PluginSpec
 ---@return string, string[]
 local function classify(spec)
     if spec.event then
@@ -67,8 +59,8 @@ local function classify(spec)
     return 'startup', { '__startup__' }
 end
 
----@param specs_map PluginSpecMap
----@param entry_list PluginSpecEntryList
+---@param specs_map modules.pack.PluginSpecMap
+---@param entry_list modules.pack.PluginSpecEntryList
 ---@return string[]
 local function ordered_sources(specs_map, entry_list)
     local ordered = {}
@@ -87,10 +79,10 @@ local function ordered_sources(specs_map, entry_list)
     return ordered
 end
 
----@param graph DepGraph
+---@param graph modules.pack.DepGraph
 ---@param src string
 ---@param cache table<string, string[]>
----@param visiting SeenSet
+---@param visiting modules.pack.SeenSet
 ---@return string[]
 local function resolve_for(graph, src, cache, visiting)
     if cache[src] then
@@ -120,11 +112,11 @@ local function resolve_for(graph, src, cache, visiting)
     return resolved
 end
 
----@param queue PackQueue
+---@param queue modules.pack.PackQueue
 ---@param kind "event"|"ft"
 ---@param key string
----@param seen_by_key table<string, SeenSet>
----@return string[], SeenSet
+---@param seen_by_key table<string, modules.pack.SeenSet>
+---@return string[], modules.pack.SeenSet
 local function ensure_keyed_bucket_state(queue, kind, key, seen_by_key)
     queue[kind][key] = queue[kind][key] or {}
     seen_by_key[key] = seen_by_key[key] or {}
@@ -132,7 +124,7 @@ local function ensure_keyed_bucket_state(queue, kind, key, seen_by_key)
 end
 
 ---@param bucket string[]
----@param seen SeenSet
+---@param seen modules.pack.SeenSet
 ---@param items string[]
 local function append_unique(bucket, seen, items)
     for _, src in ipairs(items) do
@@ -144,12 +136,12 @@ local function append_unique(bucket, seen, items)
 end
 
 ---Builds a plugin loading queue based on the provided specifications and entry list.
----@param specs_map PluginSpecMap
----@param entry_list PluginSpecEntryList
----@return PackQueue
+---@param specs_map modules.pack.PluginSpecMap
+---@param entry_list modules.pack.PluginSpecEntryList
+---@return modules.pack.PackQueue
 function M.build(specs_map, entry_list)
     if type(entry_list) ~= 'table' then
-        error('queue-builder.build expects entry_list (PluginSpecEntryList)')
+        error('queue-builder.build expects entry_list (modules.pack.PluginSpecEntryList)')
     end
 
     local graph = build_graph(specs_map)

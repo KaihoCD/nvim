@@ -1,4 +1,4 @@
----@class StateStorage
+---@class state.Storage
 ---@field get_data fun(): table<string, any>
 ---@field write fun()
 ---@field invalidate_cache fun()
