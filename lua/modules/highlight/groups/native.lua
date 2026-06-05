@@ -1,5 +1,5 @@
 --- Define all native Vim syntax highlight groups.
----@param p ColorsPalette palette colors
+---@param p modules.colors.ColorsPalette palette colors
 ---@return table<string, table> group definitions
 return function(p)
     return {
@@ -30,6 +30,7 @@ return function(p)
         ['@keyword.function'] = { fg = p.purple },
         ['@keyword.operator'] = { fg = p.purple },
         ['@keyword.conditional'] = { fg = p.purple },
+        ['@constructor'] = { fg = p.purple },
         ['@variable'] = { fg = p.fg_high },
 
         -- Types
@@ -50,7 +51,7 @@ return function(p)
 
         -- Delimiters
         Delimiter = { fg = p.fg_low },
-        ['@constructor'] = { fg = p.fg_low },
+        ['@constructor.lua'] = { link = 'Delimiter' },
 
         -- Special
         Special = { fg = p.cyan },

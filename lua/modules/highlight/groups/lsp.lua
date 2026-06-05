@@ -1,6 +1,6 @@
 --- Define all LSP highlight groups.
 --- Directly defines colors (no linking) so LSP can enhance native/treesitter highlights.
----@param p ColorsPalette palette colors
+---@param p modules.colors.ColorsPalette palette colors
 ---@return table<string, table> group definitions
 return function(p)
     return {
