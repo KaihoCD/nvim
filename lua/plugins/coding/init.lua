@@ -1,4 +1,9 @@
 local copilot = require('plugins.coding.copilot')
+local blink = require('plugins.coding.blink')
+
+local nop_func = function()
+    --[[nop func]]
+end
 
 return {
     { src = 'https://github.com/echasnovski/mini.pairs', event = 'InsertEnter' },
@@ -12,19 +17,18 @@ return {
     {
         src = 'https://github.com/saghen/blink.cmp',
         event = 'VimEnter',
-        version = 'v1.10.1',
         deps = {
+            { src = 'https://github.com/saghen/blink.lib', config = nop_func },
             { src = 'https://github.com/folke/lazydev.nvim' },
             { src = 'https://github.com/xzbdmw/colorful-menu.nvim' },
             { src = 'https://github.com/brenoprata10/nvim-highlight-colors' },
             {
                 src = 'https://github.com/rafamadriz/friendly-snippets',
-                config = function()
-                    --[[nop func]]
-                end,
+                config = nop_func,
             },
         },
-        opts = require('plugins.coding.blink').opts,
+        opts = blink.opts,
+        config = blink.config,
     },
     {
         src = 'https://github.com/zbirenbaum/copilot.lua',
