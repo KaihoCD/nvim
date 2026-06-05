@@ -23,6 +23,12 @@ local function toggle_netrw()
 end
 
 map('n', '<Esc>', '<CMD>nohlsearch<CR>', { desc = 'Clear highlights' })
+map('i', '<Esc>', function()
+    if vim.snippet and vim.snippet.active() then
+        vim.snippet.stop()
+    end
+    return '<Esc>'
+end, { expr = true, desc = 'Exit insert mode and stop snippet' })
 map('t', '<C-n>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 map('n', '-', toggle_netrw, { desc = 'Toggle Netrw' })
 
@@ -47,8 +53,8 @@ map('n', '<C-d>', '<C-d>zz', { desc = 'Page down and center cursor' })
 map('n', '<C-u>', '<C-u>zz', { desc = 'Page up and center cursor' })
 map('n', '#', '#zz', { desc = 'Jump to previous occurrence of word' })
 map('n', '*', '*zz', { desc = 'Jump to next occurrence of word' })
-map('n', '{', '{zz', { desc = 'Jump to prev paragraph' })
-map('n', '}', '}zz', { desc = 'Jump to next paragraph' })
+map({ 'n', 'v' }, '{', '{zz', { desc = 'Jump to prev paragraph' })
+map({ 'n', 'v' }, '}', '}zz', { desc = 'Jump to next paragraph' })
 map('n', 'n', 'nzzzv', { desc = 'Next search match, center & unfold' })
 map('n', 'N', 'Nzzzv', { desc = 'Prev search match, center & unfold' })
 map('v', '<', '<gv', { desc = 'Indent left and keep visual selection' })

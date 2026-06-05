@@ -29,8 +29,9 @@ N.defautl = {
     layout = {
         box = 'horizontal',
         backdrop = false,
-        width = 0.8,
+        width = 0.9,
         height = 0.8,
+        min_width = 100,
         border = 'none',
         {
             box = 'vertical',
@@ -66,8 +67,9 @@ N.vertical = {
         backdrop = false,
         box = 'vertical',
         border = 'none',
-        width = 0.8,
+        width = 0.9,
         height = 0.8,
+        min_width = 100,
         {
             win = 'input',
             title = '{title} {live} {flags}',
@@ -97,8 +99,8 @@ N.select = {
     layout = {
         backdrop = false,
         row = 10,
-        width = 0.4,
-        height = 0.4,
+        width = 100,
+        height = 0.5,
         box = 'vertical',
         {
             title = '{title}',

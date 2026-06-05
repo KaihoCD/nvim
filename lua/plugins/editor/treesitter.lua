@@ -1,4 +1,4 @@
-local notify = require('utils.notify')
+local notify = require('utils.notify').default
 local command = require('utils.command')
 
 local M = {}
@@ -29,12 +29,14 @@ function M.config()
         'json',
     }
 
-    local ok = command.ensure_available({
+    local ok = command.ensure_command({
         command = 'tree-sitter',
-        install_command = 'brew install tree-sitter-cli',
-        install_cmd_name = 'InstallTreeSitter',
         missing_message = 'nvim-treesitter requires tree-sitter CLI in PATH.',
         notify = notify,
+        installer = {
+            install_command = 'brew install tree-sitter-cli',
+            install_cmd_name = 'InstallTreeSitter',
+        },
     })
 
     if not ok then

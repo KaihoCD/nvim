@@ -1,6 +1,7 @@
 local configs = require('modules.autoim.config')
 local command = require('utils.command')
-local notify = require('utils.notify').with({
+local Notify = require('utils.notify')
+local notify = Notify.new({
     icon = configs.notify_icon,
     title = configs.notify_title,
 })
@@ -10,15 +11,17 @@ local M = {}
 local function load_auto_im()
     if
         not configs.im_switch_command
-        or not command.ensure_available({
+        or not command.ensure_command({
             command = configs.im_switch_command,
-            install_command = configs.install_command,
-            install_cmd_name = configs.install_cmd_name,
             missing_message = 'input method switch tool not found ('
                 .. (configs.im_switch_command or 'unknown')
                 .. '), module disabled!',
             notify = notify,
             schedule_notify = true,
+            installer = {
+                install_command = configs.install_command,
+                install_cmd_name = configs.install_cmd_name,
+            },
         })
     then
         return false

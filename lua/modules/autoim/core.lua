@@ -1,7 +1,7 @@
 local configs = require('modules.autoim.config')
 local utils = require('modules.autoim.utils')
-local notify = require('utils.notify').with({
-    icon = configs.notify_icon,
+local Notify = require('utils.notify')
+local notify = Notify.new({
     title = configs.notify_title,
 })
 

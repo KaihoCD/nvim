@@ -14,11 +14,12 @@ vim.g.netrw_sort_sequence = [[[\/]$,*]]
 vim.opt.termguicolors = true
 vim.opt.number = true
 vim.opt.signcolumn = 'yes'
-vim.opt.fillchars = { eob = ' ' }
+vim.opt.fillchars = { msgsep = '─', eob = ' ' }
 vim.opt.mouse = 'a'
 vim.opt.laststatus = 3
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = 'number'
+vim.opt.cmdheight = 0
 
 -- Wrapping & indentation
 vim.opt.wrap = true

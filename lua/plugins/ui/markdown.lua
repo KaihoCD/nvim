@@ -29,7 +29,6 @@ M.opts = {
             },
         },
     },
-    render_modes = true,
     sign = { enabled = false },
     code = {
         width = 'block',

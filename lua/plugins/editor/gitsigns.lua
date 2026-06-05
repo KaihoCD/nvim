@@ -32,12 +32,14 @@ M.opts = {
         end, { desc = 'Prev Hunk' })
 
         map('n', '<leader>hp', gs.preview_hunk_inline, { desc = 'Preview Hunk' })
-        map('n', '<leader>hB', gs.blame, { desc = 'Buffer Blame' })
 
         map('n', '<leader>hr', gs.reset_hunk, { desc = 'Reset Hunk' })
         map('n', '<leader>hR', gs.reset_buffer, { desc = 'Reset Buffer' })
         map('n', '<leader>hs', gs.stage_hunk, { desc = 'Stage Hunk' })
         map('n', '<leader>hS', gs.stage_buffer, { desc = 'Stage Buffer' })
+
+        map('n', '<leader>hb', gs.blame_line, { desc = 'Blame Inline' })
+        map('n', '<leader>gB', gs.blame, { desc = 'Buffer Blame' })
 
         Snacks.toggle({
             name = 'Git Signs',

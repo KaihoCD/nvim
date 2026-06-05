@@ -10,7 +10,6 @@ local M = {
 }
 
 M.notify_title = 'Auto-IM'
-M.notify_icon = '󱅄 '
 
 if utils.current_os('mac') then
     M.default_im = 'com.apple.keylayout.ABC'
