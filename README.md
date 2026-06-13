@@ -105,6 +105,36 @@ Personal Neovim configuration built with Lua for modern development.
 | `lua/devtools/formatters.lua`   | Formatter configuration    |
 | `lua/modules/autoim/config.lua` | Input method switch config |
 
+## Why Beta-2 is discontinued
+
+- **Snacks became too heavy.** The picker pulled in an entire UI component library.
+  Most features went unused, and searches would freeze on larger projects. Tight
+  coupling made it impossible to replace the picker alone.
+
+- **heirline's git component had performance issues.** The statusline itself worked
+  well, but the git branch detection mechanism suffered from performance problems and
+  compatibility quirks in certain buffer types.
+
+- **UI state management added little real value.** The state and package management
+  frameworks are sound in design. What proved unnecessary was the UI type layer
+  maintaining borderless/bordered theming — it was never toggled in daily use and
+  only added maintenance overhead.
+
+- **The borderless UI type was dropped.** It never achieved a satisfying visual
+  result despite significant effort. Given the maintenance cost and unresolved
+  aesthetic gaps, it was removed.
+
+- **Some operations fit commands better than keymaps.** Not a rejection of hotkeys,
+  but custom commands (`:LspConfig`, `:Format`) proved more discoverable and easier
+  to recall in certain cases, without requiring additional keymap maintenance.
+
+The configuration had already been moving toward a lighter setup. These were the
+remaining rough edges.
+
+What Beta-2 got right: a vim-pack-based plugin loading mechanism, adapting to native
+buffer operations without bufferline, a practical utility library, and a deeper
+understanding that **configuration should serve the workflow, not constrain it.**
+
 ## License
 
 MIT
