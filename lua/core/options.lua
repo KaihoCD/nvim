@@ -22,7 +22,7 @@ vim.opt.cursorlineopt = 'number'
 vim.opt.cmdheight = 0
 
 -- Wrapping & indentation
-vim.opt.wrap = true
+vim.opt.wrap = false
 vim.opt.linebreak = true
 vim.opt.breakindent = true
 vim.opt.showbreak = '┆ '

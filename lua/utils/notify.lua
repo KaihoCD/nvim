@@ -82,8 +82,11 @@ Notify.default = Notify.new()
 return setmetatable(Notify, {
     __index = function(_, key)
         local default = rawget(Notify, 'default')
-        if default and type(default[key]) == 'function' then
-            return default[key]
+        if default then
+            local val = rawget(default, key)
+            if type(val) == 'function' then
+                return val
+            end
         end
     end,
     __call = function(_, msg, level, opts)
