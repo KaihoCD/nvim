@@ -10,9 +10,9 @@ This repository contains multiple Neovim configurations for different versions. 
 
 **Neovim Version**: >= 0.10 (Recommended: 0.11.x)
 
-**Status**: Stable but may have compatibility issues
+**Status**: No longer maintained
 
-> **Notice**: This configuration may contain outdated settings. If you encounter errors, please resolve them on your own.
+> **Discontinued**: This configuration may contain outdated settings and is no longer maintained.
 
 **Quick Access**:
 
@@ -20,13 +20,13 @@ This repository contains multiple Neovim configurations for different versions. 
 
 ---
 
-### Beta-2 Branch (Recommended)
+### Beta-2 Branch
 
 **Neovim Version**: >= 0.12
 
-**Status**: Long-term maintenance
+**Status**: No longer maintained
 
-> **Actively Maintained**: This version is actively maintained and updated regularly.
+> **Discontinued**: This version is no longer maintained. See [discontinuation notes](https://github.com/KaihoCD/nvim/tree/beta-2#why-beta-2-is-discontinued) for details.
 
 **Quick Access**:
 
@@ -38,8 +38,8 @@ This repository contains multiple Neovim configurations for different versions. 
 
 | Your Neovim Version | Recommended Branch | Status                        |
 | ------------------- | ------------------ | ----------------------------- |
-| 0.10.x - 0.11.x     | Beta-1 [ ]         | May have compatibility issues |
-| 0.12.x and above    | Beta-2 [✓]         | Actively maintained           |
+| 0.10.x - 0.11.x     | Beta-1 [ ]         | Discontinued                  |
+| 0.12.x and above    | Beta-2 [ ]         | Discontinued                  |
 
 ## License
 
